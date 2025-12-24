@@ -31,6 +31,7 @@ export default function OrderStatus() {
   const [confirming, setConfirming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedItems, setEditedItems] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
     if (orderId && orderId !== 'ORD-NEW') {
@@ -38,6 +39,8 @@ export default function OrderStatus() {
     } else {
         setLoading(false);
     }
+    // Fetch products for add item dropdown
+    import("@/lib/api").then(m => m.getProducts().then(setProducts).catch(console.error));
   }, [orderId]);
 
   const fetchOrder = async () => {
@@ -88,6 +91,24 @@ export default function OrderStatus() {
       setEditedItems(prev => prev.map(item => 
           item.itemId === itemId ? { ...item, quantity: Math.max(0, newQty) } : item
       ));
+  };
+
+  const handleAddItem = (itemId: string) => {
+      const product = products.find(p => p._id === itemId);
+      if (!product) return;
+
+      setEditedItems(prev => [
+          ...prev, 
+          { 
+              itemId: product._id, 
+              quantity: 1, 
+              unitPrice: 0 // New items have unknown price
+          }
+      ]);
+  };
+
+  const handleRemoveItem = (itemId: string) => {
+      setEditedItems(prev => prev.filter(item => item.itemId !== itemId));
   };
 
   const handleSaveChanges = async () => {
@@ -223,29 +244,37 @@ export default function OrderStatus() {
                   </CardHeader>
                   <CardContent className="p-0">
                      <div className="divide-y divide-border/60">
-                         {order.items.map((item: any) => {
+                         {/* Existing Items */}
+                         {editedItems.length > 0 ? editedItems.map((item: any, index: number) => {
+                             // Find item details either from original order or products list
+                             const productDetails = order.items.find((i: any) => i.itemId._id === item.itemId)?.itemId 
+                                                    || products.find(p => p._id === item.itemId);
+                             
+                             if (!productDetails) return null;
+
                              const hasPrice = item.unitPrice > 0;
-                             const editingItem = editedItems.find(i => i.itemId === item.itemId._id);
-                             const currentQty = editingItem ? editingItem.quantity : item.quantity;
 
                              return (
-                                 <div key={item._id} className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors">
+                                 <div key={item.itemId} className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors">
                                      <div className="flex-1">
-                                         <p className="font-medium text-foreground">{item.itemId.itemName}</p>
+                                         <p className="font-medium text-foreground">{productDetails.itemName || productDetails.name}</p>
                                          <div className="flex items-center gap-2 mt-1">
                                             {isEditing ? (
                                                 <div className="flex items-center gap-2">
                                                     <Input 
                                                         type="number" 
                                                         className="h-8 w-20 text-center" 
-                                                        value={currentQty}
-                                                        onChange={(e) => handleQuantityChange(item.itemId._id, parseInt(e.target.value) || 0)}
+                                                        value={item.quantity}
+                                                        onChange={(e) => handleQuantityChange(item.itemId, parseInt(e.target.value) || 0)}
                                                         min="0"
                                                     />
-                                                    <span className="text-sm text-muted-foreground">{item.itemId.unit}</span>
+                                                    <span className="text-sm text-muted-foreground">{productDetails.unit}</span>
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500" onClick={() => handleRemoveItem(item.itemId)}>
+                                                        <X className="h-4 w-4" />
+                                                    </Button>
                                                 </div>
                                             ) : (
-                                                <p className="text-sm text-muted-foreground">{item.quantity} {item.itemId.unit}</p>
+                                                <p className="text-sm text-muted-foreground">{item.quantity} {productDetails.unit}</p>
                                             )}
                                          </div>
                                      </div>
@@ -253,7 +282,7 @@ export default function OrderStatus() {
                                          {hasPrice && !isEditing ? (
                                              <>
                                                  <p className="font-medium">${(item.quantity * item.unitPrice).toLocaleString()}</p>
-                                                 <p className="text-xs text-muted-foreground">${item.unitPrice}/{item.itemId.unit}</p>
+                                                 <p className="text-xs text-muted-foreground">${item.unitPrice}/{productDetails.unit}</p>
                                              </>
                                          ) : (
                                              <div className="flex flex-col items-end">
@@ -267,7 +296,32 @@ export default function OrderStatus() {
                                      </div>
                                  </div>
                              );
-                         })}
+                         }) : <div className="p-8 text-center text-muted-foreground">No items in order</div>}
+                         
+                         {/* Add New Item Section */}
+                         {isEditing && (
+                             <div className="p-4 bg-muted/20">
+                                 <label className="text-xs font-medium text-muted-foreground mb-2 block">Add New Item</label>
+                                 <div className="flex gap-2">
+                                     <select 
+                                         className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                         onChange={(e) => {
+                                             if (e.target.value) {
+                                                 handleAddItem(e.target.value);
+                                                 e.target.value = ""; // Reset
+                                             }
+                                         }}
+                                     >
+                                         <option value="">Select a product...</option>
+                                         {products.filter(p => !editedItems.find(i => i.itemId === p._id)).map(product => (
+                                             <option key={product._id} value={product._id}>
+                                                 {product.itemName} ({product.unit})
+                                             </option>
+                                         ))}
+                                     </select>
+                                 </div>
+                             </div>
+                         )}
                      </div>
                      
                      {/* Totals */}
