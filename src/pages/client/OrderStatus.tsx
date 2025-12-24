@@ -264,7 +264,7 @@ export default function OrderStatus() {
                                                     <Input 
                                                         type="number" 
                                                         className="h-8 w-20 text-center" 
-                                                        value={item.quantity}
+                                                        value={item.quantity.toString()}
                                                         onChange={(e) => handleQuantityChange(item.itemId, parseInt(e.target.value) || 0)}
                                                         min="0"
                                                     />

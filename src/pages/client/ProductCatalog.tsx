@@ -169,7 +169,7 @@ export default function ProductCatalog() {
         title="Order Materials"
         subtitle="Select items for quote"
         showNotifications
-        notificationCount={2}
+        notificationCount={localOrders.length}
         showProfile // Repurposed for History
         onProfile={() => setHistoryOpen(true)}
       />

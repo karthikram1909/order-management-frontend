@@ -11,6 +11,8 @@ interface MobileHeaderProps {
   onMenu?: () => void;
   showNotifications?: boolean;
   notificationCount?: number;
+  onNotifications?: () => void;
+  showProfile?: boolean;
   onProfile?: () => void;
   className?: string;
   rightElement?: React.ReactNode;

@@ -81,7 +81,6 @@ export default function ClientPortal() {
                             className="rounded-full px-6 py-2.5 data-[state=active]:bg-gray-100 data-[state=active]:text-foreground data-[state=active]:shadow-none gap-2 text-muted-foreground"
                         >
                             <FileText className="h-4 w-4" /> My Orders
-                            <Badge variant="secondary" className="ml-1 h-5 min-w-[1.25rem] px-1 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200">2</Badge>
                         </TabsTrigger>
                     </TabsList>
                 </div>
