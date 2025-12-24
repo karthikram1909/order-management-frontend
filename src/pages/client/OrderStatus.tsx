@@ -279,18 +279,16 @@ export default function OrderStatus() {
                                          </div>
                                      </div>
                                      <div className="text-right">
-                                         {hasPrice && !isEditing ? (
+                                         {hasPrice ? (
                                              <>
                                                  <p className="font-medium">${(item.quantity * item.unitPrice).toLocaleString()}</p>
                                                  <p className="text-xs text-muted-foreground">${item.unitPrice}/{productDetails.unit}</p>
+                                                 {isEditing && <p className="text-[10px] text-yellow-600 dark:text-yellow-400">Review pending</p>}
                                              </>
                                          ) : (
                                              <div className="flex flex-col items-end">
-                                                 {isEditing ? (
-                                                     <span className="text-xs text-muted-foreground italic">Price resets on update</span>
-                                                 ) : (
-                                                     <BadgeHelp className="h-5 w-5 text-muted-foreground/50" />
-                                                 )}
+                                                  <span className="text-xs text-muted-foreground italic">TBD</span>
+                                                  {isEditing && <span className="text-[10px] text-muted-foreground">New Item</span>}
                                              </div>
                                          )}
                                      </div>
