@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart, Search } from "lucide-react";
+import { ShoppingCart, Search, Clock, ChevronRight } from "lucide-react";
 import { MobileHeader } from "@/components/layout/MobileHeader";
 import { ProductCard } from "@/components/ui/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // import { mockProducts } from "@/data/mockData"; // Removed
-import { getProducts, modifyOrder } from "@/lib/api";
+import { getProducts, modifyOrder, getLocalHistory } from "@/lib/api";
 import { Product } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 interface CartItem {
   productId: string;
@@ -16,18 +17,17 @@ interface CartItem {
   unitPrice?: number;
 }
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Clock, ChevronRight } from "lucide-react";
-import { getLocalHistory } from "@/lib/api";
-
 export default function ProductCatalog() {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [localOrders, setLocalOrders] = useState<any[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   // Load cart from local storage on mount
   useEffect(() => {
@@ -39,6 +39,7 @@ export default function ProductCatalog() {
         console.error("Failed to parse cart", e);
       }
     }
+    setIsEditing(!!localStorage.getItem("editingOrderId"));
   }, []);
 
   // Save cart to local storage whenever it changes
@@ -102,8 +103,6 @@ export default function ProductCatalog() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const hasItems = cart.length > 0;
 
-  const { toast } = useToast();
-
   const handleRequestQuote = async () => {
     // Read from localStorage (primary) or fallback to sessionStorage
     const clientInfoStr = localStorage.getItem("clientInfo") || sessionStorage.getItem("clientInfo");
@@ -113,7 +112,7 @@ export default function ProductCatalog() {
         return;
     }
     const clientInfo = JSON.parse(clientInfoStr);
-    const editingOrderId = sessionStorage.getItem("editingOrderId");
+    const editingOrderId = localStorage.getItem("editingOrderId");
 
     setLoading(true);
     try {
@@ -126,11 +125,8 @@ export default function ProductCatalog() {
         let orderData;
         if (editingOrderId) {
              // Modify existing order
-             // Note: If backend expects unitPrice for modification, we might need to 
-             // handle that, but essentially client "modification" here is likely just quantities.
-             // If we really want to disable price editing, we don't send it.
              orderData = await modifyOrder(editingOrderId, items);
-             sessionStorage.removeItem("editingOrderId");
+             localStorage.removeItem("editingOrderId");
              toast({ title: "Order Updated", description: "Your changes have been submitted." });
         } else {
             // Create new inquiry
@@ -148,7 +144,6 @@ export default function ProductCatalog() {
         const orderToSave = { ...orderData, mobileNumber: clientInfo.mobileNumber };
         import("@/lib/api").then(m => m.addToLocalHistory(orderToSave));
 
-        sessionStorage.removeItem("cart"); // Clean up legacy
         localStorage.removeItem("cart"); // Clean up persistent cart
         setCart([]); // Reset state
         
@@ -221,7 +216,7 @@ export default function ProductCatalog() {
           onClick={handleRequestQuote}
         >
           <ShoppingCart className="h-5 w-5" />
-          Request Quote
+          {isEditing ? "Update Quote" : "Request Quote"}
           {hasItems && (
             <span className="ml-1 rounded-full bg-primary-foreground/20 px-2 py-0.5 text-xs">
               {totalItems} item{totalItems !== 1 && "s"}

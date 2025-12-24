@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { Package, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
+import Snowfall from "react-snowfall";
 const Index = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <Snowfall color="#3b82f6" style={{ position: 'fixed', width: '100vw', height: '100vh', zIndex: 50 }} radius={[0.5, 3.0]} snowflakeCount={200} />
       {/* Header */}
       <header className="border-b border-border/60 bg-card/50 backdrop-blur">
         <div className="container flex h-16 items-center justify-between">

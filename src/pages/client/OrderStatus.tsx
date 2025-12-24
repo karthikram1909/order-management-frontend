@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Check, Clock, Package, Truck, ArrowLeft, AlertCircle, CheckCircle2, Phone, MessageSquare, BadgeHelp } from "lucide-react";
+import { Check, Clock, Package, Truck, ArrowLeft, AlertCircle, CheckCircle2, Phone, MessageSquare, BadgeHelp, Edit2, X, Save } from "lucide-react";
 import { MobileHeader } from "@/components/layout/MobileHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { TimelineStepper } from "@/components/ui/timeline-stepper";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { api, getOrder, confirmOrder, confirmDelivery } from "@/lib/api";
+import { api, getOrder, confirmOrder, confirmDelivery, modifyOrder } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { getStatusConfig } from "@/data/mockData";
+import { Input } from "@/components/ui/input";
 
 const getSteps = (status: string) => {
     return [
@@ -28,6 +29,8 @@ export default function OrderStatus() {
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [confirming, setConfirming] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedItems, setEditedItems] = useState<any[]>([]);
 
   useEffect(() => {
     if (orderId && orderId !== 'ORD-NEW') {
@@ -41,6 +44,12 @@ export default function OrderStatus() {
     try {
         const data = await getOrder(orderId!);
         setOrder(data);
+        // Initialize edited items with current quantities
+        setEditedItems(data.items.map((i: any) => ({
+            itemId: i.itemId._id,
+            quantity: i.quantity,
+            unitPrice: i.unitPrice
+        })));
     } catch (e) {
         console.error(e);
         toast({ title: "Error", description: "Could not load order details" });
@@ -75,6 +84,33 @@ export default function OrderStatus() {
       }
   };
 
+  const handleQuantityChange = (itemId: string, newQty: number) => {
+      setEditedItems(prev => prev.map(item => 
+          item.itemId === itemId ? { ...item, quantity: Math.max(0, newQty) } : item
+      ));
+  };
+
+  const handleSaveChanges = async () => {
+      setConfirming(true);
+      try {
+          const itemsToSubmit = editedItems.filter(i => i.quantity > 0).map(i => ({
+              itemId: i.itemId,
+              quantity: i.quantity
+              // Backend might preserve unitPrice or reset it. 
+              // Usually client modification resets status so price needs re-evaluation or confirmation.
+          }));
+          
+          await modifyOrder(order._id, itemsToSubmit);
+          toast({ title: "Quote Updated", description: "Sent to admin for review." });
+          setIsEditing(false);
+          fetchOrder();
+      } catch (e: any) {
+          toast({ variant: "destructive", title: "Update Failed", description: e.response?.data?.message || "Could not update order" });
+      } finally {
+          setConfirming(false);
+      }
+  };
+
   if (loading) return <div className="flex h-screen items-center justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>;
 
   if (!order) {
@@ -98,12 +134,12 @@ export default function OrderStatus() {
       <MobileHeader
         title={`Order #${order._id.slice(-6)}`}
         showBack
-        onBack={() => navigate("/client/history")} // Navigate to history usually better than home
+        onBack={() => navigate("/client/history")} 
         rightElement={<StatusBadge status={(statusConfig?.variant as any) || 'neutral'} className="text-xs">{order.orderStatus.replace(/_/g, ' ')}</StatusBadge>}
       />
 
       <div className="container max-w-5xl mx-auto p-4 md:p-8 space-y-6">
-          {/* Desktop Header (Hidden on Mobile) */}
+          {/* Desktop Header */}
           <div className="hidden md:flex items-center justify-between mb-6">
              <div className="flex items-center gap-4">
                  <Button variant="ghost" size="sm" onClick={() => navigate("/client/orders")}>
@@ -121,29 +157,33 @@ export default function OrderStatus() {
                 {/* Desktop Actions */}
                  {isWaitingForApproval && (
                     <div className="flex gap-2">
-                         <Button variant="outline" onClick={() => {
-                             const cartItems = order.items.map((i: any) => ({
-                                 productId: i.itemId._id,
-                                 quantity: i.quantity,
-                                 unitPrice: i.unitPrice
-                             }));
-                             sessionStorage.setItem("cart", JSON.stringify(cartItems));
-                             sessionStorage.setItem("editingOrderId", order._id);
-                             navigate("/client/catalog");
-                         }}>
-                             Modify Quote
-                         </Button>
-                         <Button onClick={handleConfirmQuote} disabled={confirming}>
-                             {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
-                             Accept Quote
-                         </Button>
+                         {!isEditing ? (
+                             <>
+                                <Button variant="outline" onClick={() => setIsEditing(true)}>
+                                    <Edit2 className="h-4 w-4 mr-2"/> Modify Quote
+                                </Button>
+                                <Button onClick={handleConfirmQuote} disabled={confirming}>
+                                    {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
+                                    Accept Quote
+                                </Button>
+                             </>
+                         ) : (
+                             <>
+                                <Button variant="ghost" onClick={() => setIsEditing(false)} disabled={confirming}>
+                                    <X className="h-4 w-4 mr-2"/> Cancel
+                                </Button>
+                                <Button onClick={handleSaveChanges} disabled={confirming}>
+                                    {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Save className="h-4 w-4 mr-2"/>}
+                                    Submit Modified Request
+                                </Button>
+                             </>
+                         )}
                     </div>
                  )}
              </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-             {/* Left Column: Progress & Items */}
              <div className="md:col-span-2 space-y-6">
                 
                 {/* Timeline */}
@@ -158,12 +198,16 @@ export default function OrderStatus() {
                             {order.orderStatus.replace(/_/g, " ")}
                         </p>
                         <p className="text-sm text-muted-foreground mt-1">
-                            {order.orderStatus === 'NEW_INQUIRY' && "We have received your request and are calculating the best prices."}
-                            {order.orderStatus === 'PENDING_PRICING' && "Our team is reviewing stock and pricing."}
-                            {order.orderStatus === 'WAITING_CLIENT_APPROVAL' && "Pricing is ready. Please review the quote to proceed."}
-                            {order.orderStatus === 'ORDER_CONFIRMED' && "Thank you! Your order is being prepared for dispatch."}
-                            {order.orderStatus === 'IN_TRANSIT' && "Your order is on the way."}
-                            {order.orderStatus === 'DELIVERED' && "Order delivered successfully."}
+                            {isEditing ? "Modify quantities below and submit for re-evaluation." : (
+                                <>
+                                    {order.orderStatus === 'NEW_INQUIRY' && "We have received your request and are calculating the best prices."}
+                                    {order.orderStatus === 'PENDING_PRICING' && "Our team is reviewing stock and pricing."}
+                                    {order.orderStatus === 'WAITING_CLIENT_APPROVAL' && "Pricing is ready. Please review the quote to proceed."}
+                                    {order.orderStatus === 'ORDER_CONFIRMED' && "Thank you! Your order is being prepared for dispatch."}
+                                    {order.orderStatus === 'IN_TRANSIT' && "Your order is on the way."}
+                                    {order.orderStatus === 'DELIVERED' && "Order delivered successfully."}
+                                </>
+                            )}
                         </p>
                      </div>
                   </CardContent>
@@ -172,26 +216,53 @@ export default function OrderStatus() {
                 {/* Items */}
                 <Card className="border-border/60 shadow-sm">
                   <CardHeader>
-                     <CardTitle className="text-base">Order Items</CardTitle>
+                     <CardTitle className="text-base flex justify-between items-center">
+                         <span>Order Items</span>
+                         {isEditing && <span className="text-xs font-normal text-muted-foreground bg-yellow-100 dark:bg-yellow-900/30 px-2 py-1 rounded text-yellow-700 dark:text-yellow-400">Editing Mode</span>}
+                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
                      <div className="divide-y divide-border/60">
                          {order.items.map((item: any) => {
                              const hasPrice = item.unitPrice > 0;
+                             const editingItem = editedItems.find(i => i.itemId === item.itemId._id);
+                             const currentQty = editingItem ? editingItem.quantity : item.quantity;
+
                              return (
                                  <div key={item._id} className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors">
-                                     <div>
+                                     <div className="flex-1">
                                          <p className="font-medium text-foreground">{item.itemId.itemName}</p>
-                                         <p className="text-sm text-muted-foreground">{item.quantity} {item.itemId.unit}</p>
+                                         <div className="flex items-center gap-2 mt-1">
+                                            {isEditing ? (
+                                                <div className="flex items-center gap-2">
+                                                    <Input 
+                                                        type="number" 
+                                                        className="h-8 w-20 text-center" 
+                                                        value={currentQty}
+                                                        onChange={(e) => handleQuantityChange(item.itemId._id, parseInt(e.target.value) || 0)}
+                                                        min="0"
+                                                    />
+                                                    <span className="text-sm text-muted-foreground">{item.itemId.unit}</span>
+                                                </div>
+                                            ) : (
+                                                <p className="text-sm text-muted-foreground">{item.quantity} {item.itemId.unit}</p>
+                                            )}
+                                         </div>
                                      </div>
                                      <div className="text-right">
-                                         {hasPrice ? (
+                                         {hasPrice && !isEditing ? (
                                              <>
                                                  <p className="font-medium">${(item.quantity * item.unitPrice).toLocaleString()}</p>
                                                  <p className="text-xs text-muted-foreground">${item.unitPrice}/{item.itemId.unit}</p>
                                              </>
                                          ) : (
-                                             <BadgeHelp className="h-5 w-5 text-muted-foreground/50" />
+                                             <div className="flex flex-col items-end">
+                                                 {isEditing ? (
+                                                     <span className="text-xs text-muted-foreground italic">Price resets on update</span>
+                                                 ) : (
+                                                     <BadgeHelp className="h-5 w-5 text-muted-foreground/50" />
+                                                 )}
+                                             </div>
                                          )}
                                      </div>
                                  </div>
@@ -200,7 +271,7 @@ export default function OrderStatus() {
                      </div>
                      
                      {/* Totals */}
-                     {order.totalOrderValue > 0 && (
+                     {order.totalOrderValue > 0 && !isEditing && (
                          <div className="p-4 bg-muted/30 border-t border-border/60">
                              <div className="flex justify-between items-center">
                                  <span className="font-medium">Total Estimate</span>
@@ -212,10 +283,7 @@ export default function OrderStatus() {
                 </Card>
              </div>
 
-             {/* Right Column: Support & Summary */}
              <div className="space-y-6">
-                
-                {/* Help Card */}
                 <Card className="border-border/60 shadow-sm">
                    <CardHeader>
                       <CardTitle className="text-base">Need Help?</CardTitle>
@@ -239,29 +307,31 @@ export default function OrderStatus() {
        {/* Floating Actions for Mobile */}
        {isWaitingForApproval && (
             <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border md:hidden z-50">
-                 <div className="flex gap-3">
-                     <Button variant="outline" className="flex-1" onClick={() => {
-                         const cartItems = order.items.map((i: any) => ({
-                             productId: i.itemId._id,
-                             quantity: i.quantity,
-                             unitPrice: i.unitPrice
-                         }));
-                         sessionStorage.setItem("cart", JSON.stringify(cartItems));
-                         sessionStorage.setItem("editingOrderId", order._id);
-                         navigate("/client/catalog");
-                     }}>
-                         Modify
-                     </Button>
-                     <Button className="flex-1" onClick={handleConfirmQuote} disabled={confirming}>
-                         {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
-                         Accept
-                     </Button>
-                 </div>
+                 {!isEditing ? (
+                     <div className="flex gap-3">
+                         <Button variant="outline" className="flex-1" onClick={() => setIsEditing(true)}>
+                             Modify
+                         </Button>
+                         <Button className="flex-1" onClick={handleConfirmQuote} disabled={confirming}>
+                             {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
+                             Accept
+                         </Button>
+                     </div>
+                 ) : (
+                    <div className="flex gap-3">
+                         <Button variant="outline" className="flex-1" onClick={() => setIsEditing(false)}>
+                             Cancel
+                         </Button>
+                         <Button className="flex-1" onClick={handleSaveChanges} disabled={confirming}>
+                             {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : "Submit New Request"}
+                         </Button>
+                     </div>
+                 )}
             </div>
        )}
 
        {/* Confirm Delivery CTA Mobile */}
-       {order.orderStatus === 'IN_TRANSIT' && (
+       {order.orderStatus === 'IN_TRANSIT' && !isEditing && (
        <div className="fixed bottom-0 left-0 right-0 border-t border-border/60 bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 md:hidden z-50">
          <Button className="w-full gap-2" size="lg" onClick={handleConfirmDelivery} disabled={confirming}>
            <CheckCircle2 className="h-5 w-5" />
@@ -269,8 +339,8 @@ export default function OrderStatus() {
          </Button>
        </div>)}
 
-       {/* Desktop Dispatch/Delivery Buttons if needed in Sidebar, but client usually only confirms delivery */}
-       {order.orderStatus === 'IN_TRANSIT' && (
+       {/* Floating Delivery Desktop */}
+       {order.orderStatus === 'IN_TRANSIT' && !isEditing && (
            <div className="hidden md:block fixed bottom-8 right-8 z-50">
                 <Button size="lg" className="shadow-xl" onClick={handleConfirmDelivery} disabled={confirming}>
                      <CheckCircle2 className="h-5 w-5 mr-2" />

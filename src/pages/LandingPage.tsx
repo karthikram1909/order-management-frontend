@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { adminLogin, isClientLoggedIn } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
+import Snowfall from "react-snowfall";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -94,6 +95,13 @@ export default function LandingPage() {
       
       {/* Background Decor */}
       <div className="absolute inset-0 bg-[url('/background.png')] bg-cover bg-center opacity-20 mix-blend-overlay pointer-events-none"></div>
+      
+      <Snowfall 
+        color="white" 
+        style={{ position: 'fixed', width: '100vw', height: '100vh', zIndex: 1 }} 
+        snowflakeCount={150}
+        radius={[0.5, 2.5]}
+      />
 
       {/* Header Section */}
       <div className="mb-8 text-center space-y-4 relative z-10 text-white">
