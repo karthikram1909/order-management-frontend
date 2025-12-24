@@ -1,0 +1,20 @@
+[36mvite v5.4.19 [32mbuilding for production...[36m[39m
+transforming...
+Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✓[39m 1799 modules transformed.
+[1m[33m[plugin:vite:reporter][39m[22m [33m[plugin vite:reporter] 
+(!) D:/salem internship/project4/frontend/src/lib/api.ts is dynamically imported by D:/salem internship/project4/frontend/src/pages/LandingPage.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminOrderDetail.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminOrderDetail.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminOrderDetail.tsx, D:/salem internship/project4/frontend/src/pages/client/ClientIdentify.tsx but also statically imported by D:/salem internship/project4/frontend/src/pages/LandingPage.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminDashboard.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminLogin.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminOrderDetail.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminPayments.tsx, D:/salem internship/project4/frontend/src/pages/admin/AdminPricing.tsx, D:/salem internship/project4/frontend/src/pages/client/ClientIdentify.tsx, D:/salem internship/project4/frontend/src/pages/client/ClientLogin.tsx, D:/salem internship/project4/frontend/src/pages/client/OrderStatus.tsx, D:/salem internship/project4/frontend/src/pages/client/tabs/CatalogView.tsx, D:/salem internship/project4/frontend/src/pages/client/tabs/OrdersView.tsx, dynamic import will not move module into another chunk.
+[39m
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  1.01 kB[22m[1m[22m[2m │ gzip:   0.45 kB[22m
+[2mdist/[22m[35massets/index-B8IujWaz.css  [39m[1m[2m 74.26 kB[22m[1m[22m[2m │ gzip:  12.82 kB[22m
+[2mdist/[22m[36massets/index-C61Fw5Y9.js   [39m[1m[33m511.52 kB[39m[22m[2m │ gzip: 157.89 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 15.07s[39m
