@@ -240,7 +240,7 @@ export default function AdminOrderDetail() {
                 <CardTitle className="text-base">Order Progress</CardTitle>
               </CardHeader>
               <CardContent>
-                <TimelineStepper steps={timelineSteps} />
+                <TimelineStepper steps={timelineSteps} orientation="horizontal" />
               </CardContent>
             </Card>
 

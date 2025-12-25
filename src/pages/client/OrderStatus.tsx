@@ -213,7 +213,7 @@ export default function OrderStatus() {
                     <CardTitle className="text-base">Order Progress</CardTitle>
                   </CardHeader>
                   <CardContent>
-                     <TimelineStepper steps={steps} orientation="vertical" />
+                     <TimelineStepper steps={steps} orientation="horizontal" />
                      <div className="mt-6 p-4 bg-muted/50 rounded-lg text-center">
                         <p className="font-medium text-foreground">
                             {order.orderStatus.replace(/_/g, " ")}
