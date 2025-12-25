@@ -155,7 +155,7 @@ export default function OrderStatus() {
       <MobileHeader
         title={`Order #${order._id.slice(-6)}`}
         showBack
-        onBack={() => navigate("/client/history")} 
+        onBack={() => navigate("/client/catalog")} 
         rightElement={<StatusBadge status={(statusConfig?.variant as any) || 'neutral'} className="text-xs">{order.orderStatus.replace(/_/g, ' ')}</StatusBadge>}
       />
 
@@ -163,7 +163,7 @@ export default function OrderStatus() {
           {/* Desktop Header */}
           <div className="hidden md:flex items-center justify-between mb-6">
              <div className="flex items-center gap-4">
-                 <Button variant="ghost" size="sm" onClick={() => navigate("/client/orders")}>
+                 <Button variant="ghost" size="sm" onClick={() => navigate("/client/catalog")}>
                      <ArrowLeft className="h-4 w-4 mr-2"/> Back
                  </Button>
                  <div>
