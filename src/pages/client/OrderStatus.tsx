@@ -209,24 +209,24 @@ export default function OrderStatus() {
                 
                 {/* Timeline */}
                 <Card className="border-border/60 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-base">Order Progress</CardTitle>
+                  <CardHeader className="py-3 px-4">
+                    <CardTitle className="text-sm font-medium">Order Progress</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                     <TimelineStepper steps={steps} orientation="horizontal" />
-                     <div className="mt-6 p-4 bg-muted/50 rounded-lg text-center">
-                        <p className="font-medium text-foreground">
+                  <CardContent className="px-4 pb-4">
+                     <TimelineStepper steps={steps} orientation="horizontal" className="mb-4" />
+                     <div className="p-3 bg-muted/50 rounded-lg text-center">
+                        <p className="font-medium text-sm text-foreground">
                             {order.orderStatus.replace(/_/g, " ")}
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                            {isEditing ? "Modify quantities below and submit for re-evaluation." : (
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                            {isEditing ? "Modify quantities below." : (
                                 <>
-                                    {order.orderStatus === 'NEW_INQUIRY' && "We have received your request and are calculating the best prices."}
-                                    {order.orderStatus === 'PENDING_PRICING' && "Our team is reviewing stock and pricing."}
-                                    {order.orderStatus === 'WAITING_CLIENT_APPROVAL' && "Pricing is ready. Please review the quote to proceed."}
-                                    {order.orderStatus === 'ORDER_CONFIRMED' && "Thank you! Your order is being prepared for dispatch."}
-                                    {order.orderStatus === 'IN_TRANSIT' && "Your order is on the way."}
-                                    {order.orderStatus === 'DELIVERED' && "Order delivered successfully."}
+                                    {order.orderStatus === 'NEW_INQUIRY' && "Calculating best prices."}
+                                    {order.orderStatus === 'PENDING_PRICING' && "Reviewing stock and pricing."}
+                                    {order.orderStatus === 'WAITING_CLIENT_APPROVAL' && "Review quote to proceed."}
+                                    {order.orderStatus === 'ORDER_CONFIRMED' && "Being prepared."}
+                                    {order.orderStatus === 'IN_TRANSIT' && "On the way."}
+                                    {order.orderStatus === 'DELIVERED' && "Delivered."}
                                 </>
                             )}
                         </p>
@@ -236,8 +236,8 @@ export default function OrderStatus() {
 
                 {/* Items */}
                 <Card className="border-border/60 shadow-sm">
-                  <CardHeader>
-                     <CardTitle className="text-base flex justify-between items-center">
+                  <CardHeader className="py-3 px-4">
+                     <CardTitle className="text-sm flex justify-between items-center">
                          <span>Order Items</span>
                          {isEditing && <span className="text-xs font-normal text-muted-foreground bg-yellow-100 dark:bg-yellow-900/30 px-2 py-1 rounded text-yellow-700 dark:text-yellow-400">Editing Mode</span>}
                      </CardTitle>
@@ -255,9 +255,9 @@ export default function OrderStatus() {
                              const hasPrice = item.unitPrice > 0;
 
                              return (
-                                 <div key={item.itemId} className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors">
+                                 <div key={item.itemId} className="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors">
                                      <div className="flex-1">
-                                         <p className="font-medium text-foreground">{productDetails.itemName || productDetails.name}</p>
+                                         <p className="font-medium text-sm text-foreground">{productDetails.itemName || productDetails.name}</p>
                                          <div className="flex items-center gap-2 mt-1">
                                             {isEditing ? (
                                                 <div className="flex items-center gap-2">
@@ -298,7 +298,7 @@ export default function OrderStatus() {
                          
                          {/* Add New Item Section */}
                          {isEditing && (
-                             <div className="p-4 bg-muted/20">
+                             <div className="p-3 bg-muted/20">
                                  <label className="text-xs font-medium text-muted-foreground mb-2 block">Add New Item</label>
                                  <div className="flex gap-2">
                                      <select 
@@ -324,7 +324,7 @@ export default function OrderStatus() {
                      
                      {/* Totals */}
                      {order.totalOrderValue > 0 && !isEditing && (
-                         <div className="p-4 bg-muted/30 border-t border-border/60">
+                         <div className="p-3 bg-muted/30 border-t border-border/60">
                              <div className="flex justify-between items-center">
                                  <span className="font-medium">Total Estimate</span>
                                  <span className="text-xl font-bold">${order.totalOrderValue.toLocaleString()}</span>
@@ -337,11 +337,11 @@ export default function OrderStatus() {
 
              <div className="space-y-6">
                 <Card className="border-border/60 shadow-sm">
-                   <CardHeader>
-                      <CardTitle className="text-base">Need Help?</CardTitle>
+                   <CardHeader className="py-3 px-4">
+                      <CardTitle className="text-sm">Need Help?</CardTitle>
                    </CardHeader>
-                   <CardContent className="space-y-4">
-                       <p className="text-sm text-muted-foreground">For any questions regarding this order, please contact our support.</p>
+                   <CardContent className="space-y-3 p-4">
+                       <p className="text-xs text-muted-foreground">Questions regarding this order?</p>
                        <div className="flex gap-2">
                            <Button variant="outline" className="flex-1 w-full gap-2" size="sm">
                                <Phone className="h-4 w-4"/> Call
