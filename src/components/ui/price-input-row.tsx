@@ -42,7 +42,7 @@ export function PriceInputRow({
           </span>
           <Input
             type="number"
-            value={price}
+            value={price === 0 ? "" : price}
             onChange={(e) => onPriceChange(parseFloat(e.target.value) || 0)}
             className="pl-7 text-right"
             disabled={disabled}
