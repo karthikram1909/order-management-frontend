@@ -9,6 +9,7 @@ import {
   Users,
   Bell,
   LogOut,
+  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Products", href: "/admin/products", icon: Layers },
   { label: "Orders", href: "/admin/orders", icon: Package },
   { label: "Pricing", href: "/admin/pricing", icon: DollarSign },
   { label: "Invoices", href: "/admin/invoices", icon: FileText },

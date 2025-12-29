@@ -60,7 +60,7 @@ export function OrderCard({
           <div className="flex flex-col items-end gap-2">
             {total !== undefined && (
               <span className="text-sm font-semibold text-foreground">
-                ${total.toLocaleString()}
+                ₹{total.toLocaleString()}
               </span>
             )}
             <ChevronRight className="h-5 w-5 text-muted-foreground" />

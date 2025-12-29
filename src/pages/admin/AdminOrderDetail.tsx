@@ -212,11 +212,11 @@ export default function AdminOrderDetail() {
                           {item.itemId.itemName}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {item.quantity} {item.itemId.unit} @ ${item.unitPrice?.toLocaleString() || "—"}/{item.itemId.unit}
+                          {item.quantity} {item.itemId.unit} @ ₹{item.unitPrice?.toLocaleString() || "—"}/{item.itemId.unit}
                         </p>
                       </div>
                       <p className="text-sm font-semibold text-foreground">
-                        $
+                        ₹
                         {item.unitPrice
                           ? (item.quantity * item.unitPrice).toLocaleString()
                           : "—"}
@@ -228,7 +228,7 @@ export default function AdminOrderDetail() {
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold text-foreground">Total</p>
                   <p className="text-xl font-semibold text-foreground">
-                    ${order.totalOrderValue?.toLocaleString() || "—"}
+                    ₹{order.totalOrderValue?.toLocaleString() || "—"}
                   </p>
                 </div>
               </CardContent>
@@ -349,9 +349,19 @@ export default function AdminOrderDetail() {
               {(order.orderStatus === 'ORDER_CONFIRMED' || order.orderStatus === 'PAYMENT_CLEARED') && (
                 <Card className="border-border/60 shadow-card bg-accent/20">
                     <CardContent className="pt-6">
-                        <Button className="w-full gap-2" onClick={handleDispatch} disabled={processing}>
+                        <Button 
+                            className="w-full gap-2" 
+                            onClick={handleDispatch} 
+                            disabled={processing || order.paymentStatus !== 'PAID'}
+                            title={order.paymentStatus !== 'PAID' ? "Payment required before dispatch" : "Dispatch Order"}
+                        >
                             <Truck className="h-4 w-4"/> Dispatch Order
                         </Button>
+                        {order.paymentStatus !== 'PAID' && (
+                            <p className="text-center text-xs text-muted-foreground mt-2 text-destructive">
+                                * Payment required to dispatch
+                            </p>
+                        )}
                     </CardContent>
                 </Card>
               )}

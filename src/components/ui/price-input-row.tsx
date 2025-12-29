@@ -38,7 +38,7 @@ export function PriceInputRow({
       <div className="col-span-3">
         <div className="relative">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-            $
+            ₹
           </span>
           <Input
             type="number"
@@ -59,7 +59,7 @@ export function PriceInputRow({
       </div>
       <div className="col-span-3 text-right">
         <p className="text-sm font-semibold text-foreground">
-          ${lineTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+          ₹{lineTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
         </p>
         <p className="text-xs text-muted-foreground">Line total</p>
       </div>

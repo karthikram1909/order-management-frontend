@@ -19,6 +19,7 @@ import AdminPricing from "./pages/admin/AdminPricing";
 import AdminOrderDetail from "./pages/admin/AdminOrderDetail";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminPayments from "./pages/admin/AdminPayments";
+import AdminProducts from "./pages/admin/AdminProducts";
 
 import LandingPage from "./pages/LandingPage";
 
@@ -50,6 +51,7 @@ const App = () => (
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/orders" element={<AdminDashboard />} />
           <Route path="/admin/pricing" element={<AdminDashboard />} />
           <Route path="/admin/invoices" element={<AdminDashboard />} />

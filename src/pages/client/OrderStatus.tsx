@@ -281,8 +281,8 @@ export default function OrderStatus() {
                                      <div className="text-right">
                                          {hasPrice ? (
                                              <>
-                                                 <p className="font-medium">${(item.quantity * item.unitPrice).toLocaleString()}</p>
-                                                 <p className="text-xs text-muted-foreground">${item.unitPrice}/{productDetails.unit}</p>
+                                                 <p className="font-medium">₹{(item.quantity * item.unitPrice).toLocaleString()}</p>
+                                                 <p className="text-xs text-muted-foreground">₹{item.unitPrice}/{productDetails.unit}</p>
                                                  {isEditing && <p className="text-[10px] text-yellow-600 dark:text-yellow-400">Review pending</p>}
                                              </>
                                          ) : (
@@ -327,7 +327,7 @@ export default function OrderStatus() {
                          <div className="p-3 bg-muted/30 border-t border-border/60">
                              <div className="flex justify-between items-center">
                                  <span className="font-medium">Total Estimate</span>
-                                 <span className="text-xl font-bold">${order.totalOrderValue.toLocaleString()}</span>
+                                 <span className="text-xl font-bold">₹{order.totalOrderValue.toLocaleString()}</span>
                              </div>
                          </div>
                      )}

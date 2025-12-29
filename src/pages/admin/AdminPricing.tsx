@@ -180,7 +180,7 @@ export default function AdminPricing() {
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
                   <span className="font-medium">
-                    ${calculateTotal().toLocaleString(undefined, {
+                    ₹{calculateTotal().toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                     })}
                   </span>
@@ -191,7 +191,7 @@ export default function AdminPricing() {
                     Total
                   </span>
                   <span className="text-xl font-semibold text-foreground">
-                     ${calculateTotal().toLocaleString(undefined, {
+                     ₹{calculateTotal().toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                     })}
                   </span>
@@ -223,7 +223,7 @@ export default function AdminPricing() {
         onOpenChange={setShowSendQuoteModal}
         type="success"
         title="Send Quote to Client?"
-        description={`A quote for $${calculateTotal().toLocaleString(undefined, {
+        description={`A quote for ₹${calculateTotal().toLocaleString(undefined, {
           minimumFractionDigits: 2,
         })} will be sent.`}
         confirmLabel="Send Quote"

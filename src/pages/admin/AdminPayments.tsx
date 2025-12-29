@@ -69,7 +69,7 @@ export default function AdminPayments() {
                     <CheckCircle className="h-4 w-4 text-green-500" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${totalRevenue.toLocaleString()}</div>
+                    <div className="text-2xl font-bold">₹{totalRevenue.toLocaleString()}</div>
                     <p className="text-xs text-muted-foreground">From {orders.filter(o => o.paymentStatus === 'PAID').length} paid orders</p>
                 </CardContent>
             </Card>
@@ -79,7 +79,7 @@ export default function AdminPayments() {
                     <AlertTriangle className="h-4 w-4 text-orange-500" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${pendingRevenue.toLocaleString()}</div>
+                    <div className="text-2xl font-bold">₹{pendingRevenue.toLocaleString()}</div>
                     <p className="text-xs text-muted-foreground">Outstanding invoices</p>
                 </CardContent>
             </Card>
@@ -120,7 +120,7 @@ export default function AdminPayments() {
                                 </div>
                                 <div className="flex items-center gap-6">
                                     <div className="text-right">
-                                        <p className="font-medium">${(order.totalOrderValue || 0).toLocaleString()}</p>
+                                        <p className="font-medium">₹{(order.totalOrderValue || 0).toLocaleString()}</p>
                                         <p className="text-xs text-muted-foreground">
                                             Due: {order.creditDueDate ? new Date(order.creditDueDate).toLocaleDateString() : '—'}
                                         </p>

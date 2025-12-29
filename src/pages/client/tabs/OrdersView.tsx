@@ -142,7 +142,7 @@ export default function OrdersView() {
                                      <span className="font-medium">{item.itemId?.itemName || "Item"}</span>
                                      <div className="flex items-center gap-4">
                                          <span className="text-muted-foreground">Qty: {item.quantity}</span>
-                                         {item.unitPrice && <span className="font-semibold">${(item.quantity * item.unitPrice).toLocaleString()}</span>}
+                                         {item.unitPrice && <span className="font-semibold">₹{(item.quantity * item.unitPrice).toLocaleString()}</span>}
                                      </div>
                                  </div>
                              ))}
@@ -151,7 +151,7 @@ export default function OrdersView() {
                          {order.totalOrderValue > 0 && typeof order.totalOrderValue === 'number' && (
                             <div className="bg-blue-50/50 p-3 flex justify-between items-center border-t border-blue-100">
                                 <span className="text-sm font-medium text-blue-900">Total Order Value</span>
-                                <span className="text-lg font-bold text-blue-700">${order.totalOrderValue.toLocaleString()}</span>
+                                <span className="text-lg font-bold text-blue-700">₹{order.totalOrderValue.toLocaleString()}</span>
                             </div>
                          )}
                     </CardContent>
