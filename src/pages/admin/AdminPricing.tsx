@@ -8,7 +8,7 @@ import { ConfirmationModal } from "@/components/ui/confirmation-modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { api, setPricing, getOrder } from "@/lib/api";
+import { setPricing, getOrder } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function AdminPricing() {
@@ -22,6 +22,11 @@ export default function AdminPricing() {
 
   const [prices, setPrices] = useState<Record<string, number>>({});
 
+  const getItemId = (item: any, index: number) => {
+      // Use the item._id if available for database consistency, or fallback to index
+      return item._id || `item-${index}`;
+  };
+
   useEffect(() => {
     const fetchOrder = async () => {
         try {
@@ -31,8 +36,9 @@ export default function AdminPricing() {
             
             // Initialize prices
             const initial: Record<string, number> = {};
-            data.items.forEach((item: any) => {
-                initial[item.itemId._id || item.itemId] = item.unitPrice || 0;
+            data.items.forEach((item: any, index: number) => {
+                const pid = getItemId(item, index);
+                initial[pid] = item.unitPrice || 0;
             });
             setPrices(initial);
         } catch (error) {
@@ -51,19 +57,24 @@ export default function AdminPricing() {
 
   const calculateTotal = () => {
     if (!order) return 0;
-    return order.items.reduce((sum: number, item: any) => {
-      const pid = item.itemId._id || item.itemId;  
-      return sum + item.quantity * (prices[pid] || 0);
+    return order.items.reduce((sum: number, item: any, index: number) => {
+      const pid = getItemId(item, index);
+      return sum + (item.quantity || 0) * (prices[pid] || 0);
     }, 0);
   };
 
   const handleSendQuote = async () => {
     setIsSending(true);
     try {
-        const items = Object.entries(prices).map(([itemId, unitPrice]) => ({
-            itemId,
-            unitPrice
-        }));
+        const items = order.items.map((item: any, index: number) => {
+            const pid = getItemId(item, index);
+            return {
+                itemId: item.itemId?._id || item.itemId || item.productId,
+                unitPrice: prices[pid] || 0,
+                // Preserve item ID if we're updating existing ones
+                _id: item._id
+            };
+        });
         await setPricing(orderId!, items);
         toast({ title: "Quote Sent", description: "Order status updated." });
         setShowSendQuoteModal(false);
@@ -78,8 +89,11 @@ export default function AdminPricing() {
   if (loading) return <div className="flex h-screen items-center justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>;
   if (!order) return <div className="p-8">Order not found</div>;
 
-  const allPricesFilled = order.items.every(
-    (item: any) => (prices[item.itemId._id || item.itemId] || 0) > 0
+  const allPricesFilled = order.items.length > 0 && order.items.every(
+    (item: any, index: number) => {
+        const pid = getItemId(item, index);
+        return (prices[pid] || 0) > 0;
+    }
   );
 
   return (
@@ -126,14 +140,14 @@ export default function AdminPricing() {
                 <CardTitle className="text-base">Order Items</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {order.items.map((item: any) => {
-                   const pid = item.itemId._id || item.itemId; 
+                {order.items.map((item: any, index: number) => {
+                   const pid = getItemId(item, index);
                    return (
                   <PriceInputRow
                     key={pid}
-                    productName={item.itemId.itemName || "Unknown Item"}
+                    productName={item.itemName || item.itemId?.itemName || item.itemId?.name || "Product"}
                     quantity={item.quantity}
-                    unit={item.itemId.unit || "unit"}
+                    unit={item.unit || item.itemId?.unit || "unit"}
                     price={prices[pid] || 0}
                     onPriceChange={(price) =>
                       handlePriceChange(pid, price)

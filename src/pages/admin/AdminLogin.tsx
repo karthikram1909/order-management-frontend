@@ -24,7 +24,7 @@ export default function AdminLogin() {
     } catch (error: any) {
       toast({
         title: "Login Failed",
-        description: error.response?.data?.message || "Invalid credentials",
+        description: error.message || error.response?.data?.message || "Invalid credentials",
         variant: "destructive",
       });
     } finally {
@@ -34,9 +34,15 @@ export default function AdminLogin() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-center">Admin Login</CardTitle>
+      <Card className="w-full max-w-md shadow-2xl border-0 bg-white/95 backdrop-blur">
+        <CardHeader className="space-y-4 flex flex-col items-center">
+          <div className="w-20 h-20 rounded-xl bg-white p-1 border border-slate-100 shadow-lg overflow-hidden flex items-center justify-center">
+            <img src="/ram-aromatics-logo.jpg" alt="Logo" className="w-full h-full object-contain" />
+          </div>
+          <div className="text-center">
+            <CardTitle className="text-2xl font-black tracking-tighter text-slate-900">RAM AROMATICS</CardTitle>
+            <p className="text-xs font-bold uppercase tracking-widest text-blue-600 mt-1">Admin Dashboard Login</p>
+          </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">

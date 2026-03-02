@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getStatusConfig } from "@/data/mockData";
-import { api, getOrder, setPricing } from "@/lib/api"; // Added API imports
+import { getOrder, setPricing, updatePaymentStatus, dispatchOrder, adminDeliverOrder } from "@/lib/api"; 
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
@@ -58,7 +58,7 @@ export default function AdminOrderDetail() {
       setProcessing(true);
       try {
           // Simplification: Mark PAID immediately. Ideally a modal.
-          await api.put(`/admin/order/${orderId}/payment`, { status: 'PAID' });
+          await updatePaymentStatus(orderId!, 'PAID');
           toast({ title: "Payment Recorded", description: "Order marked as PAID." });
           fetchOrder();
       } catch (e) {
@@ -71,7 +71,7 @@ export default function AdminOrderDetail() {
   const handleDispatch = async () => {
       setProcessing(true);
       try {
-          await api.post(`/admin/order/${orderId}/dispatch`);
+          await dispatchOrder(orderId!);
           toast({ title: "Dispatched", description: "Order marked as In Transit." });
           fetchOrder();
       } catch (e) {
@@ -209,10 +209,10 @@ export default function AdminOrderDetail() {
                     >
                       <div>
                         <p className="text-sm font-medium text-foreground">
-                          {item.itemId.itemName}
+                          {item.itemName || item.itemId?.itemName || "Unknown Item"}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {item.quantity} {item.itemId.unit} @ ₹{item.unitPrice?.toLocaleString() || "—"}/{item.itemId.unit}
+                          {item.quantity} {item.unit || item.itemId?.unit || "unit"} @ ₹{item.unitPrice?.toLocaleString() || "—"}/{item.unit || item.itemId?.unit || "unit"}
                         </p>
                       </div>
                       <p className="text-sm font-semibold text-foreground">
@@ -373,7 +373,7 @@ export default function AdminOrderDetail() {
                         <Button className="w-full gap-2" onClick={async () => {
                             setProcessing(true);
                             try {
-                                await import("@/lib/api").then(m => m.adminDeliverOrder(orderId!));
+                                await adminDeliverOrder(orderId!);
                                 toast({ title: "Delivered", description: "Order marked as Delivered." });
                                 fetchOrder();
                             } catch (e) {

@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { TimelineStepper } from "@/components/ui/timeline-stepper";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { api, getOrder, confirmOrder, confirmDelivery, modifyOrder } from "@/lib/api";
+import { getOrder, confirmOrder, confirmDelivery, modifyOrder } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { getStatusConfig } from "@/data/mockData";
@@ -48,10 +48,13 @@ export default function OrderStatus() {
         const data = await getOrder(orderId!);
         setOrder(data);
         // Initialize edited items with current quantities
-        setEditedItems(data.items.map((i: any) => ({
-            itemId: i.itemId._id,
+        setEditedItems(data.items.map((i: any, idx: number) => ({
+            lineId: i._id || `item-${idx}-${Date.now()}`,
+            itemId: i.itemId?._id || i.itemId,
             quantity: i.quantity,
-            unitPrice: i.unitPrice
+            unitPrice: i.unitPrice,
+            itemName: i.itemName || i.itemId?.itemName || i.itemId?.name,
+            unit: i.unit || i.itemId?.unit
         })));
     } catch (e) {
         console.error(e);
@@ -87,9 +90,9 @@ export default function OrderStatus() {
       }
   };
 
-  const handleQuantityChange = (itemId: string, newQty: number) => {
+  const handleQuantityChange = (lineId: string, newQty: number) => {
       setEditedItems(prev => prev.map(item => 
-          item.itemId === itemId ? { ...item, quantity: Math.max(0, newQty) } : item
+          item.lineId === lineId ? { ...item, quantity: Math.max(0, newQty) } : item
       ));
   };
 
@@ -100,26 +103,31 @@ export default function OrderStatus() {
       setEditedItems(prev => [
           ...prev, 
           { 
+              lineId: `new-${Date.now()}`,
               itemId: product._id, 
               quantity: 1, 
-              unitPrice: 0 // New items have unknown price
+              unitPrice: 0,
+              itemName: product.itemName || product.name,
+              unit: product.unit
           }
       ]);
   };
 
-  const handleRemoveItem = (itemId: string) => {
-      setEditedItems(prev => prev.filter(item => item.itemId !== itemId));
+  const handleRemoveItem = (lineId: string) => {
+      setEditedItems(prev => prev.filter(item => item.lineId !== lineId));
   };
 
   const handleSaveChanges = async () => {
       setConfirming(true);
       try {
-          const itemsToSubmit = editedItems.filter(i => i.quantity > 0).map(i => ({
-              itemId: i.itemId,
-              quantity: i.quantity
-              // Backend might preserve unitPrice or reset it. 
-              // Usually client modification resets status so price needs re-evaluation or confirmation.
-          }));
+          const itemsToSubmit = editedItems.filter(i => i.quantity > 0).map(i => {
+              return {
+                  itemId: i.itemId,
+                  quantity: i.quantity,
+                  itemName: i.itemName || "Unknown",
+                  unit: i.unit || "kg"
+              };
+          });
           
           await modifyOrder(order._id, itemsToSubmit);
           toast({ title: "Quote Updated", description: "Sent to admin for review." });
@@ -245,19 +253,15 @@ export default function OrderStatus() {
                   <CardContent className="p-0">
                      <div className="divide-y divide-border/60">
                          {/* Existing Items */}
-                         {editedItems.length > 0 ? editedItems.map((item: any, index: number) => {
-                             // Find item details either from original order or products list
-                             const productDetails = order.items.find((i: any) => i.itemId._id === item.itemId)?.itemId 
-                                                    || products.find(p => p._id === item.itemId);
-                             
-                             if (!productDetails) return null;
-
+                         {editedItems.length > 0 ? editedItems.map((item: any) => {
                              const hasPrice = item.unitPrice > 0;
 
                              return (
-                                 <div key={item.itemId} className="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors">
+                                 <div key={item.lineId} className="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors">
                                      <div className="flex-1">
-                                         <p className="font-medium text-sm text-foreground">{productDetails.itemName || productDetails.name}</p>
+                                         <p className="font-medium text-sm text-foreground">
+                                             {item.itemName || "Unknown Item"}
+                                         </p>
                                          <div className="flex items-center gap-2 mt-1">
                                             {isEditing ? (
                                                 <div className="flex items-center gap-2">
@@ -265,16 +269,16 @@ export default function OrderStatus() {
                                                         type="number" 
                                                         className="h-8 w-20 text-center" 
                                                         value={item.quantity.toString()}
-                                                        onChange={(e) => handleQuantityChange(item.itemId, parseInt(e.target.value) || 0)}
+                                                        onChange={(e) => handleQuantityChange(item.lineId, parseInt(e.target.value) || 0)}
                                                         min="0"
                                                     />
-                                                    <span className="text-sm text-muted-foreground">{productDetails.unit}</span>
-                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500" onClick={() => handleRemoveItem(item.itemId)}>
+                                                    <span className="text-sm text-muted-foreground">{item.unit || "unit"}</span>
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500" onClick={() => handleRemoveItem(item.lineId)}>
                                                         <X className="h-4 w-4" />
                                                     </Button>
                                                 </div>
                                             ) : (
-                                                <p className="text-sm text-muted-foreground">{item.quantity} {productDetails.unit}</p>
+                                                <p className="text-sm text-muted-foreground">{item.quantity} {item.unit || "unit"}</p>
                                             )}
                                          </div>
                                      </div>
@@ -282,7 +286,7 @@ export default function OrderStatus() {
                                          {hasPrice ? (
                                              <>
                                                  <p className="font-medium">₹{(item.quantity * item.unitPrice).toLocaleString()}</p>
-                                                 <p className="text-xs text-muted-foreground">₹{item.unitPrice}/{productDetails.unit}</p>
+                                                 <p className="text-xs text-muted-foreground">₹{item.unitPrice}/{item.unit || "unit"}</p>
                                                  {isEditing && <p className="text-[10px] text-yellow-600 dark:text-yellow-400">Review pending</p>}
                                              </>
                                          ) : (
@@ -311,7 +315,7 @@ export default function OrderStatus() {
                                          }}
                                      >
                                          <option value="">Select a product...</option>
-                                         {products.filter(p => !editedItems.find(i => i.itemId === p._id)).map(product => (
+                                         {products.map(product => (
                                              <option key={product._id} value={product._id}>
                                                  {product.itemName} ({product.unit})
                                              </option>

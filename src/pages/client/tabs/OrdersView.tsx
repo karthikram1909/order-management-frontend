@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, Package } from "lucide-react";
-import { getClientHistory, api } from "@/lib/api"; // Import api directly for custom call if needed
+import { getClientHistory } from "@/lib/api"; 
 
 export default function OrdersView() {
   const navigate = useNavigate();
@@ -47,21 +47,6 @@ export default function OrdersView() {
             // DO NOT filter by mobile here because backend response typically does NOT 
             // populate clientId, so order.clientId.mobileNumber is undefined.
             // Strict filtering on server data was hiding valid orders.
-            
-            // 2. Fallback if empty
-            if ((!data || data.length === 0) && clientInfo?.mobileNumber) {
-                try {
-                     console.log("DEBUG: Attempting Fallback Fetch");
-                     // Note: This endpoint likely relies on token anyway, so query param might be ignored
-                     // but we keep it as a backup attempt.
-                     const fallbackResponse = await api.get(`/client/orders?mobileNumber=${clientInfo.mobileNumber}`);
-                     if (fallbackResponse.data && fallbackResponse.data.length > 0) {
-                         data = fallbackResponse.data;
-                     }
-                } catch (e) {
-                    // Ignore
-                }
-            }
             
             // MERGING LOCAL HISTORY: RE-ENABLED with Strict Filtering
             // We now filter local history just like server data to ensure privacy.
@@ -139,9 +124,9 @@ export default function OrdersView() {
                              <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">Items</p>
                              {order.items?.map((item: any, idx: number) => (
                                  <div key={idx} className="flex justify-between items-center py-2 border-b last:border-0 border-border/40 text-sm">
-                                     <span className="font-medium">{item.itemId?.itemName || "Item"}</span>
+                                     <span className="font-medium">{item.itemName || item.itemId?.itemName || "Item"}</span>
                                      <div className="flex items-center gap-4">
-                                         <span className="text-muted-foreground">Qty: {item.quantity}</span>
+                                         <span className="text-muted-foreground">{item.quantity} {item.unit || item.itemId?.unit || ""}</span>
                                          {item.unitPrice && <span className="font-semibold">₹{(item.quantity * item.unitPrice).toLocaleString()}</span>}
                                      </div>
                                  </div>

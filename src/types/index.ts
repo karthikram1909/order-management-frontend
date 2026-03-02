@@ -4,6 +4,8 @@ export interface Product {
     description: string;
     unit: string;
     isActive: boolean;
+    imageUrl?: string;
+    category?: string;
 }
 
 export interface Client {

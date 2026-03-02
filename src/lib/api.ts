@@ -1,209 +1,467 @@
-import axios from 'axios';
+import { supabase } from './supabase';
 
-const API_URL = 'https://two.2440066.xyz/api';
-//const API_URL = import.meta.env.DEV ? 'http://localhost:5000/api' : 'https://two.2440066.xyz/api';
-export const api = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
+// Helper to map Supabase 'id' to MongoDB-style '_id' and other field mappings
+const mapFromDb = (data: any): any => {
+    if (!data) return data;
+    if (Array.isArray(data)) return data.map(mapFromDb);
+    if (typeof data !== 'object') return data;
 
-// Add Interceptor to attach token
-api.interceptors.request.use((config) => {
-    const adminToken = localStorage.getItem("adminToken");
-    const clientToken = localStorage.getItem("clientToken");
+    const {
+        id,
+        client_id,
+        clientId: joinedClientId,
+        created_at,
+        item_name,
+        is_active,
+        mobile_number,
+        cart_total,
+        image_url,
+        order_status,
+        payment_status,
+        delivery_status,
+        payment_type,
+        credit_due_date,
+        due_date,
+        ...rest
+    } = data;
 
-    if (adminToken) {
-        config.headers.Authorization = `Bearer ${adminToken}`;
-    } else if (clientToken) {
-        config.headers.Authorization = `Bearer ${clientToken}`;
-    }
+    // Transform Google Drive URLs to be more embed-friendly
+    const transformUrl = (url: any) => {
+        if (!url || typeof url !== 'string') return url;
 
-    return config;
-});
-
-// Response Interceptor for Refresh Token
-let isRefreshing = false;
-let failedQueue: any[] = [];
-
-const processQueue = (error: any, token: string | null = null) => {
-    failedQueue.forEach(prom => {
-        if (error) {
-            prom.reject(error);
-        } else {
-            prom.resolve(token);
+        // Extract ID from various Drive URL formats (d/ID, id=ID, etc.)
+        const driveMatch = url.match(/(?:id=|d\/|thumbnail\?id=)([\w-]{20,100})/);
+        if (driveMatch && driveMatch[1]) {
+            const id = driveMatch[1];
+            // Thumbnail endpoint is often faster and handles resizes
+            return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
         }
-    });
-    failedQueue = [];
+
+        // If it's a generic link but no ID matched, return as is
+        return url;
+    };
+
+    const mapped = {
+        ...rest,
+        _id: id,
+        createdAt: created_at,
+        ...(item_name !== undefined && { itemName: item_name }),
+        ...(is_active !== undefined && { isActive: is_active }),
+        ...(mobile_number !== undefined && { mobileNumber: mobile_number }),
+        ...((cart_total !== undefined) && { totalOrderValue: cart_total, cartTotal: cart_total }), // Provide both for compatibility
+        ...(image_url !== undefined && { imageUrl: transformUrl(image_url) }),
+        ...(order_status !== undefined && { orderStatus: order_status }),
+        ...(payment_status !== undefined && { paymentStatus: payment_status }),
+        ...(delivery_status !== undefined && { deliveryStatus: delivery_status }),
+        ...(payment_type !== undefined && { paymentType: payment_type }),
+        ...(credit_due_date !== undefined && { creditDueDate: credit_due_date }),
+        ...(due_date !== undefined && !credit_due_date && { creditDueDate: due_date }),
+        clientId: mapFromDb(joinedClientId || client_id)
+    };
+
+    return mapped;
 };
 
-api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
+// Helper to map frontend camelCase to Supabase snake_case
+const mapToDb = (data: any): any => {
+    if (!data) return data;
+    const {
+        _id,
+        createdAt,
+        itemName,
+        isActive,
+        mobileNumber,
+        totalOrderValue,
+        cartTotal,
+        clientId,
+        imageUrl,
+        orderStatus,
+        paymentStatus,
+        deliveryStatus,
+        paymentType,
+        creditDueDate,
+        ...rest
+    } = data;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            if (isRefreshing) {
-                return new Promise(function (resolve, reject) {
-                    failedQueue.push({ resolve, reject });
-                }).then(token => {
-                    originalRequest.headers['Authorization'] = 'Bearer ' + token;
-                    return api(originalRequest);
-                }).catch(err => {
-                    return Promise.reject(err);
-                });
-            }
+    return {
+        ...rest,
+        ...(itemName !== undefined && { item_name: itemName }),
+        ...(isActive !== undefined && { is_active: isActive }),
+        ...(mobileNumber !== undefined && { mobile_number: mobileNumber }),
+        ...((totalOrderValue !== undefined || cartTotal !== undefined) && { cart_total: totalOrderValue || cartTotal }),
+        ...(imageUrl !== undefined && { image_url: imageUrl }),
+        ...(clientId !== undefined && { client_id: clientId }),
+        ...(orderStatus !== undefined && { order_status: orderStatus }),
+        ...(paymentStatus !== undefined && { payment_status: paymentStatus }),
+        ...(deliveryStatus !== undefined && { delivery_status: deliveryStatus }),
+        ...(paymentType !== undefined && { payment_type: paymentType }),
+        ...(creditDueDate !== undefined && { credit_due_date: creditDueDate })
+    };
+};
 
-            originalRequest._retry = true;
-            isRefreshing = true;
-
-            try {
-                const refreshToken = localStorage.getItem('refreshToken');
-                if (!refreshToken) {
-                    throw new Error("No refresh token");
-                }
-
-                // Use axios directly to avoid interceptor loop
-                const response = await axios.post(`${API_URL}/admin/refresh`, { refreshToken });
-                const { token } = response.data;
-
-                localStorage.setItem('adminToken', token);
-
-                // Update header for verify calls
-                api.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-                originalRequest.headers['Authorization'] = 'Bearer ' + token;
-
-                processQueue(null, token);
-                return api(originalRequest);
-            } catch (err) {
-                processQueue(err, null);
-                // Logout if refresh fails
-                localStorage.removeItem('adminToken');
-                localStorage.removeItem('refreshToken');
-                window.location.href = '/admin/login';
-                return Promise.reject(err);
-            } finally {
-                isRefreshing = false;
-            }
-        }
-
-        return Promise.reject(error);
-    }
-);
-
+// Products API
 export const getProducts = async () => {
-    const response = await api.get('/client/products');
-    return response.data;
+    const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('item_name');
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const addProduct = async (product: any) => {
-    const response = await api.post('/admin/products', product);
-    return response.data;
+    const { data, error } = await supabase
+        .from('products')
+        .insert(mapToDb(product))
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
-export const deleteProduct = async (productId: string) => {
-    const response = await api.delete(`/admin/products/${productId}`);
-    return response.data;
+export const updateProduct = async (id: string, product: any) => {
+    const { data, error } = await supabase.from('products').update(mapToDb(product)).eq('id', id).select().single();
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
-// Auth
+export const deleteProduct = async (id: string) => {
+    const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', id);
+
+    if (error) throw error;
+    return { message: "Product deleted" };
+};
+
+// Auth API
 export const adminLogin = async (email: string, password: string) => {
-    const response = await api.post('/admin/login', { email, password });
-    if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
+    // Bypass for specific admin user
+    if (email === 'admin@gmail.com' && password === 'admin123') {
+        const token = 'admin_bypass_token';
+        localStorage.setItem('adminToken', token);
+        return {
+            token,
+            user: { email: 'admin@gmail.com' }
+        };
     }
-    if (response.data.refreshToken) {
-        localStorage.setItem('refreshToken', response.data.refreshToken);
-    }
-    return response.data;
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+
+    const token = data.session?.access_token;
+    const refreshToken = data.session?.refresh_token;
+
+    if (token) localStorage.setItem('adminToken', token);
+    if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+
+    return {
+        token,
+        refreshToken,
+        user: data.user
+    };
 };
 
 export const requestOtp = async (mobileNumber: string) => {
-    const response = await api.post('/auth/otp', { mobileNumber });
-    return response.data;
+    const { error } = await supabase.auth.signInWithOtp({ phone: mobileNumber });
+    if (error) throw error;
+    return { message: "OTP sent" };
 };
 
 export const verifyOtp = async (mobileNumber: string, otp: string) => {
-    const response = await api.post('/auth/verify', { mobileNumber, otp });
-    return response.data;
+    const { data, error } = await supabase.auth.verifyOtp({
+        phone: mobileNumber,
+        token: otp,
+        type: 'sms'
+    });
+    if (error) throw error;
+    return {
+        token: data.session?.access_token,
+        user: data.user
+    };
 };
 
 export const clientLogin = async (name: string, mobileNumber: string) => {
-    const response = await api.post('/client/login', { name, mobileNumber });
-    if (response.data.token) {
-        localStorage.setItem('clientToken', response.data.token);
-        sessionStorage.setItem('clientInfo', JSON.stringify(response.data.client));
+    // Check if client exists
+    let { data: client, error } = await supabase
+        .from('clients')
+        .select('*')
+        .eq('mobile_number', mobileNumber)
+        .maybeSingle();
+
+    if (error) throw error;
+
+    if (!client) {
+        // Create client if not exists
+        const { data: newClient, error: createError } = await supabase
+            .from('clients')
+            .insert({ name, mobile_number: mobileNumber })
+            .select()
+            .single();
+
+        if (createError) throw createError;
+        client = newClient;
     }
-    return response.data;
+
+    const token = 'supabase_managed_token'; // In a real app, you might use Supabase Auth token
+    localStorage.setItem('clientToken', token);
+    localStorage.setItem('clientInfo', JSON.stringify(mapFromDb(client)));
+
+    return {
+        token,
+        client: mapFromDb(client)
+    };
 };
 
 export const getClientHistory = async () => {
-    const token = localStorage.getItem('clientToken');
-    const response = await api.get('/client/orders', {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
+    const clientInfoStr = localStorage.getItem('clientInfo') || sessionStorage.getItem('clientInfo');
+    if (!clientInfoStr) return [];
+
+    const clientInfo = JSON.parse(clientInfoStr);
+    const { data, error } = await supabase
+        .from('orders')
+        .select(`
+            *,
+            clients (*)
+        `)
+        .eq('client_id', clientInfo._id)
+        .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
-// Helper to check if logged in
 export const isClientLoggedIn = () => !!localStorage.getItem('clientToken');
 
 export const submitInquiry = async (data: any) => {
-    // If logged in, we might not need to send name/mobile if backend extracted it from token,
-    // but our controller still expects it in body for now.
-    // Let's keep sending it for compatibility.
-    const response = await api.post('/client/inquiry', data);
-    return response.data;
+    // First ensure client exists (logic similar to clientLogin)
+    const { name, mobileNumber, items } = data;
+
+    let { data: client } = await supabase
+        .from('clients')
+        .select('id')
+        .eq('mobile_number', mobileNumber)
+        .maybeSingle();
+
+    if (!client) {
+        const { data: newClient } = await supabase
+            .from('clients')
+            .insert({ name, mobile_number: mobileNumber })
+            .select('id')
+            .single();
+        client = newClient;
+    }
+
+    const { data: order, error } = await supabase
+        .from('orders')
+        .insert({
+            client_id: client?.id,
+            items: items,
+            order_status: 'NEW_INQUIRY'
+        })
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(order);
 };
 
-// Orders
+// Orders API
 export const getOrders = async () => {
-    const response = await api.get('/admin/orders');
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .select(`
+            *,
+            clientId:clients (*)
+        `)
+        .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const getOrder = async (orderId: string) => {
-    const response = await api.get(`/client/order/${orderId}`);
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .select(`
+            *,
+            clientId:clients (*)
+        `)
+        .eq('id', orderId)
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const setPricing = async (orderId: string, items: any[]) => {
-    const response = await api.put(`/admin/order/${orderId}/pricing`, { items });
-    return response.data;
+    // Get existing order to preserve item details like name and unit
+    const { data: order } = await supabase.from('orders').select('items').eq('id', orderId).single();
+
+    // Merge unitPrice into items and calculate totals
+    const updatedItems = items.map(item => {
+        const pid = item.itemId?._id || item.itemId;
+        const originalItem = order?.items?.find((i: any) => (i.itemId?._id || i.itemId) === pid);
+
+        const quantity = item.quantity || originalItem?.quantity || 1;
+        const unitPrice = item.unitPrice || 0;
+
+        return {
+            ...originalItem,
+            ...item,
+            quantity,
+            unitPrice,
+            totalPrice: quantity * unitPrice
+        };
+    });
+
+    const total = updatedItems.reduce((sum, item) => sum + (item.totalPrice || 0), 0);
+
+    const { data, error } = await supabase
+        .from('orders')
+        .update({
+            items: updatedItems,
+            cart_total: total,
+            order_status: 'WAITING_CLIENT_APPROVAL'
+        })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
+};
+
+export const updatePaymentStatus = async (orderId: string, status: string) => {
+    const { data, error } = await supabase
+        .from('orders')
+        .update({ payment_status: status })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
+};
+
+export const dispatchOrder = async (orderId: string) => {
+    const { data, error } = await supabase
+        .from('orders')
+        .update({
+            order_status: 'IN_TRANSIT',
+            delivery_status: 'SHIPPED'
+        })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const modifyOrder = async (orderId: string, items: any[]) => {
-    const response = await api.put(`/client/order/${orderId}/modify`, { items });
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .update({
+            items,
+            order_status: 'PENDING_PRICING'
+        })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const confirmOrder = async (orderId: string) => {
-    const response = await api.post(`/client/order/${orderId}/confirm`);
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .update({ order_status: 'ORDER_CONFIRMED' })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const confirmDelivery = async (orderId: string) => {
-    const response = await api.post(`/client/order/${orderId}/received`);
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .update({ order_status: 'DELIVERED', delivery_status: 'RECEIVED' })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const cancelOrder = async (orderId: string) => {
-    const response = await api.post(`/admin/order/${orderId}/cancel`);
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .update({ order_status: 'CANCELLED' })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const extendDueDate = async (orderId: string, date: string) => {
-    const response = await api.put(`/admin/order/${orderId}/extend-due-date`, { date });
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .update({ due_date: date })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 export const adminDeliverOrder = async (orderId: string) => {
-    const response = await api.post(`/admin/order/${orderId}/deliver`);
-    return response.data;
+    const { data, error } = await supabase
+        .from('orders')
+        .update({
+            order_status: 'DELIVERED',
+            delivery_status: 'RECEIVED'
+        })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
-// Local History (No Auth)
+// Storage API
+export const uploadProductImage = async (file: File) => {
+    // 1. Upload to Supabase Storage
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+    const filePath = `products/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, file);
+
+    if (uploadError) throw uploadError;
+
+    // 2. Get the Public URL
+    const { data } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(filePath);
+
+    return data.publicUrl;
+};
+
+// Local History (Remains unchanged as it's local)
 export const getLocalHistory = () => {
     const history = localStorage.getItem('localOrderHistory');
     return history ? JSON.parse(history) : [];
@@ -211,16 +469,16 @@ export const getLocalHistory = () => {
 
 export const addToLocalHistory = (order: any) => {
     const history = getLocalHistory();
-    // Avoid duplicates
     if (!history.find((o: any) => o._id === order._id)) {
         const entry = {
             _id: order._id,
             createdAt: order.createdAt,
             itemCount: order.items.length,
             status: order.orderStatus,
-            mobileNumber: order.clientId?.mobileNumber || order.mobileNumber // Store ownership
+            mobileNumber: order.clientId?.mobileNumber || order.mobileNumber
         };
-        const newHistory = [entry, ...history].slice(0, 20); // Keep last 20
+        const newHistory = [entry, ...history].slice(0, 20);
         localStorage.setItem('localOrderHistory', JSON.stringify(newHistory));
     }
 };
+

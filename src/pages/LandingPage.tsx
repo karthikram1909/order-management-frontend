@@ -66,7 +66,7 @@ export default function LandingPage() {
         navigate("/client/catalog");
     } catch (error: any) {
         console.error(error);
-        toast({ title: "Access Failed", description: error.response?.data?.message || "Could not login. Please try again.", variant: "destructive" });
+        toast({ title: "Access Failed", description: error.message || error.response?.data?.message || "Could not login. Please try again.", variant: "destructive" });
     } finally {
         setClientLoading(false);
     }
@@ -82,7 +82,7 @@ export default function LandingPage() {
     } catch (error: any) {
       toast({
         title: "Login Failed",
-        description: error.response?.data?.message || "Invalid credentials",
+        description: error.message || error.response?.data?.message || "Invalid credentials",
         variant: "destructive",
       });
     } finally {
@@ -105,11 +105,11 @@ export default function LandingPage() {
 
       {/* Header Section */}
       <div className="mb-8 text-center space-y-4 relative z-10 text-white">
-        <div className="mx-auto w-16 h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 shadow-xl mb-6">
-             <Shield className="w-8 h-8 text-white" />
+        <div className="mx-auto w-24 h-24 rounded-2xl bg-white p-1 shadow-2xl mb-6 flex items-center justify-center overflow-hidden border-2 border-white/50">
+             <img src="/ram-aromatics-logo.jpg" alt="Ram Aromatics Logo" className="w-full h-full object-contain rounded-xl" />
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight drop-shadow-md">Order Management System</h1>
-        <p className="text-lg text-blue-100 font-light tracking-wide">Enterprise-grade workflow management</p>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight drop-shadow-md">RAM AROMATICS</h1>
+        <p className="text-lg text-blue-100 font-light tracking-wide uppercase">Order Management System</p>
       </div>
 
       {/* Main Card */}

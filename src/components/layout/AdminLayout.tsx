@@ -28,7 +28,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
              <AdminSidebar className="h-full w-full border-none" onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
-        <span className="ml-2 font-semibold text-lg">DP-OMS</span>
+        <span className="ml-2 font-bold text-slate-900 tracking-tight">RAM AROMATICS</span>
       </div>
 
       <main className="md:ml-64 min-h-screen">

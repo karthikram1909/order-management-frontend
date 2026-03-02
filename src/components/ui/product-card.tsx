@@ -1,4 +1,4 @@
-import { Minus, Plus, ShoppingBag } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Sparkles, Wind } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,7 @@ interface ProductCardProps {
   onQuantityChange: (quantity: number) => void;
   imageUrl?: string;
   className?: string;
+  compact?: boolean;
 }
 
 export function ProductCard({
@@ -22,6 +23,7 @@ export function ProductCard({
   onQuantityChange,
   imageUrl,
   className,
+  compact = false,
 }: ProductCardProps) {
   const handleDecrement = () => {
     if (quantity > 0) {
@@ -36,68 +38,99 @@ export function ProductCard({
   return (
     <Card
       className={cn(
-        "flex flex-col overflow-hidden border-border/40 shadow-sm hover:shadow-md transition-all h-full bg-card",
+        "flex flex-col overflow-hidden border-border/40 shadow-sm hover:shadow-lg transition-all h-full bg-white group",
+        compact && "flex-row h-auto items-center",
         className
       )}
     >
-      <div className="aspect-[16/9] w-full overflow-hidden bg-muted relative">
-         {imageUrl ? (
-            <img src={imageUrl} alt={name} className="h-full w-full object-cover" />
-         ) : (
-             // Placeholder similar to screenshot
-             <img src="/placeholder-product.jpg" alt={name} className="h-full w-full object-cover opacity-80" 
+      {!compact && (
+        <div className={cn(
+          "bg-slate-100 overflow-hidden relative",
+          "aspect-[16/9] w-full"
+        )}>
+           {imageUrl ? (
+              <img 
+                  src={imageUrl} 
+                  alt={name}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110" 
                   onError={(e) => {
-                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2670&auto=format&fit=crop"; 
+                      const img = e.target as HTMLImageElement;
+                      if (img.src.includes('unsplash')) {
+                          img.parentElement!.innerHTML = `<div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 text-blue-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="h-10 w-10 animate-pulse"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                          </div>`;
+                      }
                   }}
-             />
-         )}
-      </div>
+              />
+           ) : (
+               <div className="h-full w-full flex items-center justify-center bg-secondary/30 grayscale opacity-50">
+                   <ShoppingBag className="h-12 w-12 text-muted-foreground/30" />
+               </div>
+           )}
+        </div>
+      )}
 
-      <CardContent className="p-5 flex-1 flex flex-col gap-4">
-        <div>
+      <CardContent className={cn("p-5 flex-1 flex flex-col gap-4", compact && "p-4 py-3")}>
+        <div className={cn(compact && "mb-0 flex-1 flex flex-col justify-center")}>
             <div className="flex justify-between items-start mb-2">
-                <h3 className="font-bold text-lg text-foreground line-clamp-1">{name}</h3>
-                <Badge variant="secondary" className="text-xs font-normal text-muted-foreground bg-secondary/50">
-                    {unit}
-                </Badge>
+                <h3 className={cn("font-bold text-lg text-foreground line-clamp-1", compact && "text-base")}>{name}</h3>
+                {!compact && (
+                    <Badge variant="secondary" className="text-xs font-normal text-muted-foreground bg-secondary/50">
+                        {unit}
+                    </Badge>
+                )}
             </div>
-            <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.5rem]">
-              {description}
+            <p className={cn("text-sm text-muted-foreground line-clamp-2", !compact && "min-h-[2.5rem]", compact && "text-xs line-clamp-1")}>
+              {description || "Exotic fragrance extract"}
             </p>
         </div>
 
-        <div className="mt-auto space-y-4">
-             {/* Unit & Price info */}
-             <div className="flex items-center justify-between text-sm">
-                 <span className="text-muted-foreground">Unit:</span>
-                 <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 capitalize">{unit}</Badge>
-             </div>
+        <div className={cn("mt-auto space-y-4", compact && "mt-0 space-y-2 flex flex-col items-end shrink-0")}>
+             {!compact ? (
+                 <>
+                    {/* Unit & Price info */}
+                    <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Unit:</span>
+                        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 capitalize">{unit}</Badge>
+                    </div>
 
-             {/* Price Banner */}
-             <div className="bg-yellow-50 text-yellow-800 text-xs py-2 px-3 rounded-md border border-yellow-200 flex items-center justify-center gap-2 font-medium">
-                 <span>💰</span> Price available after inquiry
-             </div>
+                    {/* Price Banner */}
+                    <div className="bg-yellow-50 text-yellow-800 text-xs py-2 px-3 rounded-md border border-yellow-200 flex items-center justify-center gap-2 font-medium">
+                        <span>💰</span> Price available after inquiry
+                    </div>
+                </>
+             ) : (
+                <div className="text-right mb-1">
+                    <Badge variant="outline" className="bg-blue-50/50 text-blue-600 border-blue-100 text-[10px] font-bold uppercase">{unit}</Badge>
+                </div>
+             )}
              
-             {/* Quantity Controls */}
-             <div className="flex items-center justify-between bg-muted/20 p-1 rounded-lg border border-border/40">
-                <Button variant="ghost" size="sm" className="h-8 w-8" onClick={handleDecrement} disabled={quantity === 0}>
-                    <Minus className="h-4 w-4" />
-                </Button>
-                <span className="font-semibold w-8 text-center">{quantity}</span>
-                <Button variant="ghost" size="sm" className="h-8 w-8" onClick={handleIncrement}>
-                    <Plus className="h-4 w-4" />
-                </Button>
-             </div>
+             {/* Quantity Controls & Add Button - Specialized for Compact */}
+             <div className={cn("flex flex-col gap-2 w-full", compact && "flex-row items-center gap-1.5")}>
+                 <div className={cn("flex items-center justify-between bg-muted/20 p-1 rounded-lg border border-border/40", compact && "h-9 px-1")}>
+                    <Button variant="ghost" size="sm" className={cn("h-8 w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={quantity === 0}>
+                        <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className={cn("font-semibold w-8 text-center", compact && "text-sm w-6")}>{quantity}</span>
+                    <Button variant="ghost" size="sm" className={cn("h-8 w-8", compact && "h-7 w-7")} onClick={handleIncrement}>
+                        <Plus className="h-4 w-4" />
+                    </Button>
+                 </div>
 
-             {/* Add Button */}
-             <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-sm" 
-                onClick={handleIncrement}
-                disabled={quantity > 0} // Optional: Disable if already added? Screenshots typically just show "Add"
-             >
-                 {quantity > 0 ? <Plus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                 {quantity > 0 ? "Add More" : "Add to Inquiry"}
-             </Button>
+                 <Button 
+                    className={cn(
+                        "w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-sm transition-all",
+                        compact && "h-9 px-4 w-auto flex-1 font-bold text-xs",
+                        quantity > 0 && compact && "bg-green-600 hover:bg-green-700"
+                    )} 
+                    onClick={handleIncrement}
+                    disabled={quantity > 0 && !compact}
+                 >
+                     {quantity > 0 ? (compact ? "Add More" : "Add More") : (compact ? "Select Scent" : "Add to Inquiry")}
+                 </Button>
+             </div>
         </div>
       </CardContent>
     </Card>

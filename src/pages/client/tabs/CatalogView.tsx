@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Search, ShoppingCart, Loader2 } from "lucide-react";
 import { ProductCard } from "@/components/ui/product-card";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getProducts, modifyOrder, submitInquiry, addToLocalHistory } from "@/lib/api";
@@ -13,7 +14,12 @@ interface CartItem {
   quantity: number;
 }
 
-export default function CatalogView() {
+interface CatalogViewProps {
+  filter?: string;
+  mode?: "grid" | "grid-compact";
+}
+
+export default function CatalogView({ filter, mode = "grid" }: CatalogViewProps) {
   const navigate = useNavigate();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -71,7 +77,15 @@ export default function CatalogView() {
 
     setLoading(true);
     try {
-        const items = cart.map((item) => ({ itemId: item.productId, quantity: item.quantity }));
+        const items = cart.map((item) => {
+            const product = products.find(p => p._id === item.productId);
+            return { 
+                itemId: item.productId, 
+                quantity: item.quantity,
+                itemName: product?.itemName || "Unknown",
+                unit: product?.unit || "kg"
+            };
+        });
         let orderData;
 
         if (editingOrderId) {
@@ -100,9 +114,13 @@ export default function CatalogView() {
   };
 
   const filteredProducts = products.filter(
-    (product) =>
-      product.itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase())
+    (product) => {
+      const matchesSearch = product.itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           (product.description || "").toLowerCase().includes(searchQuery.toLowerCase());
+      const productCat = product.category || 'Materials';
+      const matchesFilter = !filter || productCat === filter;
+      return matchesSearch && matchesFilter;
+    }
   );
 
   return (
@@ -123,6 +141,13 @@ export default function CatalogView() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {loading ? (
                 <div className="col-span-full flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground"/></div>
+            ) : filteredProducts.length === 0 ? (
+                <div className="col-span-full py-20 text-center space-y-4">
+                    <div className="h-16 w-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto">
+                        <Search className="h-8 w-8 text-muted-foreground/30" />
+                    </div>
+                    <p className="text-muted-foreground font-medium">No items found in this category.</p>
+                </div>
             ) : filteredProducts.map((product) => (
                 <ProductCard
                     key={product._id}
@@ -131,7 +156,11 @@ export default function CatalogView() {
                     unit={product.unit}
                     quantity={getQuantity(product._id)}
                     onQuantityChange={(qty) => handleQuantityChange(product._id, qty)}
-                    imageUrl=""
+                    imageUrl={product.imageUrl}
+                    compact={mode === "grid-compact"}
+                    className={cn(
+                        mode === "grid-compact" && "border-blue-100 shadow-blue-50 hover:border-blue-300"
+                    )}
                 />
             ))}
         </div>

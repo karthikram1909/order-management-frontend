@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -37,6 +38,8 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ className, onNavigate }: AdminSidebarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const isActive = (href: string) => {
     if (href === "/admin") {
@@ -48,13 +51,13 @@ export function AdminSidebar({ className, onNavigate }: AdminSidebarProps) {
   return (
     <aside className={cn("flex h-screen w-64 flex-col border-r border-border/60 bg-sidebar", className)}>
       {/* Logo */}
-      <div className="flex h-16 items-center gap-3 border-b border-border/60 px-6">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Package className="h-5 w-5" />
+      <div className="flex h-20 items-center gap-3 border-b border-border/60 px-6 bg-white">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white overflow-hidden border border-slate-100 shadow-sm">
+          <img src="/ram-aromatics-logo.jpg" alt="Logo" className="h-full w-full object-contain" />
         </div>
         <div>
-          <p className="text-sm font-semibold text-foreground">DP-OMS</p>
-          <p className="text-xs text-muted-foreground">Admin Panel</p>
+          <p className="text-sm font-black tracking-tight text-slate-900 leading-none">RAM AROMATICS</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-blue-600 mt-1">Admin Panel</p>
         </div>
       </div>
 
@@ -103,25 +106,24 @@ export function AdminSidebar({ className, onNavigate }: AdminSidebarProps) {
 
         {/* User */}
         <div className="flex items-center gap-3 rounded-lg px-3 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground">
-            A
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground uppercase">
+            {user?.email?.[0] || 'A'}
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-foreground">
               Admin User
             </p>
             <p className="truncate text-xs text-muted-foreground">
-              admin@company.com
+              {user?.email || 'admin@company.com'}
             </p>
           </div>
           <Button 
             variant="ghost" 
             size="sm" 
             className="h-8 w-8 p-0"
-            onClick={() => {
-              localStorage.removeItem("adminToken");
-              localStorage.removeItem("refreshToken");
-              window.location.href = "/admin/login";
+            onClick={async () => {
+              await signOut();
+              navigate("/admin/login");
             }}
           >
             <LogOut className="h-4 w-4" />

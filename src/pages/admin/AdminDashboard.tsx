@@ -75,8 +75,8 @@ export default function AdminDashboard() {
   // Handle Auth Error
   useEffect(() => {
     if (error) {
-      // Check if the error is an AxiosError and has a response status
-      if ((error as any).response?.status === 401) {
+      const status = (error as any).status || (error as any).response?.status;
+      if (status === 401 || (error as any).code === 'PGRST301') { // PGRST301 is Supabase JWT expired/invalid
         window.location.href = "/admin/login";
       } else {
         console.error("Failed to fetch orders", error);
