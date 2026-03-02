@@ -1,6 +1,7 @@
 import { supabase } from './supabase';
 
 // Helper to map Supabase 'id' to MongoDB-style '_id' and other field mappings
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapFromDb = (data: any): any => {
     if (!data) return data;
     if (Array.isArray(data)) return data.map(mapFromDb);
@@ -63,8 +64,9 @@ const mapFromDb = (data: any): any => {
 };
 
 // Helper to map frontend camelCase to Supabase snake_case
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapToDb = (data: any): any => {
-    if (!data) return data;
+    if (!data || typeof data !== 'object') return data;
     const {
         _id,
         createdAt,
@@ -110,7 +112,7 @@ export const getProducts = async () => {
     return mapFromDb(data);
 };
 
-export const addProduct = async (product: any) => {
+export const addProduct = async (product: Record<string, unknown>) => {
     const { data, error } = await supabase
         .from('products')
         .insert(mapToDb(product))
@@ -121,7 +123,7 @@ export const addProduct = async (product: any) => {
     return mapFromDb(data);
 };
 
-export const updateProduct = async (id: string, product: any) => {
+export const updateProduct = async (id: string, product: Record<string, unknown>) => {
     const { data, error } = await supabase.from('products').update(mapToDb(product)).eq('id', id).select().single();
     if (error) throw error;
     return mapFromDb(data);
@@ -236,7 +238,7 @@ export const getClientHistory = async () => {
 
 export const isClientLoggedIn = () => !!localStorage.getItem('clientToken');
 
-export const submitInquiry = async (data: any) => {
+export const submitInquiry = async (data: { name: string; mobileNumber: string; items: unknown[] }) => {
     // First ensure client exists (logic similar to clientLogin)
     const { name, mobileNumber, items } = data;
 
@@ -467,7 +469,7 @@ export const getLocalHistory = () => {
     return history ? JSON.parse(history) : [];
 };
 
-export const addToLocalHistory = (order: any) => {
+export const addToLocalHistory = (order: { _id: string; createdAt: string; items: unknown[]; orderStatus: string; clientId?: unknown; mobileNumber?: string }) => {
     const history = getLocalHistory();
     if (!history.find((o: any) => o._id === order._id)) {
         const entry = {
@@ -475,7 +477,7 @@ export const addToLocalHistory = (order: any) => {
             createdAt: order.createdAt,
             itemCount: order.items.length,
             status: order.orderStatus,
-            mobileNumber: order.clientId?.mobileNumber || order.mobileNumber
+            mobileNumber: (order.clientId as any)?.mobileNumber || order.mobileNumber
         };
         const newHistory = [entry, ...history].slice(0, 20);
         localStorage.setItem('localOrderHistory', JSON.stringify(newHistory));

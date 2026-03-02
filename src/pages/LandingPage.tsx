@@ -115,7 +115,7 @@ export default function LandingPage() {
       {/* Main Card */}
       <Card className="w-full max-w-md border-0 shadow-2xl bg-white/95 backdrop-blur rounded-xl overflow-hidden z-10">
         <Tabs defaultValue="client" className="w-full">
-            <div className="p-1 mx-6 mt-6 bg-slate-100/80 rounded-lg p-1">
+            <div className="p-1 mx-6 mt-6 bg-slate-100/80 rounded-lg">
               <TabsList className="grid w-full grid-cols-2 bg-transparent h-auto p-0 gap-1">
                 <TabsTrigger 
                   value="client"
