@@ -1,8 +1,9 @@
-import { Minus, Plus, ShoppingBag, Sparkles, Wind } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
 interface ProductCardProps {
   name: string;
@@ -25,6 +26,9 @@ export function ProductCard({
   className,
   compact = false,
 }: ProductCardProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
   const handleDecrement = () => {
     if (quantity > 0) {
       onQuantityChange(quantity - 1);
@@ -46,27 +50,35 @@ export function ProductCard({
       {!compact && (
         <div className={cn(
           "bg-slate-100 overflow-hidden relative",
-          "aspect-[16/9] w-full"
+          "aspect-[16/9] w-full",
+          !imageLoaded && imageUrl && !hasError && "animate-pulse bg-slate-200"
         )}>
-           {imageUrl ? (
-              <img 
-                  src={imageUrl} 
-                  alt={name}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110" 
-                  onError={(e) => {
-                      const img = e.target as HTMLImageElement;
-                      if (img.src.includes('unsplash')) {
-                          img.parentElement!.innerHTML = `<div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 text-blue-400">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="h-10 w-10 animate-pulse"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                          </div>`;
-                      }
-                  }}
-              />
+           {imageUrl && !hasError ? (
+              <>
+                {!imageLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  </div>
+                )}
+                <img 
+                    src={imageUrl} 
+                    alt={name}
+                    loading="lazy"
+                    decoding="async"
+                    onLoad={() => setImageLoaded(true)}
+                    className={cn(
+                      "h-full w-full object-cover transition-all duration-700 group-hover:scale-110",
+                      imageLoaded ? "opacity-100" : "opacity-0"
+                    )} 
+                    onError={() => {
+                        setHasError(true);
+                        setImageLoaded(true);
+                    }}
+                />
+              </>
            ) : (
-               <div className="h-full w-full flex items-center justify-center bg-secondary/30 grayscale opacity-50">
-                   <ShoppingBag className="h-12 w-12 text-muted-foreground/30" />
+               <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 text-blue-400/40">
+                   <Sparkles className="h-12 w-12 animate-pulse" />
                </div>
            )}
         </div>
