@@ -2,7 +2,11 @@ import { ReactNode, useState } from "react";
 import { AdminSidebar } from "./AdminSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Bell } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -10,6 +14,44 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children }: AdminLayoutProps) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Real-time listener for new orders
+    const channel = supabase
+      .channel('admin-order-notifications')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'orders'
+        },
+        async (payload) => {
+          console.log('New order detected:', payload);
+          
+          // Get some basic info if possible
+          const newOrder = payload.new;
+          
+          toast.success("New Order Received!", {
+            description: `Order #${newOrder.id.substring(0, 6)}. Click to view details.`,
+            action: {
+              label: "View",
+              onClick: () => navigate(`/admin/orders/${newOrder.id}`)
+            },
+            icon: <Bell className="h-4 w-4" />,
+            duration: 10000, // Keep it visible for 10 seconds
+          });
+
+          // Also play a subtle sound if you want, but sticking to UI for now
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-background">

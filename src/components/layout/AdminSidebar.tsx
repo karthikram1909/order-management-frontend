@@ -116,10 +116,10 @@ export function AdminSidebar({ className, onNavigate }: AdminSidebarProps) {
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-foreground">
-              Admin User
+              Administrator
             </p>
             <p className="truncate text-xs text-muted-foreground">
-              {user?.email || 'admin@company.com'}
+              {user?.email}
             </p>
           </div>
           <Button 

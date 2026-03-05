@@ -24,6 +24,8 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminClients from "./pages/admin/AdminClients";
+import AdminSettings from "./pages/admin/AdminSettings";
+import AdminNotifications from "./pages/admin/AdminNotifications";
 
 import LandingPage from "./pages/LandingPage";
 
@@ -66,8 +68,8 @@ const App = () => (
             <Route path="/admin/invoices" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
             <Route path="/admin/payments" element={<ProtectedRoute role="admin"><AdminPayments /></ProtectedRoute>} />
             <Route path="/admin/clients" element={<ProtectedRoute role="admin"><AdminClients /></ProtectedRoute>} />
-            <Route path="/admin/notifications" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/admin/settings" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/notifications" element={<ProtectedRoute role="admin"><AdminNotifications /></ProtectedRoute>} />
+            <Route path="/admin/settings" element={<ProtectedRoute role="admin"><AdminSettings /></ProtectedRoute>} />
             <Route path="/admin/pricing/:orderId" element={<ProtectedRoute role="admin"><AdminPricing /></ProtectedRoute>} />
             <Route path="/admin/orders/:orderId" element={<ProtectedRoute role="admin"><AdminOrderDetail /></ProtectedRoute>} />
             
