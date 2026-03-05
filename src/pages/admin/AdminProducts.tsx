@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Plus, Trash2, Search, Package, Loader2, Edit2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export default function AdminProducts() {
+  const { isBypass } = useAuth();
   const { toast } = useToast();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,8 +48,13 @@ export default function AdminProducts() {
     try {
       const data = await getProducts();
       setProducts(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      const status = error.status || error.response?.status;
+      if (status === 401 || error.code === 'PGRST301') {
+          window.location.href = "/admin/login";
+          return;
+      }
       toast({ title: "Error", description: "Failed to load products", variant: "destructive" });
     } finally {
       setLoading(false);
@@ -59,6 +66,16 @@ export default function AdminProducts() {
         toast({ title: "Validation Error", description: "Name and Unit are required", variant: "destructive" });
         return;
     }
+
+    if (isBypass) {
+        toast({ 
+            title: "Permission Denied", 
+            description: "You are logged in via Bypass Mode. Update operations require a real Supabase admin account.", 
+            variant: "destructive" 
+        });
+        return;
+    }
+
     setSubmitting(true);
     try {
         let imageUrl = editingProduct.imageUrl;
@@ -82,6 +99,16 @@ export default function AdminProducts() {
         toast({ title: "Validation Error", description: "Name and Unit are required", variant: "destructive" });
         return;
     }
+    
+    if (isBypass) {
+        toast({ 
+            title: "Permission Denied", 
+            description: "You are logged in via Bypass Mode. This mode is read-only. To add products, please log in with a real Supabase admin account.", 
+            variant: "destructive" 
+        });
+        return;
+    }
+
     setSubmitting(true);
     try {
         let imageUrl = newProduct.imageUrl;
@@ -98,6 +125,12 @@ export default function AdminProducts() {
         setSelectedFile(null);
         fetchProducts();
     } catch (error: any) {
+        // Handle Auth Error
+        const status = error.status || error.response?.status;
+        if (status === 401 || error.code === 'PGRST301') {
+            window.location.href = "/admin/login";
+            return;
+        }
         toast({ title: "Error", description: error.message || "Failed to add product", variant: "destructive" });
     } finally {
         setSubmitting(false);
@@ -105,6 +138,16 @@ export default function AdminProducts() {
   };
   const handleDeleteProduct = async (id: string, name: string) => {
       if (!confirm(`Are you sure you want to delete ${name}?`)) return;
+
+      if (isBypass) {
+          toast({ 
+              title: "Permission Denied", 
+              description: "You are logged in via Bypass Mode. Delete operations require a real Supabase admin account.", 
+              variant: "destructive" 
+          });
+          return;
+      }
+      
       try {
           await deleteProduct(id);
           toast({ title: "Deleted", description: "Product removed." });

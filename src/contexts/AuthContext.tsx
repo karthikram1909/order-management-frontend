@@ -8,6 +8,7 @@ interface AuthContextType {
   loading: boolean;
   isAdmin: boolean;
   isClient: boolean;
+  isBypass: boolean;
   signOut: () => Promise<void>;
 }
 
@@ -19,8 +20,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isBypass, setIsBypass] = useState(false);
 
   useEffect(() => {
+    // Check for bypass token on load
+    const token = localStorage.getItem('adminToken');
+    setIsBypass(token === 'admin_bypass_token');
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -70,7 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, isAdmin, isClient, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isAdmin, isClient, isBypass, signOut }}>
       {children}
     </AuthContext.Provider>
   );

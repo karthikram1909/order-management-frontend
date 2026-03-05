@@ -141,13 +141,15 @@ export const deleteProduct = async (id: string) => {
 
 // Auth API
 export const adminLogin = async (email: string, password: string) => {
-    // Bypass for specific admin user
+    // Bypass for specific admin user - WARNING: This does not authenticate with Supabase
     if (email === 'admin@gmail.com' && password === 'admin123') {
         const token = 'admin_bypass_token';
         localStorage.setItem('adminToken', token);
+        console.warn("Using Administrative Bypass. Database write operations will fail because you are not authenticated with Supabase.");
         return {
             token,
-            user: { email: 'admin@gmail.com' }
+            user: { email: 'admin@gmail.com' },
+            isBypass: true
         };
     }
 
@@ -163,7 +165,8 @@ export const adminLogin = async (email: string, password: string) => {
     return {
         token,
         refreshToken,
-        user: data.user
+        user: data.user,
+        isBypass: false
     };
 };
 
@@ -269,6 +272,32 @@ export const submitInquiry = async (data: { name: string; mobileNumber: string; 
 
     if (error) throw error;
     return mapFromDb(order);
+};
+
+// Admin Client Management
+export const getClients = async () => {
+    const { data, error } = await supabase
+        .from('clients')
+        .select('*')
+        .order('name');
+
+    if (error) throw error;
+    return mapFromDb(data);
+};
+
+export const createOrder = async (orderData: { clientId: string; items: any[] }) => {
+    const { data, error } = await supabase
+        .from('orders')
+        .insert({
+            client_id: orderData.clientId,
+            items: orderData.items,
+            order_status: 'NEW_INQUIRY'
+        })
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
 };
 
 // Orders API

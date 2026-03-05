@@ -39,7 +39,7 @@ interface AdminSidebarProps {
 export function AdminSidebar({ className, onNavigate }: AdminSidebarProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, signOut, isBypass } = useAuth();
 
   const isActive = (href: string) => {
     if (href === "/admin") {
@@ -58,6 +58,11 @@ export function AdminSidebar({ className, onNavigate }: AdminSidebarProps) {
         <div>
           <p className="text-sm font-black tracking-tight text-slate-900 leading-none">RAM AROMATICS</p>
           <p className="text-[10px] font-bold uppercase tracking-wider text-blue-600 mt-1">Admin Panel</p>
+          {isBypass && (
+            <p className="text-[8px] font-bold uppercase tracking-tighter text-red-500 mt-0.5 animate-pulse">
+              (Bypass Mode - Read Only)
+            </p>
+          )}
         </div>
       </div>
 

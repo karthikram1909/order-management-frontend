@@ -20,6 +20,15 @@ export default function AdminLogin() {
     try {
       const data = await adminLogin(email, password);
       localStorage.setItem("adminToken", data.token); // Store token
+      
+      if (data.isBypass) {
+        toast({
+          title: "Bypass Login Active",
+          description: "You are logged in via bypass. Database write operations (like adding products) will not work. Please use a real Supabase account for full features.",
+          variant: "destructive",
+        });
+      }
+
       navigate("/admin");
     } catch (error: any) {
       toast({
