@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Send, RefreshCw, Loader2 } from "lucide-react";
 import { AdminLayout } from "@/components/layout/AdminLayout";
-import { PriceInputRow } from "@/components/ui/price-input-row";
-import { NotificationBanner } from "@/components/ui/notification-banner";
-import { ConfirmationModal } from "@/components/ui/confirmation-modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ConfirmationModal } from "@/components/ui/confirmation-modal";
+import { NotificationBanner } from "@/components/ui/notification-banner";
+import { PriceInputRow } from "@/components/ui/price-input-row";
 import { Separator } from "@/components/ui/separator";
-import { setPricing, getOrder } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
+import { getLastPrices, getOrder, setPricing } from "@/lib/api";
+import { ArrowLeft, Loader2, RefreshCw, Send } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function AdminPricing() {
   const navigate = useNavigate();
@@ -19,40 +19,81 @@ export default function AdminPricing() {
   const [isSending, setIsSending] = useState(false);
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isLoadingPrices, setIsLoadingPrices] = useState(false);
 
   const [prices, setPrices] = useState<Record<string, number>>({});
 
   const getItemId = (item: any, index: number) => {
-      // Use the item._id if available for database consistency, or fallback to index
-      return item._id || `item-${index}`;
+    // Use the item._id if available for database consistency, or fallback to index
+    return item._id || `item-${index}`;
   };
 
   useEffect(() => {
     const fetchOrder = async () => {
-        try {
-            if (!orderId) return;
-            const data = await getOrder(orderId);
-            setOrder(data);
-            
-            // Initialize prices
-            const initial: Record<string, number> = {};
-            data.items.forEach((item: any, index: number) => {
-                const pid = getItemId(item, index);
-                initial[pid] = item.unitPrice || 0;
-            });
-            setPrices(initial);
-        } catch (error) {
-            console.error(error);
-            toast({ title: "Error fetching order", variant: "destructive" });
-        } finally {
-            setLoading(false);
-        }
+      try {
+        if (!orderId) return;
+        const data = await getOrder(orderId);
+        setOrder(data);
+
+        // Initialize prices
+        const initial: Record<string, number> = {};
+        data.items.forEach((item: any, index: number) => {
+          const pid = getItemId(item, index);
+          initial[pid] = item.unitPrice || 0;
+        });
+        setPrices(initial);
+      } catch (error) {
+        console.error(error);
+        toast({ title: "Error fetching order", variant: "destructive" });
+      } finally {
+        setLoading(false);
+      }
     };
     fetchOrder();
   }, [orderId]);
 
   const handlePriceChange = (productId: string, price: number) => {
     setPrices((prev) => ({ ...prev, [productId]: price }));
+  };
+
+  const handleLoadLastPrices = async () => {
+    if (!orderId || !order) return;
+    setIsLoadingPrices(true);
+    try {
+      // priceMap is keyed by itemId (the product/item id stored in each order item)
+      const priceMap = await getLastPrices(orderId);
+
+      if (Object.keys(priceMap).length === 0) {
+        toast({ title: "No previous prices found", description: "This client has no past priced orders.", variant: "destructive" });
+        return;
+      }
+
+      // Fill in prices for matching items
+      let filledCount = 0;
+      setPrices((prev) => {
+        const updated = { ...prev };
+        order.items.forEach((item: any, index: number) => {
+          const pid = getItemId(item, index);
+          // The item's product id to look up in the price map
+          const itemId = item.itemId?._id || item.itemId || item.productId;
+          if (itemId && priceMap[itemId] && priceMap[itemId] > 0) {
+            updated[pid] = priceMap[itemId];
+            filledCount++;
+          }
+        });
+        return updated;
+      });
+
+      toast({
+        title: "Prices Loaded",
+        description: `Loaded last prices for ${filledCount} item(s).`,
+      });
+    } catch (error) {
+      console.error(error);
+      toast({ title: "Failed to load prices", variant: "destructive" });
+    } finally {
+      setIsLoadingPrices(false);
+    }
   };
 
   const calculateTotal = () => {
@@ -66,23 +107,23 @@ export default function AdminPricing() {
   const handleSendQuote = async () => {
     setIsSending(true);
     try {
-        const items = order.items.map((item: any, index: number) => {
-            const pid = getItemId(item, index);
-            return {
-                itemId: item.itemId?._id || item.itemId || item.productId,
-                unitPrice: prices[pid] || 0,
-                // Preserve item ID if we're updating existing ones
-                _id: item._id
-            };
-        });
-        await setPricing(orderId!, items);
-        toast({ title: "Quote Sent", description: "Order status updated." });
-        setShowSendQuoteModal(false);
-        navigate("/admin");
+      const items = order.items.map((item: any, index: number) => {
+        const pid = getItemId(item, index);
+        return {
+          itemId: item.itemId?._id || item.itemId || item.productId,
+          unitPrice: prices[pid] || 0,
+          // Preserve item ID if we're updating existing ones
+          _id: item._id
+        };
+      });
+      await setPricing(orderId!, items);
+      toast({ title: "Quote Sent", description: "Order status updated." });
+      setShowSendQuoteModal(false);
+      navigate("/admin");
     } catch (error) {
-        toast({ title: "Failed to send quote", variant: "destructive" });
+      toast({ title: "Failed to send quote", variant: "destructive" });
     } finally {
-        setIsSending(false);
+      setIsSending(false);
     }
   };
 
@@ -91,8 +132,8 @@ export default function AdminPricing() {
 
   const allPricesFilled = order.items.length > 0 && order.items.every(
     (item: any, index: number) => {
-        const pid = getItemId(item, index);
-        return (prices[pid] || 0) > 0;
+      const pid = getItemId(item, index);
+      return (prices[pid] || 0) > 0;
     }
   );
 
@@ -118,8 +159,18 @@ export default function AdminPricing() {
               Set unit prices for customer request
             </p>
           </div>
-          <Button variant="outline" size="sm" className="gap-2">
-            <RefreshCw className="h-4 w-4" />
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={handleLoadLastPrices}
+            disabled={isLoadingPrices}
+          >
+            {isLoadingPrices ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <RefreshCw className="h-4 w-4" />
+            )}
             Load Last Prices
           </Button>
         </div>
@@ -141,19 +192,20 @@ export default function AdminPricing() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {order.items.map((item: any, index: number) => {
-                   const pid = getItemId(item, index);
-                   return (
-                  <PriceInputRow
-                    key={pid}
-                    productName={item.itemName || item.itemId?.itemName || item.itemId?.name || "Product"}
-                    quantity={item.quantity}
-                    unit={item.unit || item.itemId?.unit || "unit"}
-                    price={prices[pid] || 0}
-                    onPriceChange={(price) =>
-                      handlePriceChange(pid, price)
-                    }
-                  />
-                );})}
+                  const pid = getItemId(item, index);
+                  return (
+                    <PriceInputRow
+                      key={pid}
+                      productName={item.itemName || item.itemId?.itemName || item.itemId?.name || "Product"}
+                      quantity={item.quantity}
+                      unit={item.unit || item.itemId?.unit || "unit"}
+                      price={prices[pid] || 0}
+                      onPriceChange={(price) =>
+                        handlePriceChange(pid, price)
+                      }
+                    />
+                  );
+                })}
               </CardContent>
             </Card>
           </div>
@@ -205,7 +257,7 @@ export default function AdminPricing() {
                     Total
                   </span>
                   <span className="text-xl font-semibold text-foreground">
-                     ₹{calculateTotal().toLocaleString(undefined, {
+                    ₹{calculateTotal().toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                     })}
                   </span>

@@ -456,6 +456,53 @@ export const extendDueDate = async (orderId: string, date: string) => {
     return mapFromDb(data);
 };
 
+/**
+ * Load last known unit prices for items in a given order.
+ * Searches past orders for the same client (excluding the current order)
+ * that already have priced items, then maps itemId -> unitPrice.
+ */
+export const getLastPrices = async (orderId: string): Promise<Record<string, number>> => {
+    // 1. Get the current order to find the clientId
+    const { data: currentOrder, error: orderError } = await supabase
+        .from('orders')
+        .select('client_id, items')
+        .eq('id', orderId)
+        .single();
+
+    if (orderError || !currentOrder) throw orderError || new Error('Order not found');
+
+    const clientId = currentOrder.client_id;
+
+    // 2. Fetch previous orders for the same client (excluding the current one)
+    //    that have been priced — we look at all statuses except pure NEW_INQUIRY
+    const { data: pastOrders, error: pastError } = await supabase
+        .from('orders')
+        .select('items, created_at')
+        .eq('client_id', clientId)
+        .neq('id', orderId)
+        .not('order_status', 'eq', 'NEW_INQUIRY')
+        .order('created_at', { ascending: false });
+
+    if (pastError) throw pastError;
+    if (!pastOrders || pastOrders.length === 0) return {};
+
+    // 3. Build a map of itemId -> unitPrice from past orders (most recent wins)
+    const priceMap: Record<string, number> = {};
+
+    for (const pastOrder of pastOrders) {
+        const items: any[] = pastOrder.items || [];
+        for (const item of items) {
+            const itemId = item.itemId?._id || item.itemId || item.productId;
+            const unitPrice = item.unitPrice;
+            if (itemId && unitPrice && unitPrice > 0 && !priceMap[itemId]) {
+                priceMap[itemId] = unitPrice;
+            }
+        }
+    }
+
+    return priceMap;
+};
+
 export const adminDeliverOrder = async (orderId: string) => {
     const { data, error } = await supabase
         .from('orders')
