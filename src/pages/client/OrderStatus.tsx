@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Check, Clock, Package, Truck, ArrowLeft, AlertCircle, CheckCircle2, Phone, MessageSquare, BadgeHelp, Edit2, X, Save } from "lucide-react";
+import { Check, Clock, Package, Truck, ArrowLeft, AlertCircle, CheckCircle2, Phone, MessageSquare, BadgeHelp, Edit2, X, Save, Ban } from "lucide-react";
 import { MobileHeader } from "@/components/layout/MobileHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { TimelineStepper } from "@/components/ui/timeline-stepper";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { getOrder, confirmOrder, confirmDelivery, modifyOrder } from "@/lib/api";
+import { getOrder, confirmOrder, confirmDelivery, modifyOrder, cancelOrder } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { getStatusConfig } from "@/data/mockData";
@@ -129,8 +129,13 @@ export default function OrderStatus() {
               };
           });
           
-          await modifyOrder(order._id, itemsToSubmit);
-          toast({ title: "Quote Updated", description: "Sent to admin for review." });
+          if (itemsToSubmit.length === 0) {
+              await cancelOrder(order._id);
+              toast({ title: "Order Cancelled", description: "Order cancelled as all items were removed." });
+          } else {
+              await modifyOrder(order._id, itemsToSubmit);
+              toast({ title: "Quote Updated", description: "Sent to admin for review." });
+          }
           setIsEditing(false);
           fetchOrder();
       } catch (e: any) {
@@ -155,8 +160,23 @@ export default function OrderStatus() {
   }
 
   const steps = getSteps(order.orderStatus);
+  const canModify = ['NEW_INQUIRY', 'PENDING_PRICING', 'WAITING_CLIENT_APPROVAL'].includes(order.orderStatus);
   const isWaitingForApproval = order.orderStatus === 'WAITING_CLIENT_APPROVAL';
   const statusConfig = getStatusConfig(order.orderStatus);
+
+  const handleCancelOrder = async () => {
+      if (!confirm("Are you sure you want to cancel this order?")) return;
+      setConfirming(true);
+      try {
+          await cancelOrder(order._id);
+          toast({ title: "Order Cancelled", description: "Your order has been cancelled." });
+          fetchOrder();
+      } catch (e: any) {
+          toast({ variant: "destructive", title: "Update Failed", description: e.response?.data?.message || "Could not cancel order" });
+      } finally {
+          setConfirming(false);
+      }
+  };
 
   return (
     <div className="min-h-screen bg-background pb-32">
@@ -183,18 +203,23 @@ export default function OrderStatus() {
                  </StatusBadge>
              </div>
              <div>
-                {/* Desktop Actions */}
-                 {isWaitingForApproval && (
+                 {/* Desktop Actions */}
+                 {canModify && (
                     <div className="flex gap-2">
                          {!isEditing ? (
                              <>
+                                <Button variant="outline" className="text-destructive border-destructive" onClick={handleCancelOrder} disabled={confirming}>
+                                    <Ban className="h-4 w-4 mr-2"/> Cancel Order
+                                </Button>
                                 <Button variant="outline" onClick={() => setIsEditing(true)}>
-                                    <Edit2 className="h-4 w-4 mr-2"/> Modify Quote
+                                    <Edit2 className="h-4 w-4 mr-2"/> Modify {isWaitingForApproval ? "Quote" : "Order"}
                                 </Button>
-                                <Button onClick={handleConfirmQuote} disabled={confirming}>
-                                    {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
-                                    Accept Quote
-                                </Button>
+                                {isWaitingForApproval && (
+                                    <Button onClick={handleConfirmQuote} disabled={confirming}>
+                                        {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
+                                        Accept Quote
+                                    </Button>
+                                )}
                              </>
                          ) : (
                              <>
@@ -361,17 +386,22 @@ export default function OrderStatus() {
       </div>
 
        {/* Floating Actions for Mobile */}
-       {isWaitingForApproval && (
+       {canModify && (
             <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border md:hidden z-50">
                  {!isEditing ? (
-                     <div className="flex gap-3">
-                         <Button variant="outline" className="flex-1" onClick={() => setIsEditing(true)}>
+                     <div className="flex gap-2">
+                         <Button variant="outline" className="flex-1 text-destructive border-destructive px-0" onClick={handleCancelOrder} disabled={confirming}>
+                             Cancel Order
+                         </Button>
+                         <Button variant="outline" className="flex-1 px-0" onClick={() => setIsEditing(true)}>
                              Modify
                          </Button>
-                         <Button className="flex-1" onClick={handleConfirmQuote} disabled={confirming}>
-                             {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
-                             Accept
-                         </Button>
+                         {isWaitingForApproval && (
+                             <Button className="flex-1 px-0" onClick={handleConfirmQuote} disabled={confirming}>
+                                 {confirming ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : <Check className="h-4 w-4 mr-2"/>}
+                                 Accept
+                             </Button>
+                         )}
                      </div>
                  ) : (
                     <div className="flex gap-3">
