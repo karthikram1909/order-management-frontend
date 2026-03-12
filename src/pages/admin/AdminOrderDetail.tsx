@@ -124,21 +124,21 @@ export default function AdminOrderDetail() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
+      <div className="p-4 md:p-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-4">
             <Button
               variant="ghost"
               size="sm"
-              className="gap-2"
+              className="gap-2 w-fit"
               onClick={() => navigate("/admin/orders")}
             >
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
             <div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <h1 className="text-2xl font-semibold text-foreground">
                   Order {order._id.slice(-6)}
                 </h1>
@@ -155,7 +155,7 @@ export default function AdminOrderDetail() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             {['NEW_INQUIRY', 'PENDING_PRICING', 'WAITING_CLIENT_APPROVAL'].includes(order.orderStatus) && (
                 <Button 
                     size="sm" 
@@ -192,9 +192,9 @@ export default function AdminOrderDetail() {
           </div>
         </div>
 
-        <div className="mt-8 grid grid-cols-3 gap-8">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             {/* Order Items */}
             <Card className="border-border/60 shadow-card">
               <CardHeader>

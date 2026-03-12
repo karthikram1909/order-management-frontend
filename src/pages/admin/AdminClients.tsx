@@ -29,8 +29,8 @@ export default function AdminClients() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
-        <div className="flex items-center justify-between mb-8">
+      <div className="p-4 md:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-semibold text-foreground">Clients</h1>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -38,7 +38,7 @@ export default function AdminClients() {
             </p>
           </div>
           {selectedClientId && (
-            <Button variant="outline" onClick={() => setSelectedClientId(null)}>
+            <Button variant="outline" className="w-full sm:w-auto" onClick={() => setSelectedClientId(null)}>
               Back to Client List
             </Button>
           )}
@@ -58,17 +58,17 @@ export default function AdminClients() {
                 onClick={() => setSelectedClientId(client._id)}
               >
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="h-12 w-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                         <User className="h-6 w-6" />
                       </div>
-                      <div>
-                        <h3 className="font-bold text-xl text-foreground uppercase tracking-tight group-hover:text-primary transition-colors">{client.name}</h3>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-xl text-foreground uppercase tracking-tight group-hover:text-primary transition-colors truncate">{client.name}</h3>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                      <span className="text-sm font-bold uppercase tracking-widest">View History</span>
+                    <div className="flex items-center gap-2 text-primary opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all transform translate-x-0 sm:translate-x-2 group-hover:translate-x-0">
+                      <span className="text-sm font-bold uppercase tracking-widest hidden sm:inline">View History</span>
                       <ChevronRight className="h-5 w-5" />
                     </div>
                   </div>

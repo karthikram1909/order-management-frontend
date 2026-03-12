@@ -58,7 +58,7 @@ export default function AdminPayments() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
+      <div className="p-4 md:p-8">
         <h1 className="text-2xl font-semibold mb-6">Payments & Invoices</h1>
 
         {/* Stats */}
@@ -106,22 +106,22 @@ export default function AdminPayments() {
                 ) : (
                     <div className="divide-y divide-border/60">
                         {filteredOrders.map((order) => (
-                            <div key={order._id} className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => navigate(`/admin/orders/${order._id}`)}>
+                            <div key={order._id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-4 hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => navigate(`/admin/orders/${order._id}`)}>
                                 <div className="flex items-center gap-4">
-                                    <div className={`p-2 rounded-full ${order.paymentStatus === 'PAID' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
+                                    <div className={`p-2 rounded-full flex-shrink-0 ${order.paymentStatus === 'PAID' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
                                         <CreditCard className="h-4 w-4" />
                                     </div>
-                                    <div>
-                                        <p className="font-medium">Order {order._id.slice(-6)}</p>
-                                        <p className="text-sm text-muted-foreground">
+                                    <div className="min-w-0">
+                                        <p className="font-medium truncate">Order {order._id.slice(-6).toUpperCase()}</p>
+                                        <p className="text-sm text-muted-foreground truncate">
                                             {typeof order.clientId === 'object' ? order.clientId?.name : 'Client'} • {new Date(order.createdAt).toLocaleDateString()}
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-6">
-                                    <div className="text-right">
-                                        <p className="font-medium">₹{(order.totalOrderValue || 0).toLocaleString()}</p>
-                                        <p className="text-xs text-muted-foreground">
+                                <div className="flex items-center justify-between sm:justify-end gap-6 sm:text-right">
+                                    <div className="text-left sm:text-right">
+                                        <p className="font-bold text-foreground">₹{(order.totalOrderValue || 0).toLocaleString()}</p>
+                                        <p className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-wider">
                                             Due: {order.creditDueDate ? new Date(order.creditDueDate).toLocaleDateString() : '—'}
                                         </p>
                                     </div>

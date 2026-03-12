@@ -286,7 +286,7 @@ export default function AdminDashboard() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
+      <div className="p-4 md:p-8">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-foreground">{pageTitle}</h1>
@@ -459,21 +459,21 @@ export default function AdminDashboard() {
 
         {/* Orders Section */}
         <div className="mt-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <h2 className="text-lg font-semibold text-foreground">Recent Orders</h2>
-            <div className="flex items-center gap-3">
-              <div className="relative">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+              <div className="relative flex-1 sm:w-64">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search orders..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-64 pl-10"
+                  className="pl-10 w-full"
                 />
               </div>
               <Select value={sortOrder} onValueChange={setSortOrder}>
-                <SelectTrigger className="w-[180px] h-9">
+                <SelectTrigger className="h-9 w-full sm:w-[180px]">
                   <div className="flex items-center gap-2 text-sm">
                     <Filter className="h-4 w-4" />
                     <span><SelectValue placeholder="Sort by" /></span>
@@ -494,7 +494,8 @@ export default function AdminDashboard() {
             onValueChange={setActiveTab}
             className="mt-4"
           >
-            <TabsList className="bg-muted/50">
+            <div className="overflow-x-auto pb-2 scrollbar-hide">
+              <TabsList className="bg-muted/50 w-full justify-start md:justify-center min-w-max">
               <TabsTrigger value="all">All Orders</TabsTrigger>
               <TabsTrigger value="pending" className="gap-2">
                 Pending Pricing
@@ -522,6 +523,7 @@ export default function AdminDashboard() {
               </TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>
             </TabsList>
+            </div>
 
             <TabsContent value={activeTab} className="mt-4">
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

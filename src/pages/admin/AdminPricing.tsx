@@ -139,30 +139,32 @@ export default function AdminPricing() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
+      <div className="p-4 md:p-8">
         {/* Header */}
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="gap-2"
-            onClick={() => navigate("/admin")}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </Button>
-          <div className="flex-1">
-            <h1 className="text-2xl font-semibold text-foreground">
-              Price Order {order._id.slice(-6)}
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Set unit prices for customer request
-            </p>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex items-center gap-4 flex-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-2"
+              onClick={() => navigate("/admin")}
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </Button>
+            <div className="flex-1">
+              <h1 className="text-2xl font-semibold text-foreground">
+                Price Order {order._id.slice(-6)}
+              </h1>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Set unit prices for customer request
+              </p>
+            </div>
           </div>
           <Button
             variant="outline"
             size="sm"
-            className="gap-2"
+            className="gap-2 w-full sm:w-auto"
             onClick={handleLoadLastPrices}
             disabled={isLoadingPrices}
           >
@@ -175,9 +177,9 @@ export default function AdminPricing() {
           </Button>
         </div>
 
-        <div className="mt-8 grid grid-cols-3 gap-8">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             {/* Pricing Notification */}
             <NotificationBanner
               type="info"

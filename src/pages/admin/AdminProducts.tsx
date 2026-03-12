@@ -166,7 +166,7 @@ export default function AdminProducts() {
 
   return (
     <AdminLayout>
-      <div className="p-8 max-w-7xl mx-auto space-y-10 animate-in fade-in duration-700">
+      <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-10 animate-in fade-in duration-700">
         {/* Superior Header Styling */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-1">
@@ -329,7 +329,7 @@ export default function AdminProducts() {
                  </span>
             </div>
             
-            <div className="overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto">
                 <Table>
                     <TableHeader className="bg-muted/10">
                         <TableRow className="hover:bg-transparent border-none">
@@ -341,110 +341,126 @@ export default function AdminProducts() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {loading ? (
-                            <TableRow>
-                                <TableCell colSpan={4} className="h-72 text-center border-none">
-                                    <div className="flex flex-col items-center gap-3">
-                                        <Loader2 className="h-10 w-10 animate-spin text-blue-600/40" />
-                                        <p className="text-sm text-muted-foreground/60 font-medium italic">Fetching manifest...</p>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ) : filteredProducts.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={4} className="h-72 text-center border-none">
-                                    <div className="flex flex-col items-center gap-4">
-                                        <div className="h-16 w-16 rounded-full bg-muted/40 flex items-center justify-center">
-                                            <Search className="h-8 w-8 text-muted-foreground/40" />
-                                        </div>
-                                        <div className="space-y-1">
-                                            <p className="text-lg font-bold text-foreground">Entry not found</p>
-                                            <p className="text-sm text-muted-foreground max-w-xs mx-auto">No products matching your search were found in the master database.</p>
-                                        </div>
-                                        <Button variant="outline" size="sm" onClick={() => setSearchQuery("")} className="mt-2 text-blue-600 border-blue-100 hover:bg-blue-50">Clear Filter</Button>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            filteredProducts.map((product, idx) => (
-                                <TableRow key={product._id} className="group border-b border-border/30 hover:bg-blue-50/20 transition-colors">
-                                    <TableCell className="px-8 py-5">
-                                        <div className="flex items-center gap-5">
-                                            <div className="relative group/img flex-shrink-0">
-                                                <div className="h-14 w-14 rounded-2xl border border-border/40 bg-white overflow-hidden shadow-sm transition-transform group-hover:scale-105 group-hover:shadow-md">
-                                                    {product.imageUrl ? (
-                                                    <img 
-                                                        src={product.imageUrl} 
-                                                        loading="lazy"
-                                                        decoding="async"
-                                                        className="h-full w-full object-cover transition-opacity hover:opacity-90" 
-                                                        alt={product.itemName}
-                                                    />
-                                                    ) : (
-                                                        <div className="h-full w-full flex items-center justify-center bg-muted/20">
-                                                            <Package className="h-6 w-6 text-muted-foreground/30 font-thin" />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <div className="absolute -top-1 -left-1 h-5 w-5 bg-blue-600 rounded-full border-2 border-white text-[10px] text-white flex items-center justify-center font-bold shadow-sm">
-                                                    {idx + 1}
-                                                </div>
+                        {filteredProducts.map((product, idx) => (
+                            <TableRow key={product._id} className="group border-b border-border/30 hover:bg-blue-50/20 transition-colors">
+                                <TableCell className="px-8 py-5">
+                                    <div className="flex items-center gap-5">
+                                        <div className="relative group/img flex-shrink-0">
+                                            <div className="h-14 w-14 rounded-2xl border border-border/40 bg-white overflow-hidden shadow-sm transition-transform group-hover:scale-105 group-hover:shadow-md">
+                                                {product.imageUrl ? (
+                                                <img 
+                                                    src={product.imageUrl} 
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="h-full w-full object-cover transition-opacity hover:opacity-90" 
+                                                    alt={product.itemName}
+                                                />
+                                                ) : (
+                                                    <div className="h-full w-full flex items-center justify-center bg-muted/20">
+                                                        <Package className="h-6 w-6 text-muted-foreground/30 font-thin" />
+                                                    </div>
+                                                )}
                                             </div>
-                                            <div className="flex flex-col gap-0.5">
-                                                <span className="font-bold text-base text-foreground group-hover:text-blue-600 transition-colors uppercase tracking-tight leading-tight">
-                                                    {product.itemName}
-                                                </span>
-                                                <span className="text-[10px] font-bold text-muted-foreground/40 font-mono tracking-widest uppercase truncate max-w-[150px]">
-                                                    ID: {product._id.slice(-8)}
-                                                </span>
+                                            <div className="absolute -top-1 -left-1 h-5 w-5 bg-blue-600 rounded-full border-2 border-white text-[10px] text-white flex items-center justify-center font-bold shadow-sm">
+                                                {idx + 1}
                                             </div>
                                         </div>
-                                    </TableCell>
-                                     <TableCell>
-                                         <Badge variant="outline" className={cn(
-                                             "capitalize font-bold text-[10px]",
-                                             product.category === 'Agarbatti' ? "text-blue-600 bg-blue-50 border-blue-100" : 
-                                             product.category === 'Sambrani' ? "text-indigo-600 bg-indigo-50 border-indigo-100" :
-                                             "text-slate-600 bg-slate-50 border-slate-100"
-                                         )}>
-                                             {product.category || "General"}
-                                         </Badge>
-                                     </TableCell>
-                                    <TableCell className="max-w-[100px]">
-                                        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed font-medium">
-                                            {product.description || <span className="text-muted-foreground/30 italic font-normal">No metadata provided</span>}
-                                        </p>
-                                    </TableCell>
+                                        <div className="flex flex-col gap-0.5">
+                                            <span className="font-bold text-base text-foreground group-hover:text-blue-600 transition-colors uppercase tracking-tight leading-tight">
+                                                {product.itemName}
+                                            </span>
+                                            <span className="text-[10px] font-bold text-muted-foreground/40 font-mono tracking-widest uppercase truncate max-w-[150px]">
+                                                ID: {product._id.slice(-8)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </TableCell>
                                     <TableCell>
-                                        <Badge variant="secondary" className="bg-white border text-blue-700 px-3 py-1 rounded-full font-bold text-[11px] shadow-sm uppercase tracking-wider">
-                                            {product.unit}
+                                        <Badge variant="outline" className={cn(
+                                            "capitalize font-bold text-[10px]",
+                                            product.category === 'Agarbatti' ? "text-blue-600 bg-blue-50 border-blue-100" : 
+                                            product.category === 'Sambrani' ? "text-indigo-600 bg-indigo-50 border-indigo-100" :
+                                            "text-slate-600 bg-slate-50 border-slate-100"
+                                        )}>
+                                            {product.category || "General"}
                                         </Badge>
                                     </TableCell>
-                                    <TableCell className="px-8 text-right">
-                                        <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <Button 
-                                                variant="outline" 
-                                                size="icon" 
-                                                className="h-9 w-9 rounded-xl border-border/40 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-sm"
-                                                onClick={() => setEditingProduct(product)}
-                                            >
-                                                <Edit2 className="h-4 w-4" />
-                                            </Button>
-                                            <Button 
-                                                variant="outline" 
-                                                size="icon" 
-                                                className="h-9 w-9 rounded-xl border-border/40 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all shadow-sm"
-                                                onClick={() => handleDeleteProduct(product._id, product.itemName)}
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        )}
+                                <TableCell className="max-w-[100px]">
+                                    <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed font-medium">
+                                        {product.description || <span className="text-muted-foreground/30 italic font-normal">No metadata provided</span>}
+                                    </p>
+                                </TableCell>
+                                <TableCell>
+                                    <Badge variant="secondary" className="bg-white border text-blue-700 px-3 py-1 rounded-full font-bold text-[11px] shadow-sm uppercase tracking-wider">
+                                        {product.unit}
+                                    </Badge>
+                                </TableCell>
+                                <TableCell className="px-8 text-right">
+                                    <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Button 
+                                            variant="outline" 
+                                            size="icon" 
+                                            className="h-9 w-9 rounded-xl border-border/40 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-sm"
+                                            onClick={() => setEditingProduct(product)}
+                                        >
+                                            <Edit2 className="h-4 w-4" />
+                                        </Button>
+                                        <Button 
+                                            variant="outline" 
+                                            size="icon" 
+                                            className="h-9 w-9 rounded-xl border-border/40 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all shadow-sm"
+                                            onClick={() => handleDeleteProduct(product._id, product.itemName)}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden divide-y divide-border/40">
+                {loading ? (
+                    <div className="p-12 flex flex-col items-center gap-3">
+                        <Loader2 className="h-8 w-8 animate-spin text-blue-600/40" />
+                        <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">Loading Catalog</p>
+                    </div>
+                ) : filteredProducts.length === 0 ? (
+                    <div className="p-12 text-center text-muted-foreground">No products found.</div>
+                ) : (
+                    filteredProducts.map((product) => (
+                        <div key={product._id} className="p-4 space-y-4">
+                            <div className="flex gap-4">
+                                <div className="h-16 w-16 rounded-xl border bg-muted/20 overflow-hidden flex-shrink-0">
+                                    {product.imageUrl ? (
+                                        <img src={product.imageUrl} className="h-full w-full object-cover" />
+                                    ) : (
+                                        <Package className="h-full w-full p-4 text-muted-foreground/20" />
+                                    )}
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                    <div className="flex items-start justify-between gap-2">
+                                        <h3 className="font-bold text-sm uppercase tracking-tight truncate">{product.itemName}</h3>
+                                        <Badge variant="outline" className="text-[9px] h-5 py-0 px-1">{product.unit}</Badge>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{product.description || "No description"}</p>
+                                    <Badge variant="secondary" className="mt-2 text-[9px] uppercase tracking-wider font-bold h-5">{product.category}</Badge>
+                                </div>
+                            </div>
+                            <div className="flex gap-2">
+                                <Button variant="outline" size="sm" className="flex-1 h-9 rounded-lg gap-2" onClick={() => setEditingProduct(product)}>
+                                    <Edit2 className="h-3.5 w-3.5" /> Edit
+                                </Button>
+                                <Button variant="outline" size="sm" className="flex-1 h-9 rounded-lg gap-2 text-destructive border-destructive/20 hover:bg-red-50" onClick={() => handleDeleteProduct(product._id, product.itemName)}>
+                                    <Trash2 className="h-3.5 w-3.5" /> Delete
+                                </Button>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
             
             {!loading && filteredProducts.length > 0 && (
