@@ -1,0 +1,1492 @@
+[
+  {
+    "id": "b533eb84-d386-4b27-a675-6f5a947d3492",
+    "item_name": "weightless charcoal",
+    "description": "Premium weightless charcoal.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/257.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "7ce61c98-1d76-4990-9e80-67abcf1f608c",
+    "item_name": "Coconut shell charcoal",
+    "description": "Organic coconut shell charcoal.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/257.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "9ea69d17-516a-44ed-9b32-cd484c53c59f",
+    "item_name": "Arabian Sandal Perfume",
+    "description": "Exotic Arabian Sandalwood fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "84309738-1d60-45aa-ada2-d25236bb111f",
+    "item_name": "Cold Water Perfume",
+    "description": "Refreshing cool aquatic fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "179014ca-b401-428c-b7c6-e10fd858aae7",
+    "item_name": "Divya Perfume",
+    "description": "Divine traditional fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "1c1b6caf-3de3-4bad-b6a1-60a7119179ee",
+    "item_name": "Fancy Fruit Perfume",
+    "description": "Sweet fruity blend fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "9684039b-63c9-4103-bec5-5d01a1209e4b",
+    "item_name": "Gullistan Rose Perfume",
+    "description": "Premium garden rose fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "394d30af-c98d-4a82-b97b-f1eb84a42949",
+    "item_name": "Jasmine King Perfume",
+    "description": "Strong royal jasmine fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "8802eac3-b267-441d-8a22-ef869d9f8340",
+    "item_name": "Javadhu Perfume",
+    "description": "Traditional herbal javadhu fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "e658cfea-4f5a-4647-874a-14b987b7f417",
+    "item_name": "Kewda Base Perfume",
+    "description": "Strong kewda floral base.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "edd34112-bf8d-4074-a650-c8926f3dd6c0",
+    "item_name": "Sugandh Swarna Perfume",
+    "description": "Golden sweet fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "d05b8c2f-519b-4b72-bf40-34517b149a41",
+    "item_name": "Lavender Amritha Perfume",
+    "description": "Soothing Lavender blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "b1a19eb7-ad89-4e4c-91d0-20b903a2a031",
+    "item_name": "Trident Lavender Perfume",
+    "description": "Sharp fresh lavender.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "97fcba88-b805-4fd4-bce2-6c4dfa0c9fa5",
+    "item_name": "Mist Perfume",
+    "description": "Light morning mist fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "801e64c2-ec60-4343-b816-4cddf2ebd577",
+    "item_name": "Mogra Perfume",
+    "description": "Natural night-blooming jasmine.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "ea782765-8b0e-4fe4-a423-aab07ab67b3e",
+    "item_name": "PC Sandal Perfume",
+    "description": "Classic Sandalwood fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "a70fe924-e146-4653-9097-654cc532a9ad",
+    "item_name": "Pineapple King Perfume",
+    "description": "Sweet tropical pineapple.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "f6b4a9c6-0162-4bdf-8a69-108ecb58aff6",
+    "item_name": "Trident Rose Perfume",
+    "description": "Sharp rose fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "572fa10d-0b7c-48de-a259-51a4f8be0654",
+    "item_name": "Trident Pineapple Perfume",
+    "description": "Zesty pineapple blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "31d8a057-6941-467f-8cf7-7a6209ac9a94",
+    "item_name": "Trident Sandal Perfume",
+    "description": "Heavy sandalwood base.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "564dba76-14cf-4027-8bf0-f8e3f2dfe02f",
+    "item_name": "Rudhramala Perfume",
+    "description": "Intense spiritual fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "57cd10e3-51e5-45e7-8008-8c8d24fee22a",
+    "item_name": "Sandal King Perfume",
+    "description": "Strongest sandal blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "8e748255-8e5e-4381-937b-953cccd93f19",
+    "item_name": "Sandal King ACN Perfume",
+    "description": "ACN grade premium sandal.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "f7d28656-5ca3-4440-9b69-d40b4be9e47f",
+    "item_name": "Dhunamala Perfume",
+    "description": "Rich smoky fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "6be64122-3ac2-44d9-8215-adc762446109",
+    "item_name": "Queen Rose Perfume",
+    "description": "Elegant queen rose fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "883da2ca-9597-4cc2-8a18-cd717eda289f",
+    "item_name": "Silver Diamond Perfume",
+    "description": "Bright modern fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "3939b6d4-a8cf-4f00-8583-0f79aee0948d",
+    "item_name": "Nine Flower Perfume",
+    "description": "Complex nine-floral blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "a1afc45f-f25c-4a5b-ae10-bba6a64e1a35",
+    "item_name": "A Night in Dubai Perfume",
+    "description": "Luxurious Arabian night scent.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "1b1cf2aa-a3a1-4e23-8c38-84a8cd072430",
+    "item_name": "Aarthi Perfume",
+    "description": "Devotional prayer fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "29f6284c-3573-4192-a1b9-69195245d9fd",
+    "item_name": "Champa Perfume",
+    "description": "Magnolia / Champa fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "f93613bd-38f2-4d76-89f3-da65dbfd58f8",
+    "item_name": "Musk and Crystal Perfume",
+    "description": "Clean musk and mineral notes.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "51de0d0d-bbfd-40d6-ac31-a5cfb392a171",
+    "item_name": "Amber Sandal Perfume",
+    "description": "Warm amber and sandalwood.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "abb58c70-7aff-4e68-8267-998476d4b541",
+    "item_name": "Loban Rudhraksh Perfume",
+    "description": "Loban and sacred wood notes.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "13c77b36-5d5a-4ab1-8543-125bd97587ce",
+    "item_name": "Guggal Perfume",
+    "description": "Pure Guggal resin fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "63b91cda-e65f-4010-b2d8-cd364cdeaf26",
+    "item_name": "Sambrani New Perfume",
+    "description": "Fresh Sambrani blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "906b4a7a-6260-4280-9904-9b81970f9893",
+    "item_name": "White cup premix",
+    "description": "Professional grade white cup premix.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/6001.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "500b30d6-13bc-414f-9fbf-a57b41833e85",
+    "item_name": "Stone powder",
+    "description": "Premium stone powder.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/207.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "be89a39d-51f3-45a2-8d3a-1456facbf3e2",
+    "item_name": "Black cup premix",
+    "description": "Professional grade black cup premix.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/257.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "7a802918-5214-4222-8541-9cb0bf86eede",
+    "item_name": "Loban Incense sticks (3mm/ 25kg)",
+    "description": "Bulk supply of Loban scented incense.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/527.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "ccdc23f5-5512-4e9f-be4f-4c6989e08530",
+    "item_name": "Dasangam Incense sticks (3mm/25kg)",
+    "description": "Bulk supply of Dasangam scented incense.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/527.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "f9775216-129d-4928-8899-d4b5bcbb9a03",
+    "item_name": "Floral sambrani Incense sticks (3mm/25kg)",
+    "description": "Bulk supply of Floral sambrani scented incense.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/527.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "d30f61f6-fb8f-48f4-838a-713f57fa44cd",
+    "item_name": "Ruby Sandal Perfume",
+    "description": "Sweet Ruby grade Sandalwood.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "55030211-a7cb-4164-8dce-bfc6655d9051",
+    "item_name": "Vinayak Loban Perfume",
+    "description": "Devotional Loban fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "abb6e148-ed88-4808-a7a6-bf31e7a8f401",
+    "item_name": "Sandal Flower Perfume",
+    "description": "Floral Sandalwood blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "990beab1-4113-4c84-81a1-00cdf84b6e7a",
+    "item_name": "Camphor Compound Perfume",
+    "description": "Sharp Camphorated notes.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "0df698e9-a756-4dbd-acc6-69c4dfa70bd5",
+    "item_name": "Surya Perfume",
+    "description": "Bright solar fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "148f5e7c-dfcc-4787-869f-dd121bafaeff",
+    "item_name": "Rose Water Perfume",
+    "description": "Distilled rose water essence.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "6f5aedc4-d7da-4e64-be83-acdb611ff5fd",
+    "item_name": "Sambrani 1 Perfume",
+    "description": "Classic Sambrani grade 1.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "c0a692f8-9a5d-4a2c-a683-98b26fbb30f1",
+    "item_name": "Chandanmala Perfume",
+    "description": "Pure Sandalwood garland scent.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "230fed8a-955a-4e3d-b71d-81e9e9dd8f87",
+    "item_name": "Rudhviksha Perfume",
+    "description": "Spiritual seed fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "89fe3b1b-7f98-4b02-b579-e986a564bdde",
+    "item_name": "Bruno Perfume",
+    "description": "Robust industrial fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "eb0ae507-1748-4793-9d71-a7cc60e413f5",
+    "item_name": "Darbar Perfume",
+    "description": "Royal court fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "b8486684-4881-4304-8a4d-c82d02464c7a",
+    "item_name": "Yara Yara",
+    "description": "Product: Yara Yara. Premium aromatic choice.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "0596bda8-1bbe-408c-9184-35f960978905",
+    "item_name": "Vanillin",
+    "description": "Product: Vanillin. Premium aromatic choice.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "4b0ad5b8-3300-4a96-bedc-8d92b891d24b",
+    "item_name": "Rose crystal",
+    "description": "Product: Rose crystal. Premium aromatic choice.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "3f3e1026-de25-4a8b-9aab-c12306e3b216",
+    "item_name": "Jasmine powder",
+    "description": "Product: Jasmine powder. Premium aromatic choice.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "747956da-b553-48ac-b3cc-98e9b4e464a3",
+    "item_name": "IBF",
+    "description": "Product: IBF. Premium quality choice.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "1286d192-017d-43f3-b5f7-01dcda9cbc16",
+    "item_name": "DEP Barrel (225kg)",
+    "description": "Product: DEP Barrel (225kg). Bulk packaging.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "d9e06b99-e63c-4d9b-8bd2-a35e20484d92",
+    "item_name": "DEP Carboy (35kg)",
+    "description": "Product: DEP Carboy (35kg). Medium packaging.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "c83518bf-fcf0-4a84-891c-0a0d08c6a446",
+    "item_name": "Dasangam Sambrani Perfume",
+    "description": "Traditional Dasangam blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "e2c00b8c-e0d9-4139-93aa-8270f670eb0e",
+    "item_name": "Loban Incense sticks (5 mm/ 25kg)",
+    "description": "Product: Loban Incense sticks (5 mm/ 25kg). Bulk supply.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": null,
+    "category": "Materials"
+  },
+  {
+    "id": "7b219d55-c9a4-42bc-ae22-74190052deed",
+    "item_name": "Kodi Loban Super Perfume",
+    "description": "Extra strong Kodi Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "897f109a-16dc-44d3-b581-9f4d1a01bfe9",
+    "item_name": "Loban Sweet Perfume",
+    "description": "Sweet honey-like Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "320fbd38-ed8e-4983-86e8-b578a44d4f9b",
+    "item_name": "Loban Base Perfume",
+    "description": "Fundamental Loban base.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "faa8dccf-4fce-43f5-af4e-64626f0e55f1",
+    "item_name": "Loban Cinnamon Perfume",
+    "description": "Spicy Cinnamon Loban fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "183d9a78-494b-4cd9-b017-e22f09b6b2ed",
+    "item_name": "Loban Southern Spice Perfume",
+    "description": "Spicy southern blend Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "ca509f8c-aafd-4cfb-9d36-34a2301eb2fd",
+    "item_name": "Mr Loban Perfume",
+    "description": "Professional grade Mr Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "46240af9-4a65-4254-9f98-72ab8e04013a",
+    "item_name": "Kuppam dust",
+    "description": "Fine Kuppam dust.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://images.unsplash.com/photo-1541544336712-9c169225c56d?q=80&w=2670&auto=format&fit=crop",
+    "category": "Materials"
+  },
+  {
+    "id": "1256e543-b3a5-4457-a12e-03b64711dca5",
+    "item_name": "Damar battu lumps",
+    "description": "Damar battu in lump form.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
+    "category": "Materials"
+  },
+  {
+    "id": "17514ea3-3bbd-4eeb-b7bd-00b7fd3890ac",
+    "item_name": "Gum damar ABX",
+    "description": "High clarity ABX grade gum damar.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
+    "category": "Materials"
+  },
+  {
+    "id": "4b7eceea-b402-4b7e-a62d-48ba8dbb3131",
+    "item_name": "Gum Benzoin BX",
+    "description": "High fragrance BX grade gum benzoin.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/134.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "128ed9ab-f012-47c8-9f43-2756c632dcd8",
+    "item_name": "Gum rosin barrel",
+    "description": "Bulk gum rosin in barrels.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/144.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "9b6da843-d7d1-4151-bd3c-376e14072e02",
+    "item_name": "9 inch bamboo stick",
+    "description": "Premium 9 inch bamboo sticks.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/244.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "b46ae26b-aa67-46cb-aab1-cc6d9d046822",
+    "item_name": "Damar battu crumbs",
+    "description": "Damar battu in crumb form.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/268.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "deddda73-b91d-4d5b-9843-823a33424ca0",
+    "item_name": "Loban premix",
+    "description": "High-grade Loban premix for incense.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/279.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "945ce6bb-2abe-4d72-86da-a647f3d94033",
+    "item_name": "Damar battu powder",
+    "description": "Damar battu in powder form.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/279.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+    "item_name": " 8-inch bamboo stick",
+    "description": "Premium 8 inch bamboo sticks.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/236.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "faf31f6b-11ae-469a-adc3-9c682266e15f",
+    "item_name": "Gum rosin broken",
+    "description": "Natural broken gum rosin bits.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/144.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "d494f226-68bb-4f53-b056-c3380cfa5c2b",
+    "item_name": "Gum damar AC",
+    "description": "Industrial AC grade gum damar.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/159.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "44b98d66-d52a-4980-989c-8f20d69e49e7",
+    "item_name": "Potassium nitrate",
+    "description": "Industrial grade Potassium nitrate.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/207.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "2483057d-91a7-4bec-831d-621100abf627",
+    "item_name": "Guar gum(2000 cps)",
+    "description": "Guar gum 2000 viscosity.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/207.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "e473d4c0-d1e5-4193-8ae8-f6bfebb002a1",
+    "item_name": "Rose Incense sticks (3mm/25kg)",
+    "description": "Bulk supply of Rose scented incense.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/5350.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "adfd8014-bd98-4eec-9296-5a46976a4079",
+    "item_name": "Cup Sambrani (144 box)",
+    "description": "Premium cup sambrani multi-pack.",
+    "unit": "box",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/5969.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "aa1b43e9-4f1e-4c53-8eb8-950472d90bca",
+    "item_name": "White saw dust",
+    "description": "Refined white saw dust.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/6001.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "811cf047-0180-4e8e-b9b9-1bb735720766",
+    "item_name": "T1 wood powder",
+    "description": "Premium wood powder T1 grade.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/6001.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "a5a7fc02-6e68-435b-a080-d525c6aa7c92",
+    "item_name": "Raw bathi premix",
+    "description": "Base agarbatti premix.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/6001.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "ef61314b-b2b0-4f3c-86a2-44f1958ebacb",
+    "item_name": "Brown saw dust",
+    "description": "Natural brown saw dust.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/64.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "dcf529c9-c9dd-4fa0-ad53-38bd758c6299",
+    "item_name": "Joss powder",
+    "description": "Natural bonding joss powder.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/9984.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "6f05736b-8bac-4aa5-a844-62e54638130a",
+    "item_name": "Gum damar dust",
+    "description": "Natural gum damar dust.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/104.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "93e66431-4131-4d16-b037-5b8ec36a9cc0",
+    "item_name": "Guar gum(8000 cps)",
+    "description": "Guar gum 8000 high viscosity.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/207.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "477eb0be-3139-4d0b-88b5-02fe3ae794d8",
+    "item_name": "Modified starch",
+    "description": "Industrial modified starch.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/207.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "12453683-60e4-4aef-8aa4-7cbb39a58f60",
+    "item_name": "Acrylic polimer",
+    "description": "Industrial acrylic polymer base.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-01T07:36:20.741502+00:00",
+    "image_url": "https://tpesictttjotzcxscwia.supabase.co/storage/v1/object/public/product-images/207.jpg",
+    "category": "Materials"
+  },
+  {
+    "id": "cb4eda79-5b69-4961-ae61-9fc853edc14e",
+    "item_name": "Pakiza(Bharatham) Perfume",
+    "description": "Traditional Pakiza Bharatham scent.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "16f3349c-c4c7-41f7-a5c5-a1a0c4f98ee8",
+    "item_name": "Trident Loban Perfume",
+    "description": "High intensity Trident Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "f3d44bc2-c012-4fc2-83f0-9e6a6a4fbc46",
+    "item_name": "T T Loban Perfume",
+    "description": "TT grade industrial Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T05:46:03.668989+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Perfumes"
+  },
+  {
+    "id": "3b7fb308-fde0-4af1-b4e0-229f895233d5",
+    "item_name": "Arabian Sandal",
+    "description": "Premium Arabian Sandalwood fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "62953ddc-f17f-4a01-abfe-d5a507676153",
+    "item_name": "Cold water",
+    "description": "Refreshing cool aquatic fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "05250dc3-2761-4c12-a0f0-c18cd8d7cd28",
+    "item_name": "Divya",
+    "description": "Divine traditional fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "11efabed-d375-4831-9ad7-7bd935bdff0b",
+    "item_name": "Fancy fruit",
+    "description": "Sweet fruity blend fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "e977ee55-3c16-495e-9faa-0610d5aa829b",
+    "item_name": "Gullistan Rose",
+    "description": "Premium garden rose fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "30450530-1289-4139-93fe-eeb70755b75c",
+    "item_name": "Jasmine king",
+    "description": "Strong royal jasmine fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "e50057a5-7a61-4619-9d4f-0eb3f58b34a1",
+    "item_name": "Javadhu",
+    "description": "Traditional herbal javadhu fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "efc8adb5-e640-42b1-8ad5-b6c2f4feeda7",
+    "item_name": "Kewda base",
+    "description": "Strong kewda floral base.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "30f9b32c-b797-4b1f-afb7-fdbdb4be8e67",
+    "item_name": "Sugandh swarna",
+    "description": "Golden sweet fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "d6db0200-08e4-4f4e-b5e0-62baa52cb28d",
+    "item_name": "Lavender Amritha",
+    "description": "Soothing Lavender blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "e305e3dc-01ce-4fb1-8145-d40f1c041de8",
+    "item_name": "Trident Lavender",
+    "description": "Sharp fresh lavender.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "d240fa4e-fc8e-46f6-8fec-191adc03b694",
+    "item_name": "Mist",
+    "description": "Light morning mist fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "ef38e671-167d-417e-a89b-da5942a27514",
+    "item_name": "Mogra",
+    "description": "Natural night-blooming jasmine.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "0adfe5be-005d-4fdb-ada4-d7a933a96d25",
+    "item_name": "PC Sandal",
+    "description": "Classic Sandalwood fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "385c54af-c8af-42ad-980e-1be68e014e1e",
+    "item_name": "Pineapple king",
+    "description": "Sweet tropical pineapple.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "9118aac2-9cc1-4265-9d99-2e261b1f874b",
+    "item_name": "Trident Rose",
+    "description": "Sharp rose fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "a856e79b-57db-49fb-8b4b-266ddd7ca42a",
+    "item_name": "Trident Pineapple",
+    "description": "Zesty pineapple blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "7a5cd145-cf9c-4a5b-8d12-524c8a6079a2",
+    "item_name": "Trident Sandal",
+    "description": "Heavy sandalwood base.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "0a561773-9800-494f-8c83-7805f3c64494",
+    "item_name": "Rudhramala",
+    "description": "Intense spiritual fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "1bdca26e-3cbb-4a7e-a0b0-273c9c58f779",
+    "item_name": "Sandal King",
+    "description": "Strongest sandal blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "24dc941c-7095-4927-92af-8d3728b68829",
+    "item_name": "Sandal King ACN",
+    "description": "ACN grade premium sandal.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "f786c220-d74d-4b03-a1ea-1e261481819b",
+    "item_name": "Dhunamala",
+    "description": "Rich smoky fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "8800f164-c026-4d46-8881-8c0abda84f42",
+    "item_name": "Queen rose",
+    "description": "Elegant queen rose fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "5329872a-e814-4a78-88d5-c92b8252c32c",
+    "item_name": "Silver diamond",
+    "description": "Bright modern fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "9a0976a6-346e-4bf3-a130-0a6b7625c5c0",
+    "item_name": "Nine flower",
+    "description": "Complex nine-floral blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "b2844b3e-dd56-4381-b58d-f083fcee9a3b",
+    "item_name": "A night in Dubai",
+    "description": "Luxurious Arabian night scent.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "18576459-3296-45d6-89c4-00a66a3d8d63",
+    "item_name": "Aarthi",
+    "description": "Devotional prayer fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "d98e37ae-3cd7-4a9a-a0af-f6facad2b44c",
+    "item_name": "Champa",
+    "description": "Magnolia / Champa fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "9e79035e-bf43-46a4-b5f7-d5107196f9a4",
+    "item_name": "Musk and crystal",
+    "description": "Clean musk and mineral notes.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "8e6cec8c-0672-4061-8d0b-5d0615e3f49e",
+    "item_name": "Amber sandal",
+    "description": "Warm amber and sandalwood.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "666c45f0-5e3f-40f2-95b6-650411feacdc",
+    "item_name": "Loban rudhraksh",
+    "description": "Loban and sacred wood notes.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "6707afb4-d75a-472b-a977-743cfa8127df",
+    "item_name": "Guggal",
+    "description": "Pure Guggal resin fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "42074ffc-1b3f-4dfa-a871-b584f42b7177",
+    "item_name": "Sambrani new",
+    "description": "Fresh Sambrani blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "08b099d4-9545-4594-a3aa-f9315d3a9bce",
+    "item_name": "Ruby sandal",
+    "description": "Sweet Ruby grade Sandalwood.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "2df183ea-f383-422e-a192-03f6ce0f6ae7",
+    "item_name": "Vinayak Loban",
+    "description": "Devotional Loban fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "bf7999e8-3a0a-4251-8050-ff3b84daae66",
+    "item_name": "Sandal flower",
+    "description": "Floral Sandalwood blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "376d346c-9d40-4ac6-9c25-5b3055012526",
+    "item_name": "Camphor compound",
+    "description": "Sharp Camphorated notes.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "d74e0421-2c87-4fe2-b3ab-45d5a4b87876",
+    "item_name": "Surya",
+    "description": "Bright solar fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "de98cae0-f954-4408-ba57-e9a928f2d504",
+    "item_name": "Rose water",
+    "description": "Distilled rose water essence.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "d9d001c4-4c45-4b89-8fe4-87704628db15",
+    "item_name": "Sambrani 1",
+    "description": "Classic Sambrani grade 1.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "e72cf9c3-3836-422e-a24f-951ebe511b42",
+    "item_name": "Chandanmala",
+    "description": "Pure Sandalwood garland scent.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "cfe0ea1a-95d9-498e-8879-774b305fe3f7",
+    "item_name": "Rudhviksha",
+    "description": "Spiritual seed fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Agarbatti"
+  },
+  {
+    "id": "408f587d-710f-43c4-9510-57e55210c2ef",
+    "item_name": "Bruno",
+    "description": "Robust industrial fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "8db2f738-05dd-4208-9bec-3485a6a3a0fd",
+    "item_name": "Darbar",
+    "description": "Royal court fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "54c17873-8241-4a83-b027-fcd22c33aca7",
+    "item_name": "Dasangam",
+    "description": "Traditional Dasangam blend.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "ed931c14-150f-45e4-8a56-b4c9cecf57e9",
+    "item_name": "Kodi loban super",
+    "description": "Extra strong Kodi Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "7821efc9-9d23-4520-8c6c-322945014443",
+    "item_name": "Loban sweet",
+    "description": "Sweet honey-like Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "2040a27e-92ab-419a-bb3e-e695e2a1937e",
+    "item_name": "Loban base",
+    "description": "Fundamental Loban base.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "ec06f6ff-d4fd-40cd-b8ad-081e94a97ef6",
+    "item_name": "Loban cinnamon",
+    "description": "Spicy Cinnamon Loban fragrance.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "cad5fc49-b523-4670-a25a-7dd11ad465f9",
+    "item_name": "Loban southern spice",
+    "description": "Spicy southern blend Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "a3330fec-a352-4b3e-b0aa-1979c0154a99",
+    "item_name": "Mr Loban",
+    "description": "Professional grade Mr Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "be269d28-3fa1-436e-aaaa-18c67abda358",
+    "item_name": "Pakiza(Bharatham)",
+    "description": "Traditional Pakiza Bharatham scent.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "5af7d734-3d7e-4e8f-b7a3-3d20d80e05d0",
+    "item_name": "Trident loban",
+    "description": "High intensity Trident Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  },
+  {
+    "id": "dc644099-abee-4658-9b63-5ee95b761f0f",
+    "item_name": "T T loban",
+    "description": "TT grade industrial Loban.",
+    "unit": "kg",
+    "is_active": true,
+    "created_at": "2026-03-02T06:15:10.774332+00:00",
+    "image_url": "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=2670&auto=format&fit=crop",
+    "category": "Sambrani"
+  }
+]

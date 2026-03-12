@@ -461,11 +461,11 @@ export const extendDueDate = async (orderId: string, date: string) => {
  * Searches past orders for the same client (excluding the current order)
  * that already have priced items, then maps itemId -> unitPrice.
  */
-export const getLastPrices = async (orderId: string): Promise<Record<string, number>> => {
+export const getLastPrices = async (orderId: string): Promise<{ idMap: Record<string, number>, nameMap: Record<string, number> }> => {
     // 1. Get the current order to find the clientId
     const { data: currentOrder, error: orderError } = await supabase
         .from('orders')
-        .select('client_id, items')
+        .select('client_id')
         .eq('id', orderId)
         .single();
 
@@ -473,34 +473,53 @@ export const getLastPrices = async (orderId: string): Promise<Record<string, num
 
     const clientId = currentOrder.client_id;
 
-    // 2. Fetch previous orders for the same client (excluding the current one)
-    //    that have been priced — we look at all statuses except pure NEW_INQUIRY
+    // 2. Fetch all orders that have been priced (excluding current and cancelled)
     const { data: pastOrders, error: pastError } = await supabase
         .from('orders')
-        .select('items, created_at')
-        .eq('client_id', clientId)
+        .select('items, created_at, client_id')
         .neq('id', orderId)
         .not('order_status', 'eq', 'NEW_INQUIRY')
+        .not('order_status', 'eq', 'CANCELLED')
         .order('created_at', { ascending: false });
 
     if (pastError) throw pastError;
-    if (!pastOrders || pastOrders.length === 0) return {};
+    
+    // Build maps of itemId -> unitPrice and itemName -> unitPrice
+    const globalIdMap: Record<string, number> = {};
+    const globalNameMap: Record<string, number> = {};
+    const clientIdMap: Record<string, number> = {};
+    const clientNameMap: Record<string, number> = {};
 
-    // 3. Build a map of itemId -> unitPrice from past orders (most recent wins)
-    const priceMap: Record<string, number> = {};
+    if (pastOrders) {
+        for (const pastOrder of pastOrders) {
+            const items: any[] = pastOrder.items || [];
+            const isThisClient = pastOrder.client_id === clientId;
 
-    for (const pastOrder of pastOrders) {
-        const items: any[] = pastOrder.items || [];
-        for (const item of items) {
-            const itemId = item.itemId?._id || item.itemId || item.productId;
-            const unitPrice = item.unitPrice;
-            if (itemId && unitPrice && unitPrice > 0 && !priceMap[itemId]) {
-                priceMap[itemId] = unitPrice;
+            for (const item of items) {
+                const itemId = item.itemId?._id || item.itemId || item.productId;
+                const itemName = (item.itemName || item.itemId?.itemName || item.itemId?.name || '').trim().toLowerCase();
+                const unitPrice = item.unitPrice;
+                
+                if (unitPrice && unitPrice > 0) {
+                    // Global maps (latest overall)
+                    if (itemId && !globalIdMap[itemId]) globalIdMap[itemId] = unitPrice;
+                    if (itemName && !globalNameMap[itemName]) globalNameMap[itemName] = unitPrice;
+                    
+                    // Client maps (latest for THIS client)
+                    if (isThisClient) {
+                        if (itemId && !clientIdMap[itemId]) clientIdMap[itemId] = unitPrice;
+                        if (itemName && !clientNameMap[itemName]) clientNameMap[itemName] = unitPrice;
+                    }
+                }
             }
         }
     }
 
-    return priceMap;
+    // Merge: Client specific > Global
+    return {
+        idMap: { ...globalIdMap, ...clientIdMap },
+        nameMap: { ...globalNameMap, ...clientNameMap }
+    };
 };
 
 export const adminDeliverOrder = async (orderId: string) => {

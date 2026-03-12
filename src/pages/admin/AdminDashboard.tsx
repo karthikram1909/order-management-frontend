@@ -197,11 +197,11 @@ export default function AdminDashboard() {
   }, [error]);
 
   // Calculate real stats
-  const pendingPricingCount = orders.filter(o => ['NEW_INQUIRY', 'PENDING_PRICING'].includes(o.orderStatus)).length;
-  const actionRequiredCount = orders.filter(o => ['WAITING_CLIENT_APPROVAL', 'IN_TRANSIT'].includes(o.orderStatus)).length;
-  const confirmedCount = orders.filter(o => o.orderStatus === 'ORDER_CONFIRMED' || o.paymentStatus === 'PAID').length;
-  const overdueCount = orders.filter(o => o.paymentStatus === 'OVERDUE').length;
-  const completedCount = orders.filter(o => ['CLOSED', 'DELIVERED'].includes(o.orderStatus)).length;
+  const pendingPricingCount = orders.filter(o => o.orderStatus !== 'CANCELLED' && ['NEW_INQUIRY', 'PENDING_PRICING'].includes(o.orderStatus)).length;
+  const actionRequiredCount = orders.filter(o => o.orderStatus !== 'CANCELLED' && ['WAITING_CLIENT_APPROVAL', 'IN_TRANSIT'].includes(o.orderStatus)).length;
+  const confirmedCount = orders.filter(o => o.orderStatus !== 'CANCELLED' && (o.orderStatus === 'ORDER_CONFIRMED' || o.paymentStatus === 'PAID')).length;
+  const overdueCount = orders.filter(o => o.orderStatus !== 'CANCELLED' && o.paymentStatus === 'OVERDUE').length;
+  const completedCount = orders.filter(o => o.orderStatus !== 'CANCELLED' && ['CLOSED', 'DELIVERED'].includes(o.orderStatus)).length;
 
   const dynamicStatCards = [
     {
@@ -247,8 +247,8 @@ export default function AdminDashboard() {
     if (activeTab === "all") return matchesSearch;
     if (activeTab === "pending") return matchesSearch && (order.orderStatus === "PENDING_PRICING" || order.orderStatus === "NEW_INQUIRY");
     if (activeTab === "action") return matchesSearch && (order.orderStatus === "WAITING_CLIENT_APPROVAL" || order.orderStatus === "IN_TRANSIT");
-    if (activeTab === "confirmed") return matchesSearch && (order.orderStatus === "ORDER_CONFIRMED" || order.paymentStatus === "PAID");
-    if (activeTab === "overdue") return matchesSearch && order.paymentStatus === "OVERDUE";
+    if (activeTab === "confirmed") return matchesSearch && (order.orderStatus === "ORDER_CONFIRMED" || order.paymentStatus === "PAID") && order.orderStatus !== 'CANCELLED';
+    if (activeTab === "overdue") return matchesSearch && order.paymentStatus === "OVERDUE" && order.orderStatus !== 'CANCELLED';
     if (activeTab === "completed") return matchesSearch && (order.orderStatus === "CLOSED" || order.orderStatus === "DELIVERED");
 
     return matchesSearch;

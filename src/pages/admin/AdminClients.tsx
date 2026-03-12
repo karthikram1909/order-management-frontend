@@ -89,14 +89,17 @@ export default function AdminClients() {
                 <Card className="bg-primary/5 border-none">
                     <CardContent className="p-6">
                         <p className="text-sm text-muted-foreground uppercase font-bold tracking-widest mb-1">Total Orders</p>
-                        <h3 className="text-3xl font-black">{clientOrders.length}</h3>
+                        <h3 className="text-3xl font-black">{clientOrders.filter((o: any) => o.orderStatus !== 'CANCELLED').length}</h3>
                     </CardContent>
                 </Card>
                 <Card className="bg-green-50 border-none">
                     <CardContent className="p-6">
                         <p className="text-sm text-green-600 uppercase font-bold tracking-widest mb-1">Total Spent</p>
                         <h3 className="text-3xl font-black text-green-700">
-                            ₹{clientOrders.reduce((sum: number, o: any) => sum + (o.cartTotal || 0), 0).toLocaleString()}
+                            ₹{clientOrders
+                                .filter((o: any) => o.orderStatus !== 'CANCELLED')
+                                .reduce((sum: number, o: any) => sum + (o.cartTotal || 0), 0)
+                                .toLocaleString()}
                         </h3>
                     </CardContent>
                 </Card>

@@ -39,7 +39,7 @@ export default function AdminPayments() {
     // Only show relevant payment statuses? Or just filter by search.
     // Let's show everything but allow search.
     // Or maybe filter out 'NEW_INQUIRY' / 'PENDING_PRICING' as no payment is relevant yet.
-    if (['NEW_INQUIRY', 'PENDING_PRICING', 'WAITING_CLIENT_APPROVAL'].includes(order.orderStatus)) return false;
+    if (['NEW_INQUIRY', 'PENDING_PRICING', 'WAITING_CLIENT_APPROVAL', 'CANCELLED'].includes(order.orderStatus)) return false;
 
     const searchTerm = searchQuery.toLowerCase();
     const orderId = order._id?.toLowerCase() || "";
@@ -49,11 +49,14 @@ export default function AdminPayments() {
   });
 
   const totalRevenue = orders
-    .filter(o => o.paymentStatus === 'PAID')
+    .filter(o => o.paymentStatus === 'PAID' && o.orderStatus !== 'CANCELLED')
     .reduce((acc, curr) => acc + (curr.totalOrderValue || 0), 0);
 
   const pendingRevenue = orders
-    .filter(o => o.paymentStatus !== 'PAID' && !['NEW_INQUIRY', 'PENDING_PRICING', 'WAITING_CLIENT_APPROVAL'].includes(o.orderStatus))
+    .filter(o => 
+      o.paymentStatus !== 'PAID' && 
+      !['NEW_INQUIRY', 'PENDING_PRICING', 'WAITING_CLIENT_APPROVAL', 'CANCELLED'].includes(o.orderStatus)
+    )
     .reduce((acc, curr) => acc + (curr.totalOrderValue || 0), 0);
 
   return (

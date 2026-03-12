@@ -1,0 +1,50 @@
+--- ALL ORDERS FOR CLIENT 4b74ba79-6075-46b4-bee6-4b830b2da66c ---
+Order: 2d7dd5 | Status: PENDING_PRICING | Date: 2026-03-12T09:09:39.700805+00:00
+  Item: " 8-inch bamboo stick" | Price: undefined
+---
+Order: 9edf8a | Status: CANCELLED | Date: 2026-03-12T08:57:21.484561+00:00
+  Item: " 8-inch bamboo stick" | Price: undefined
+---
+Order: d7c362 | Status: DELIVERED | Date: 2026-03-12T08:51:33.615259+00:00
+  Item: " 8-inch bamboo stick" | Price: 100
+  Item: "9 inch bamboo stick" | Price: 23
+  Item: "Acrylic polimer" | Price: 34
+  Item: "Black cup premix" | Price: 44
+  Item: "Champa Perfume" | Price: 109.99
+---
+Order: 80eac0 | Status: CANCELLED | Date: 2026-03-09T09:38:56.357642+00:00
+  Item: "9 inch bamboo stick" | Price: 1000.8
+  Item: "A night in Dubai" | Price: 120.32
+---
+Order: 3469f0 | Status: DELIVERED | Date: 2026-03-09T09:37:38.707084+00:00
+  Item: " 8-inch bamboo stick" | Price: 55
+  Item: "Cup Sambrani (144 box)" | Price: 44.98
+  Item: "Coconut shell charcoal" | Price: 5556
+  Item: "Floral sambrani Incense sticks (3mm/25kg)" | Price: 21
+---
+Order: 61cf12 | Status: IN_TRANSIT | Date: 2026-03-06T16:35:31.434082+00:00
+  Item: "9 inch bamboo stick" | Price: 1221.8
+  Item: "A night in Dubai" | Price: 120.32
+  Item: "Aarthi" | Price: 67.88
+---
+Order: baeed7 | Status: NEW_INQUIRY | Date: 2026-03-05T09:18:17.366285+00:00
+  Item: " 8-inch bamboo stick" | Price: undefined
+  Item: "9 inch bamboo stick" | Price: undefined
+---
+Order: bda470 | Status: DELIVERED | Date: 2026-03-05T04:19:30.058972+00:00
+  Item: "Damar battu lumps" | Price: 234
+  Item: "Damar battu powder" | Price: 444
+  Item: "Camphor Compound Perfume" | Price: 124
+---
+Order: eacebb | Status: NEW_INQUIRY | Date: 2026-03-02T07:50:42.285386+00:00
+  Item: "8 inch bamboo stick" | Price: undefined
+---
+Order: 75a6b4 | Status: DELIVERED | Date: 2026-03-02T06:15:52.069849+00:00
+  Item: "A night in Dubai" | Price: 123
+  Item: "8 inch bamboo stick" | Price: 23
+  Item: "Darbar" | Price: 22
+---
+Order: 9c7c7b | Status: DELIVERED | Date: 2026-03-02T04:30:49.7358+00:00
+  Item: "Unknown" | Price: 221
+  Item: "Guar gum(2000 cps)" | Price: 11
+---

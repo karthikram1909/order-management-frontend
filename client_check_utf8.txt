@@ -1,0 +1,7 @@
+{
+  "id": "4b74ba79-6075-46b4-bee6-4b830b2da66c",
+  "name": "karthik",
+  "mobile_number": "9392387359",
+  "address": null,
+  "created_at": "2026-03-01T07:12:35.04416+00:00"
+}

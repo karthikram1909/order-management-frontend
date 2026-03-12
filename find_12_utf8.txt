@@ -1,0 +1,406 @@
+--- GLOBAL SEARCH 12 ---
+FOUND in Order 75a6b4:
+[
+  {
+    "unit": "kg",
+    "itemId": "b2844b3e-dd56-4381-b58d-f083fcee9a3b",
+    "itemName": "A night in Dubai",
+    "quantity": 1,
+    "unitPrice": 123,
+    "totalPrice": 123
+  },
+  {
+    "unit": "kg",
+    "itemId": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+    "itemName": "8 inch bamboo stick",
+    "quantity": 89,
+    "unitPrice": 23,
+    "totalPrice": 2047
+  },
+  {
+    "unit": "kg",
+    "itemId": "8db2f738-05dd-4208-9bec-3485a6a3a0fd",
+    "itemName": "Darbar",
+    "quantity": 12,
+    "unitPrice": 22,
+    "totalPrice": 264
+  }
+]
+Status: DELIVERED
+Date: 2026-03-02T06:15:52.069849+00:00
+---
+FOUND in Order bda470:
+[
+  {
+    "unit": "kg",
+    "itemId": "1256e543-b3a5-4457-a12e-03b64711dca5",
+    "itemName": "Damar battu lumps",
+    "quantity": 12,
+    "unitPrice": 234,
+    "totalPrice": 2808
+  },
+  {
+    "unit": "kg",
+    "itemId": "945ce6bb-2abe-4d72-86da-a647f3d94033",
+    "itemName": "Damar battu powder",
+    "quantity": 1,
+    "unitPrice": 444,
+    "totalPrice": 444
+  },
+  {
+    "unit": "kg",
+    "itemId": "990beab1-4113-4c84-81a1-00cdf84b6e7a",
+    "itemName": "Camphor Compound Perfume",
+    "quantity": 1,
+    "unitPrice": 124,
+    "totalPrice": 124
+  }
+]
+Status: DELIVERED
+Date: 2026-03-05T04:19:30.058972+00:00
+---
+FOUND in Order 9c7c7b:
+[
+  {
+    "unit": "kg",
+    "itemName": "Unknown",
+    "quantity": 12,
+    "unitPrice": 221,
+    "totalPrice": 2652
+  },
+  {
+    "unit": "kg",
+    "itemId": "2483057d-91a7-4bec-831d-621100abf627",
+    "itemName": "Guar gum(2000 cps)",
+    "quantity": 1,
+    "unitPrice": 11,
+    "totalPrice": 11
+  }
+]
+Status: DELIVERED
+Date: 2026-03-02T04:30:49.7358+00:00
+---
+FOUND in Order c22a21:
+[
+  {
+    "unit": "kg",
+    "itemId": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+    "itemName": "8 inch bamboo stick",
+    "quantity": 1,
+    "unitPrice": 150,
+    "totalPrice": 150
+  },
+  {
+    "unit": "kg",
+    "itemId": "12453683-60e4-4aef-8aa4-7cbb39a58f60",
+    "itemName": "Acrylic polimer",
+    "quantity": 1,
+    "unitPrice": 180,
+    "totalPrice": 180
+  },
+  {
+    "unit": "box",
+    "itemId": "adfd8014-bd98-4eec-9296-5a46976a4079",
+    "itemName": "Cup Sambrani (144 box)",
+    "quantity": 1,
+    "unitPrice": 125,
+    "totalPrice": 125
+  },
+  {
+    "unit": "kg",
+    "itemId": "ccdc23f5-5512-4e9f-be4f-4c6989e08530",
+    "itemName": "Dasangam Incense sticks (3mm/25kg)",
+    "quantity": 1,
+    "unitPrice": 99,
+    "totalPrice": 99
+  },
+  {
+    "unit": "kg",
+    "itemId": "08b099d4-9545-4594-a3aa-f9315d3a9bce",
+    "itemName": "Ruby sandal",
+    "quantity": 1,
+    "unitPrice": 169,
+    "totalPrice": 169
+  },
+  {
+    "unit": "kg",
+    "itemId": "de98cae0-f954-4408-ba57-e9a928f2d504",
+    "itemName": "Rose water",
+    "quantity": 1,
+    "unitPrice": 80,
+    "totalPrice": 80
+  },
+  {
+    "unit": "kg",
+    "itemId": "8db2f738-05dd-4208-9bec-3485a6a3a0fd",
+    "itemName": "Darbar",
+    "quantity": 1,
+    "unitPrice": 50,
+    "totalPrice": 50
+  },
+  {
+    "unit": "kg",
+    "itemId": "12453683-60e4-4aef-8aa4-7cbb39a58f60",
+    "itemName": "Acrylic polimer",
+    "quantity": 1,
+    "unitPrice": 180,
+    "totalPrice": 180
+  }
+]
+Status: DELIVERED
+Date: 2026-03-05T05:06:30.794224+00:00
+---
+FOUND in Order c356b7:
+[
+  {
+    "unit": "kg",
+    "itemId": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+    "itemName": " 8-inch bamboo stick",
+    "quantity": 1,
+    "unitPrice": 150,
+    "totalPrice": 150
+  },
+  {
+    "unit": "kg",
+    "itemId": "9b6da843-d7d1-4151-bd3c-376e14072e02",
+    "itemName": "9 inch bamboo stick",
+    "quantity": 1,
+    "unitPrice": 240,
+    "totalPrice": 240
+  },
+  {
+    "unit": "kg",
+    "itemId": "b46ae26b-aa67-46cb-aab1-cc6d9d046822",
+    "itemName": "Damar battu crumbs",
+    "quantity": 1,
+    "unitPrice": 99,
+    "totalPrice": 99
+  },
+  {
+    "unit": "kg",
+    "itemId": "1256e543-b3a5-4457-a12e-03b64711dca5",
+    "itemName": "Damar battu lumps",
+    "quantity": 1,
+    "unitPrice": 120,
+    "totalPrice": 120
+  },
+  {
+    "unit": "kg",
+    "itemId": "b2844b3e-dd56-4381-b58d-f083fcee9a3b",
+    "itemName": "A night in Dubai",
+    "quantity": 1,
+    "unitPrice": 250,
+    "totalPrice": 250
+  },
+  {
+    "unit": "kg",
+    "itemId": "18576459-3296-45d6-89c4-00a66a3d8d63",
+    "itemName": "Aarthi",
+    "quantity": 1,
+    "unitPrice": 100,
+    "totalPrice": 100
+  },
+  {
+    "unit": "kg",
+    "itemId": "cad5fc49-b523-4670-a25a-7dd11ad465f9",
+    "itemName": "Loban southern spice",
+    "quantity": 1,
+    "unitPrice": 199,
+    "totalPrice": 199
+  },
+  {
+    "unit": "kg",
+    "itemId": "7821efc9-9d23-4520-8c6c-322945014443",
+    "itemName": "Loban sweet",
+    "quantity": 1,
+    "unitPrice": 99,
+    "totalPrice": 99
+  }
+]
+Status: DELIVERED
+Date: 2026-03-05T07:25:56.38869+00:00
+---
+FOUND in Order 6f1ea1:
+[
+  {
+    "unit": "kg",
+    "itemId": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+    "itemName": " 8-inch bamboo stick",
+    "quantity": 1,
+    "unitPrice": 159,
+    "totalPrice": 159
+  },
+  {
+    "unit": "kg",
+    "itemId": "9b6da843-d7d1-4151-bd3c-376e14072e02",
+    "itemName": "9 inch bamboo stick",
+    "quantity": 1,
+    "unitPrice": 250,
+    "totalPrice": 250
+  },
+  {
+    "unit": "kg",
+    "itemId": "3f3e1026-de25-4a8b-9aab-c12306e3b216",
+    "itemName": "Jasmine powder",
+    "quantity": 1,
+    "unitPrice": 199,
+    "totalPrice": 199
+  },
+  {
+    "unit": "kg",
+    "itemId": "a5a7fc02-6e68-435b-a080-d525c6aa7c92",
+    "itemName": "Raw bathi premix",
+    "quantity": 1,
+    "unitPrice": 120,
+    "totalPrice": 120
+  },
+  {
+    "unit": "kg",
+    "itemId": "b8486684-4881-4304-8a4d-c82d02464c7a",
+    "itemName": "Yara Yara",
+    "quantity": 1,
+    "unitPrice": 99,
+    "totalPrice": 99
+  }
+]
+Status: DELIVERED
+Date: 2026-03-09T08:29:15.566052+00:00
+---
+FOUND in Order 2cfc62:
+[
+  {
+    "unit": "kg",
+    "itemId": "12453683-60e4-4aef-8aa4-7cbb39a58f60",
+    "itemName": "Acrylic polimer",
+    "quantity": 1
+  },
+  {
+    "unit": "kg",
+    "itemId": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+    "itemName": " 8-inch bamboo stick",
+    "quantity": 12
+  }
+]
+Status: NEW_INQUIRY
+Date: 2026-03-06T04:24:05.700569+00:00
+---
+FOUND in Order 61cf12:
+[
+  {
+    "unit": "kg",
+    "itemId": "9b6da843-d7d1-4151-bd3c-376e14072e02",
+    "itemName": "9 inch bamboo stick",
+    "quantity": 1,
+    "unitPrice": 1221.8,
+    "totalPrice": 1221.8
+  },
+  {
+    "unit": "kg",
+    "itemId": "b2844b3e-dd56-4381-b58d-f083fcee9a3b",
+    "itemName": "A night in Dubai",
+    "quantity": 1,
+    "unitPrice": 120.32,
+    "totalPrice": 120.32
+  },
+  {
+    "unit": "kg",
+    "itemId": "18576459-3296-45d6-89c4-00a66a3d8d63",
+    "itemName": "Aarthi",
+    "quantity": 1,
+    "unitPrice": 67.88,
+    "totalPrice": 67.88
+  }
+]
+Status: IN_TRANSIT
+Date: 2026-03-06T16:35:31.434082+00:00
+---
+FOUND in Order 80eac0:
+[
+  {
+    "unit": "kg",
+    "itemId": "9b6da843-d7d1-4151-bd3c-376e14072e02",
+    "itemName": "9 inch bamboo stick",
+    "quantity": 1,
+    "unitPrice": 1000.8,
+    "totalPrice": 1000.8
+  },
+  {
+    "unit": "kg",
+    "itemId": "b2844b3e-dd56-4381-b58d-f083fcee9a3b",
+    "itemName": "A night in Dubai",
+    "quantity": 1,
+    "unitPrice": 120.32,
+    "totalPrice": 120.32
+  }
+]
+Status: CANCELLED
+Date: 2026-03-09T09:38:56.357642+00:00
+---
+FOUND in Order edda89:
+[
+  {
+    "unit": "kg",
+    "itemId": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+    "itemName": " 8-inch bamboo stick",
+    "quantity": 3,
+    "unitPrice": 23,
+    "totalPrice": 69
+  },
+  {
+    "unit": "kg",
+    "itemId": "be89a39d-51f3-45a2-8d3a-1456facbf3e2",
+    "itemName": "Black cup premix",
+    "quantity": 1,
+    "unitPrice": 44,
+    "totalPrice": 44
+  },
+  {
+    "unit": "kg",
+    "itemId": "18576459-3296-45d6-89c4-00a66a3d8d63",
+    "itemName": "Aarthi",
+    "quantity": 1,
+    "unitPrice": 56,
+    "totalPrice": 56
+  },
+  {
+    "unit": "kg",
+    "itemId": "a1afc45f-f25c-4a5b-ae10-bba6a64e1a35",
+    "itemName": "A Night in Dubai Perfume",
+    "quantity": 23,
+    "unitPrice": 112,
+    "totalPrice": 2576
+  },
+  {
+    "unit": "kg",
+    "itemId": "8db2f738-05dd-4208-9bec-3485a6a3a0fd",
+    "itemName": "Darbar",
+    "quantity": 1,
+    "unitPrice": 33.99,
+    "totalPrice": 33.99
+  },
+  {
+    "unit": "kg",
+    "itemId": "ef61314b-b2b0-4f3c-86a2-44f1958ebacb",
+    "itemName": "Brown saw dust",
+    "quantity": 1,
+    "unitPrice": 33,
+    "totalPrice": 33
+  }
+]
+Status: DELIVERED
+Date: 2026-03-11T10:07:12.725255+00:00
+---
+FOUND in Order 60947b:
+[
+  {
+    "unit": "kg",
+    "itemId": "12453683-60e4-4aef-8aa4-7cbb39a58f60",
+    "itemName": "Acrylic polimer",
+    "quantity": 1,
+    "unitPrice": 10,
+    "totalPrice": 10
+  }
+]
+Status: ORDER_CONFIRMED
+Date: 2026-03-11T19:02:12.704453+00:00
+---

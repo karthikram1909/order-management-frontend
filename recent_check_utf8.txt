@@ -1,0 +1,37 @@
+--- RECENT ORDERS (Last 10) ---
+Order: 2d7dd5 | Client: 2da66c | Status: PENDING_PRICING | Date: 2026-03-12T09:09:39.700805+00:00
+  Item: " 8-inch bamboo stick" | Price: undefined
+---
+Order: 9edf8a | Client: 2da66c | Status: CANCELLED | Date: 2026-03-12T08:57:21.484561+00:00
+  Item: " 8-inch bamboo stick" | Price: undefined
+---
+Order: 2580d9 | Client: ae35f9 | Status: NEW_INQUIRY | Date: 2026-03-12T08:55:51.363405+00:00
+  Item: "Coconut shell charcoal" | Price: undefined
+  Item: "Cold Water Perfume" | Price: undefined
+---
+Order: d7c362 | Client: 2da66c | Status: DELIVERED | Date: 2026-03-12T08:51:33.615259+00:00
+  Item: " 8-inch bamboo stick" | Price: 100
+  Item: "9 inch bamboo stick" | Price: 23
+  Item: "Acrylic polimer" | Price: 34
+  Item: "Black cup premix" | Price: 44
+  Item: "Champa Perfume" | Price: 109.99
+---
+Order: bc479e | Client: 3b4ca5 | Status: DELIVERED | Date: 2026-03-12T07:38:26.174244+00:00
+  Item: " 8-inch bamboo stick" | Price: 100
+  Item: "Acrylic polimer" | Price: 9.98
+---
+Order: e094b1 | Client: 3b4ca5 | Status: DELIVERED | Date: 2026-03-12T07:28:36.495121+00:00
+  Item: " 8-inch bamboo stick" | Price: 100
+  Item: "9 inch bamboo stick" | Price: 89.97
+---
+Order: 3ab13f | Client: c35f3c | Status: CANCELLED | Date: 2026-03-12T05:34:27.213469+00:00
+  Item: "Dasangam Incense sticks (3mm/25kg)" | Price: 2
+---
+Order: 75460b | Client: 3b4ca5 | Status: CANCELLED | Date: 2026-03-12T04:25:34.255912+00:00
+  Item: "Guar gum(8000 cps)" | Price: 1000
+---
+Order: f8c0ca | Client: 3b4ca5 | Status: CANCELLED | Date: 2026-03-11T19:36:26.49823+00:00
+  Item: "Damar battu lumps" | Price: 18
+---
+Order: 8e8c68 | Client: 3b4ca5 | Status: PENDING_PRICING | Date: 2026-03-11T19:28:00.014018+00:00
+---

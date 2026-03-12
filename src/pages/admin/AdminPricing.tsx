@@ -60,11 +60,11 @@ export default function AdminPricing() {
     if (!orderId || !order) return;
     setIsLoadingPrices(true);
     try {
-      // priceMap is keyed by itemId (the product/item id stored in each order item)
-      const priceMap = await getLastPrices(orderId);
+      // Expecting { idMap, nameMap }
+      const { idMap, nameMap } = await getLastPrices(orderId);
 
-      if (Object.keys(priceMap).length === 0) {
-        toast({ title: "No previous prices found", description: "This client has no past priced orders.", variant: "destructive" });
+      if (Object.keys(idMap).length === 0 && Object.keys(nameMap).length === 0) {
+        toast({ title: "No previous prices found", description: "This client and global history have no past priced orders.", variant: "destructive" });
         return;
       }
 
@@ -72,13 +72,30 @@ export default function AdminPricing() {
       let filledCount = 0;
       setPrices((prev) => {
         const updated = { ...prev };
+        console.log("Current order items:", order.items);
+        console.log("History ID Map:", idMap);
+        console.log("History Name Map:", nameMap);
+        
         order.items.forEach((item: any, index: number) => {
           const pid = getItemId(item, index);
-          // The item's product id to look up in the price map
           const itemId = item.itemId?._id || item.itemId || item.productId;
-          if (itemId && priceMap[itemId] && priceMap[itemId] > 0) {
-            updated[pid] = priceMap[itemId];
+          const itemName = (item.itemName || item.itemId?.itemName || item.itemId?.name || '').trim().toLowerCase();
+          
+          console.log(`Checking item ${index}: ID=${itemId}, Name="${itemName}"`);
+
+          // Try ID match first
+          if (itemId && idMap[itemId] && idMap[itemId] > 0) {
+            console.log(`Matched by ID: ${idMap[itemId]}`);
+            updated[pid] = idMap[itemId];
             filledCount++;
+          } 
+          // Fallback to name match
+          else if (itemName && nameMap[itemName] && nameMap[itemName] > 0) {
+            console.log(`Matched by Name: ${nameMap[itemName]}`);
+            updated[pid] = nameMap[itemName];
+            filledCount++;
+          } else {
+            console.log("No match found for this item");
           }
         });
         return updated;
