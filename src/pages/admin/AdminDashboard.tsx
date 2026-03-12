@@ -66,6 +66,7 @@ export default function AdminDashboard() {
   const { isBypass } = useAuth();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("date-desc");
 
   // Determine initial tab based on route
   const getInitialTab = () => {
@@ -251,6 +252,26 @@ export default function AdminDashboard() {
     if (activeTab === "completed") return matchesSearch && (order.orderStatus === "CLOSED" || order.orderStatus === "DELIVERED");
 
     return matchesSearch;
+  }).sort((a, b) => {
+    if (sortOrder === "date-desc") {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+    if (sortOrder === "date-asc") {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    }
+    
+    // For client name sorting
+    const nameA = ((typeof a.clientId === 'object' && a.clientId?.name) ? a.clientId.name : 'Unknown Client').toLowerCase();
+    const nameB = ((typeof b.clientId === 'object' && b.clientId?.name) ? b.clientId.name : 'Unknown Client').toLowerCase();
+    
+    if (sortOrder === "name-asc") {
+      return nameA.localeCompare(nameB);
+    }
+    if (sortOrder === "name-desc") {
+      return nameB.localeCompare(nameA);
+    }
+    
+    return 0;
   });
 
   const formatTimestamp = (dateStr: string) => {
@@ -451,10 +472,20 @@ export default function AdminDashboard() {
                   className="w-64 pl-10"
                 />
               </div>
-              <Button variant="outline" size="sm" className="gap-2">
-                <Filter className="h-4 w-4" />
-                Filter
-              </Button>
+              <Select value={sortOrder} onValueChange={setSortOrder}>
+                <SelectTrigger className="w-[180px] h-9">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Filter className="h-4 w-4" />
+                    <span><SelectValue placeholder="Sort by" /></span>
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="date-desc">Newest First</SelectItem>
+                  <SelectItem value="date-asc">Oldest First</SelectItem>
+                  <SelectItem value="name-asc">Client Name (A-Z)</SelectItem>
+                  <SelectItem value="name-desc">Client Name (Z-A)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 

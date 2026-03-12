@@ -179,10 +179,11 @@ export default function ClientPortal() {
                         {/* Cart Drawer in Header */}
                         <Sheet>
                             <SheetTrigger asChild>
-                                <Button variant="outline" size="icon" className="relative h-9 w-9 border-slate-200">
-                                    <ShoppingBag className="h-4 w-4 text-slate-600" />
+                                <Button variant="outline" className="relative h-10 px-3 border-slate-200 flex items-center gap-2">
+                                    <ShoppingBag className="h-5 w-5 text-slate-600" />
+                                    <span className="font-semibold text-slate-700 hidden sm:inline">Cart</span>
                                     {totalItems > 0 && (
-                                        <span className="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+                                        <span className="absolute -top-2 -right-2 bg-blue-600 border-2 border-white text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center">
                                             {totalItems}
                                         </span>
                                     )}
