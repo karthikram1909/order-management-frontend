@@ -372,11 +372,15 @@ export default function OrderStatus() {
                    <CardContent className="space-y-3 p-4">
                        <p className="text-xs text-muted-foreground">Questions regarding this order?</p>
                        <div className="flex gap-2">
-                           <Button variant="outline" className="flex-1 w-full gap-2" size="sm">
-                               <Phone className="h-4 w-4"/> Call
+                           <Button variant="outline" className="flex-1 w-full gap-2" size="sm" asChild>
+                               <a href="tel:9159007007">
+                                   <Phone className="h-4 w-4"/> Call
+                               </a>
                            </Button>
-                           <Button variant="outline" className="flex-1 w-full gap-2" size="sm">
-                               <MessageSquare className="h-4 w-4"/> Chat
+                           <Button variant="outline" className="flex-1 w-full gap-2" size="sm" asChild>
+                               <a href="https://wa.me/919159007007" target="_blank" rel="noopener noreferrer">
+                                   <MessageSquare className="h-4 w-4"/> Chat
+                               </a>
                            </Button>
                        </div>
                    </CardContent>
