@@ -292,13 +292,21 @@ export default function AdminOrderDetail() {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1 gap-2">
-                    <Phone className="h-4 w-4" />
-                    Call
+                  <Button variant="outline" size="sm" className="flex-1 gap-2" asChild>
+                    <a href={typeof order.clientId === 'object' && order.clientId?.mobileNumber ? `tel:${order.clientId.mobileNumber}` : '#'}>
+                      <Phone className="h-4 w-4" />
+                      Call
+                    </a>
                   </Button>
-                  <Button variant="outline" size="sm" className="flex-1 gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    SMS
+                  <Button variant="outline" size="sm" className="flex-1 gap-2" asChild>
+                    <a 
+                      href={typeof order.clientId === 'object' && order.clientId?.mobileNumber ? `https://wa.me/91${order.clientId.mobileNumber.replace(/\D/g, '')}` : '#'} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      WhatsApp
+                    </a>
                   </Button>
                 </div>
               </CardContent>
