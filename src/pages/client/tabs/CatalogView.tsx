@@ -104,18 +104,19 @@ export default function CatalogView({ products, cart, loading, onQuantityChange 
                     <h3 className="text-xl font-bold text-slate-900 capitalize">{cat}</h3>
                     <span className="text-xs font-medium bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">{catProducts.length} items</span>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:overflow-x-visible scrollbar-hide snap-x">
                     {catProducts.map((product) => (
-                      <ProductCard
-                        key={product._id}
-                        name={product.itemName}
-                        description={product.description}
-                        unit={product.unit}
-                        quantity={getQuantity(product._id)}
-                        onQuantityChange={(qty) => onQuantityChange(product._id, qty)}
-                        imageUrl={product.imageUrl}
-                        className="border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all"
-                      />
+                      <div key={product._id} className="min-w-[160px] sm:min-w-0 snap-start">
+                        <ProductCard
+                          name={product.itemName}
+                          description={product.description}
+                          unit={product.unit}
+                          quantity={getQuantity(product._id)}
+                          onQuantityChange={(qty) => onQuantityChange(product._id, qty)}
+                          imageUrl={product.imageUrl}
+                          className="border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all h-full"
+                        />
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -123,7 +124,7 @@ export default function CatalogView({ products, cart, loading, onQuantityChange 
             })}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredProducts.map((product) => (
               <ProductCard
                 key={product._id}
@@ -133,7 +134,7 @@ export default function CatalogView({ products, cart, loading, onQuantityChange 
                 quantity={getQuantity(product._id)}
                 onQuantityChange={(qty) => onQuantityChange(product._id, qty)}
                 imageUrl={product.imageUrl}
-                className="border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all"
+                className="border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all h-full"
               />
             ))}
           </div>
