@@ -43,6 +43,8 @@ export function ProductCard({
     <Card
       className={cn(
         "flex flex-col overflow-hidden border-border/40 shadow-sm hover:shadow-lg transition-all h-full bg-white group",
+        "w-full sm:w-auto sm:min-w-0 md:w-full", // Default responsive width
+        "min-w-[160px] max-w-[180px] sm:max-w-none", // Mobile card sizing for horizontal scroll
         compact && "flex-row h-auto items-center",
         className
       )}
@@ -84,17 +86,17 @@ export function ProductCard({
         </div>
       )}
 
-      <CardContent className={cn("p-5 flex-1 flex flex-col gap-4", compact && "p-4 py-3")}>
+      <CardContent className={cn("p-3 sm:p-5 flex-1 flex flex-col gap-2 sm:gap-4", compact && "p-4 py-3")}>
         <div className={cn(compact && "mb-0 flex-1 flex flex-col justify-center")}>
-          <div className="flex justify-between items-start mb-2">
-            <h3 className={cn("font-bold text-lg text-foreground line-clamp-1", compact && "text-base")}>{name}</h3>
+          <div className="flex justify-between items-start mb-1 sm:mb-2 text-wrap">
+            <h3 className={cn("font-bold text-sm sm:text-lg text-foreground line-clamp-1", compact && "text-base")}>{name}</h3>
             {!compact && (
-              <Badge variant="secondary" className="text-xs font-normal text-muted-foreground bg-secondary/50">
+              <Badge variant="secondary" className="text-[10px] sm:text-xs font-normal text-muted-foreground bg-secondary/50 px-1.5 py-0 capitalize">
                 {unit}
               </Badge>
             )}
           </div>
-          <p className={cn("text-sm text-muted-foreground line-clamp-2", !compact && "min-h-[2.5rem]", compact && "text-xs line-clamp-1")}>
+          <p className={cn("text-[11px] sm:text-sm text-muted-foreground line-clamp-2", !compact && "min-h-[2rem] sm:min-h-[2.5rem]", compact && "text-xs line-clamp-1")}>
             {description || "Exotic fragrance extract"}
           </p>
         </div>
@@ -121,9 +123,9 @@ export function ProductCard({
 
           {/* Quantity Controls & Add Button - Specialized for Compact */}
           <div className={cn("flex flex-col gap-2 w-full", compact && "flex-row items-center gap-1.5")}>
-            <div className={cn("flex items-center justify-between bg-muted/20 p-1 rounded-lg border border-border/40", compact && "h-9 px-1")}>
-              <Button variant="ghost" size="sm" className={cn("h-8 w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={quantity === 0}>
-                <Minus className="h-4 w-4" />
+            <div className={cn("flex items-center justify-between bg-muted/20 p-1 rounded-lg border border-border/40", compact ? "h-9 px-1" : "h-8 sm:h-10 px-1")}>
+              <Button variant="ghost" size="sm" className={cn("h-6 w-6 sm:h-8 sm:w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={quantity === 0}>
+                <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
               <input
                 type="number"
@@ -138,26 +140,26 @@ export function ProductCard({
                   }
                 }}
                 className={cn(
-                  "font-semibold w-10 text-center bg-transparent border-none p-0 focus:outline-none focus:ring-1 focus:ring-primary rounded-sm",
+                  "font-semibold w-8 sm:w-10 text-center bg-transparent border-none p-0 focus:outline-none focus:ring-1 focus:ring-primary rounded-sm",
                   "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
-                  compact && "text-sm w-8"
+                  compact ? "text-sm w-8" : "text-xs sm:text-sm"
                 )}
               />
-              <Button variant="ghost" size="sm" className={cn("h-8 w-8", compact && "h-7 w-7")} onClick={handleIncrement}>
-                <Plus className="h-4 w-4" />
+              <Button variant="ghost" size="sm" className={cn("h-6 w-6 sm:h-8 sm:w-8", compact && "h-7 w-7")} onClick={handleIncrement}>
+                <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             </div>
 
             <Button
               className={cn(
-                "w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-sm transition-all",
+                "w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-sm transition-all text-[11px] sm:text-sm h-8 sm:h-10",
                 compact && "h-9 px-4 w-auto flex-1 font-bold text-xs",
                 quantity > 0 && compact && "bg-green-600 hover:bg-green-700"
               )}
               onClick={handleIncrement}
               disabled={quantity > 0 && !compact}
             >
-              {quantity > 0 ? (compact ? "Add More" : "Add More") : (compact ? "Select Scent" : "Add to Inquiry")}
+              {quantity > 0 ? (compact ? "Update" : "Added") : (compact ? "Select" : "Add")}
             </Button>
           </div>
         </div>
