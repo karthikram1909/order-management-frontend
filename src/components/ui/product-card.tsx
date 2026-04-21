@@ -101,13 +101,8 @@ export function ProductCard({
 
       <CardContent className={cn("p-3 sm:p-5 flex-1 flex flex-col gap-2 sm:gap-4", compact && "p-4 py-3")}>
         <div className={cn(compact && "mb-0 flex-1 flex flex-col justify-center")}>
-<<<<<<< HEAD
-          <div className="flex justify-between items-start mb-2">
-            <h3 className={cn("font-bold text-lg text-foreground", compact && "text-base")}>{name}</h3>
-=======
           <div className="flex justify-between items-start mb-1 sm:mb-2 text-wrap">
-            <h3 className={cn("font-bold text-sm sm:text-lg text-foreground line-clamp-1", compact && "text-base")}>{name}</h3>
->>>>>>> 89927294ffba66ba4b002a9064d599e9876b2b4b
+            <h3 className={cn("font-bold text-sm sm:text-lg text-foreground", compact && "text-base")}>{name}</h3>
             {!compact && (
               <Badge variant="secondary" className="text-[10px] sm:text-xs font-normal text-muted-foreground bg-secondary/50 px-1.5 py-0 capitalize">
                 {unit}
@@ -141,15 +136,9 @@ export function ProductCard({
 
           {/* Quantity Controls & Add Button - Specialized for Compact */}
           <div className={cn("flex flex-col gap-2 w-full", compact && "flex-row items-center gap-1.5")}>
-<<<<<<< HEAD
-            <div className={cn("flex items-center justify-between bg-muted/20 p-1 rounded-lg border border-border/40", compact && "h-9 px-1")}>
-              <Button variant="ghost" size="sm" className={cn("h-8 w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={localQty === 0 || localQty === ""}>
-                <Minus className="h-4 w-4" />
-=======
             <div className={cn("flex items-center justify-between bg-muted/20 p-1 rounded-lg border border-border/40", compact ? "h-9 px-1" : "h-8 sm:h-10 px-1")}>
-              <Button variant="ghost" size="sm" className={cn("h-6 w-6 sm:h-8 sm:w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={quantity === 0}>
+              <Button variant="ghost" size="sm" className={cn("h-6 w-6 sm:h-8 sm:w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={localQty === 0 || localQty === ""}>
                 <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
->>>>>>> 89927294ffba66ba4b002a9064d599e9876b2b4b
               </Button>
               <input
                 type="number"
@@ -185,11 +174,7 @@ export function ProductCard({
               onClick={handleAdd}
               disabled={localQty === quantity || (localQty === 0 && quantity === 0)}
             >
-<<<<<<< HEAD
-              {(quantity === localQty && typeof quantity === 'number' && quantity > 0) ? "Added" : (typeof quantity === 'number' && quantity > 0 ? "Update" : "Add")}
-=======
-              {quantity > 0 ? (compact ? "Update" : "Added") : (compact ? "Select" : "Add")}
->>>>>>> 89927294ffba66ba4b002a9064d599e9876b2b4b
+              {(quantity === localQty && typeof quantity === 'number' && quantity > 0) ? "Added" : (typeof quantity === 'number' && quantity > 0 ? "Update" : (compact ? "Select" : "Add"))}
             </Button>
           </div>
         </div>
