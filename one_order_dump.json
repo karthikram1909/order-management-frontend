@@ -1,0 +1,37 @@
+{
+  "id": "df4ef10c-a6cb-478c-ba7e-38a10f75a6b4",
+  "client_id": "4b74ba79-6075-46b4-bee6-4b830b2da66c",
+  "items": [
+    {
+      "unit": "kg",
+      "itemId": "b2844b3e-dd56-4381-b58d-f083fcee9a3b",
+      "itemName": "A night in Dubai",
+      "quantity": 1,
+      "unitPrice": 123,
+      "totalPrice": 123
+    },
+    {
+      "unit": "kg",
+      "itemId": "0be40232-ef14-46b6-84c1-57b33aae2a1a",
+      "itemName": "8 inch bamboo stick",
+      "quantity": 89,
+      "unitPrice": 23,
+      "totalPrice": 2047
+    },
+    {
+      "unit": "kg",
+      "itemId": "8db2f738-05dd-4208-9bec-3485a6a3a0fd",
+      "itemName": "Darbar",
+      "quantity": 12,
+      "unitPrice": 22,
+      "totalPrice": 264
+    }
+  ],
+  "order_status": "DELIVERED",
+  "payment_type": null,
+  "payment_status": "PAID",
+  "delivery_status": "RECEIVED",
+  "cart_total": 2434,
+  "due_date": null,
+  "created_at": "2026-03-02T06:15:52.069849+00:00"
+}

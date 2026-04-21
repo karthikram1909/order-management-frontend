@@ -17,7 +17,7 @@ import { Trash2, Plus, Minus, Info } from "lucide-react";
 
 interface CartItem {
     productId: string;
-    quantity: number;
+    quantity: number | string;
 }
 
 export default function ClientPortal() {
@@ -81,20 +81,32 @@ export default function ClientPortal() {
         loadProducts();
     }, [toast]);
 
-    const handleQuantityChange = (productId: string, quantity: number) => {
+    const handleQuantityChange = (productId: string, quantity: number | string) => {
         setCart((prev) => {
             const existing = prev.find((item) => item.productId === productId);
-            if (quantity === 0) return prev.filter((item) => item.productId !== productId);
             if (existing) return prev.map((item) => item.productId === productId ? { ...item, quantity } : item);
             return [...prev, { productId, quantity }];
         });
     };
 
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const handleRemoveItem = (productId: string) => {
+        setCart((prev) => prev.filter((item) => item.productId !== productId));
+    };
+
+    const totalItems = cart.reduce((sum, item) => {
+        const val = parseInt(item.quantity as any, 10);
+        return sum + (isNaN(val) ? 0 : val);
+    }, 0);
 
     const handleRequestQuote = async () => {
         const clientInfoStr = localStorage.getItem("clientInfo") || sessionStorage.getItem("clientInfo");
         if (!clientInfoStr) return;
+
+        const hasInvalidQuantity = cart.some(item => typeof item.quantity === 'string' || item.quantity === 0);
+        if (hasInvalidQuantity) {
+            toast({ variant: "destructive", title: "Invalid Quantity", description: "You have items with 0 pieces in your cart. Please remove them or specify a valid quantity." });
+            return;
+        }
 
         const clientInfo = JSON.parse(clientInfoStr);
         const editingOrderId = sessionStorage.getItem("editingOrderId");
@@ -228,7 +240,7 @@ export default function ClientPortal() {
 
                                                         <div className="flex-1 min-w-0 py-1 flex flex-col justify-between">
                                                             <div>
-                                                                <h4 className="font-semibold text-sm text-slate-900 line-clamp-1">{product.itemName}</h4>
+                                                                <h4 className="font-semibold text-sm text-slate-900">{product.itemName}</h4>
                                                                 <p className="text-xs text-slate-500 font-medium mt-0.5 capitalize px-1.5 py-0.5 bg-slate-100 rounded-sm inline-block">{product.unit}</p>
                                                             </div>
 
@@ -239,7 +251,11 @@ export default function ClientPortal() {
                                                                         variant="ghost"
                                                                         size="icon"
                                                                         className="h-full w-8 text-slate-500 hover:text-slate-900"
-                                                                        onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
+                                                                        onClick={() => {
+                                                                            const qty = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity as string, 10);
+                                                                            const validQty = isNaN(qty) ? 0 : qty;
+                                                                            if (validQty > 0) handleQuantityChange(item.productId, validQty - 1);
+                                                                        }}
                                                                     >
                                                                         <Minus className="h-3 w-3" />
                                                                     </Button>
@@ -248,9 +264,12 @@ export default function ClientPortal() {
                                                                         min="0"
                                                                         value={item.quantity}
                                                                         onChange={(e) => {
-                                                                            const val = parseInt(e.target.value, 10);
-                                                                            if (!isNaN(val) && val > 0) handleQuantityChange(item.productId, val);
-                                                                            else if (e.target.value === "") handleQuantityChange(item.productId, 0);
+                                                                            if (e.target.value === "") {
+                                                                                handleQuantityChange(item.productId, "");
+                                                                            } else {
+                                                                                const val = parseInt(e.target.value, 10);
+                                                                                if (!isNaN(val) && val >= 0) handleQuantityChange(item.productId, val);
+                                                                            }
                                                                         }}
                                                                         className="h-full w-10 text-center font-bold text-sm bg-transparent border-none p-0 focus:outline-none focus:ring-1 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-slate-700"
                                                                     />
@@ -258,7 +277,11 @@ export default function ClientPortal() {
                                                                         variant="ghost"
                                                                         size="icon"
                                                                         className="h-full w-8 text-slate-500 hover:text-slate-900"
-                                                                        onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
+                                                                        onClick={() => {
+                                                                            const qty = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity as string, 10);
+                                                                            const validQty = isNaN(qty) ? 0 : qty;
+                                                                            handleQuantityChange(item.productId, validQty + 1);
+                                                                        }}
                                                                     >
                                                                         <Plus className="h-3 w-3" />
                                                                     </Button>
@@ -268,7 +291,7 @@ export default function ClientPortal() {
                                                                     variant="ghost"
                                                                     size="icon"
                                                                     className="h-8 w-8 text-red-400 hover:text-red-600 hover:bg-red-50"
-                                                                    onClick={() => handleQuantityChange(item.productId, 0)}
+                                                                    onClick={() => handleRemoveItem(item.productId)}
                                                                 >
                                                                     <Trash2 className="h-4 w-4" />
                                                                 </Button>

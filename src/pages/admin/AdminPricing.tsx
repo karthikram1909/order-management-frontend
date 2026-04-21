@@ -237,10 +237,6 @@ export default function AdminPricing() {
                 <CardTitle className="text-base">Client Details</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {/* We need to populate client details in backend getOrder or use what we have */}
-                {/* order.clientId is usually populated IF we used .populate('clientId') in backend. 
-                    Let's check clientController.getOrder. Yes, it only populates items.itemId. 
-                    We should populate clientId too. */}
                 <div>
                   <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                     Client ID
@@ -251,6 +247,33 @@ export default function AdminPricing() {
                 </div>
               </CardContent>
             </Card>
+            
+            {/* Payment Summary */}
+            {order.payments && order.payments.length > 0 && (
+              <Card className="border-border/60 shadow-card bg-green-50/30">
+                <CardHeader>
+                  <CardTitle className="text-base">Previous Payments</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Total Paid</span>
+                    <span className="font-bold text-green-700">
+                      ₹{order.payments.reduce((s: number, p: any) => s + p.amount, 0).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Balance (New Total)</span>
+                    <span className="font-bold text-destructive">
+                      ₹{Math.max(0, calculateTotal() - order.payments.reduce((s: number, p: any) => s + p.amount, 0)).toLocaleString()}
+                    </span>
+                  </div>
+                  <Separator />
+                  <p className="text-[10px] text-muted-foreground italic">
+                    * Client has already paid ₹{order.payments.reduce((s: number, p: any) => s + p.amount, 0).toLocaleString()} towards this order.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Quote Summary */}
             <Card className="border-border/60 shadow-card">

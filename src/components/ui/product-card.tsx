@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ProductCardProps {
   name: string;
   description: string;
   unit: string;
-  quantity: number;
-  onQuantityChange: (quantity: number) => void;
+  quantity: number | string;
+  onQuantityChange: (quantity: number | string) => void;
   imageUrl?: string;
   className?: string;
   compact?: boolean;
@@ -28,15 +28,28 @@ export function ProductCard({
 }: ProductCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [localQty, setLocalQty] = useState<number | string>(quantity);
+
+  useEffect(() => {
+    setLocalQty(quantity);
+  }, [quantity]);
 
   const handleDecrement = () => {
-    if (quantity > 0) {
-      onQuantityChange(quantity - 1);
+    const qty = typeof localQty === 'number' ? localQty : parseInt(localQty as string, 10);
+    const validQty = isNaN(qty) ? 0 : qty;
+    if (validQty > 0) {
+      setLocalQty(validQty - 1);
     }
   };
 
   const handleIncrement = () => {
-    onQuantityChange(quantity + 1);
+    const qty = typeof localQty === 'number' ? localQty : parseInt(localQty as string, 10);
+    const validQty = isNaN(qty) ? 0 : qty;
+    setLocalQty(validQty + 1);
+  };
+
+  const handleAdd = () => {
+    onQuantityChange(localQty);
   };
 
   return (
@@ -87,7 +100,7 @@ export function ProductCard({
       <CardContent className={cn("p-5 flex-1 flex flex-col gap-4", compact && "p-4 py-3")}>
         <div className={cn(compact && "mb-0 flex-1 flex flex-col justify-center")}>
           <div className="flex justify-between items-start mb-2">
-            <h3 className={cn("font-bold text-lg text-foreground line-clamp-1", compact && "text-base")}>{name}</h3>
+            <h3 className={cn("font-bold text-lg text-foreground", compact && "text-base")}>{name}</h3>
             {!compact && (
               <Badge variant="secondary" className="text-xs font-normal text-muted-foreground bg-secondary/50">
                 {unit}
@@ -122,19 +135,21 @@ export function ProductCard({
           {/* Quantity Controls & Add Button - Specialized for Compact */}
           <div className={cn("flex flex-col gap-2 w-full", compact && "flex-row items-center gap-1.5")}>
             <div className={cn("flex items-center justify-between bg-muted/20 p-1 rounded-lg border border-border/40", compact && "h-9 px-1")}>
-              <Button variant="ghost" size="sm" className={cn("h-8 w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={quantity === 0}>
+              <Button variant="ghost" size="sm" className={cn("h-8 w-8", compact && "h-7 w-7")} onClick={handleDecrement} disabled={localQty === 0 || localQty === ""}>
                 <Minus className="h-4 w-4" />
               </Button>
               <input
                 type="number"
                 min="0"
-                value={quantity}
+                value={localQty}
                 onChange={(e) => {
-                  const val = parseInt(e.target.value, 10);
-                  if (!isNaN(val) && val > 0) {
-                    onQuantityChange(val);
-                  } else if (e.target.value === "") {
-                    onQuantityChange(0);
+                  if (e.target.value === "") {
+                    setLocalQty("");
+                  } else {
+                    const val = parseInt(e.target.value, 10);
+                    if (!isNaN(val) && val >= 0) {
+                      setLocalQty(val);
+                    }
                   }
                 }}
                 className={cn(
@@ -152,12 +167,12 @@ export function ProductCard({
               className={cn(
                 "w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-sm transition-all",
                 compact && "h-9 px-4 w-auto flex-1 font-bold text-xs",
-                quantity > 0 && compact && "bg-green-600 hover:bg-green-700"
+                (quantity === localQty && typeof quantity === 'number' && quantity > 0) && "bg-blue-800/80 hover:bg-blue-800/80 opacity-90 cursor-default"
               )}
-              onClick={handleIncrement}
-              disabled={quantity > 0 && !compact}
+              onClick={handleAdd}
+              disabled={localQty === quantity || (localQty === 0 && quantity === 0)}
             >
-              {quantity > 0 ? (compact ? "Add More" : "Add More") : (compact ? "Select Scent" : "Add to Inquiry")}
+              {(quantity === localQty && typeof quantity === 'number' && quantity > 0) ? "Added" : (typeof quantity === 'number' && quantity > 0 ? "Update" : "Add")}
             </Button>
           </div>
         </div>

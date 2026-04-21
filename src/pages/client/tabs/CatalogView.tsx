@@ -9,14 +9,14 @@ import { Product } from "@/types";
 
 interface CartItem {
   productId: string;
-  quantity: number;
+  quantity: number | string;
 }
 
 interface CatalogViewProps {
   products: Product[];
   cart: CartItem[];
   loading: boolean;
-  onQuantityChange: (productId: string, quantity: number) => void;
+  onQuantityChange: (productId: string, quantity: number | string) => void;
 }
 
 export default function CatalogView({ products, cart, loading, onQuantityChange }: CatalogViewProps) {

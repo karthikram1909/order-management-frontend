@@ -1,0 +1,6 @@
+Table 'payments' does NOT exist: Could not find the table 'public.payments' in the schema cache
+Table 'payment_history' does NOT exist: Could not find the table 'public.payment_history' in the schema cache
+Table 'transactions' does NOT exist: Could not find the table 'public.transactions' in the schema cache
+Table 'order_payments' does NOT exist: Could not find the table 'public.order_payments' in the schema cache
+Table 'billing' does NOT exist: Could not find the table 'public.billing' in the schema cache
+Table 'receipts' does NOT exist: Could not find the table 'public.receipts' in the schema cache

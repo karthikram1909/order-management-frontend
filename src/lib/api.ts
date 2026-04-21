@@ -23,6 +23,7 @@ const mapFromDb = (data: any): any => {
         payment_type,
         credit_due_date,
         due_date,
+        payments,
         ...rest
     } = data;
 
@@ -57,6 +58,7 @@ const mapFromDb = (data: any): any => {
         ...(payment_type !== undefined && { paymentType: payment_type }),
         ...(credit_due_date !== undefined && { creditDueDate: credit_due_date }),
         ...(due_date !== undefined && !credit_due_date && { creditDueDate: due_date }),
+        ...(payments !== undefined && { payments: payments || [] }),
         clientId: mapFromDb(joinedClientId || client_id)
     };
 
@@ -82,6 +84,7 @@ const mapToDb = (data: any): any => {
         deliveryStatus,
         paymentType,
         creditDueDate,
+        payments,
         ...rest
     } = data;
 
@@ -97,7 +100,8 @@ const mapToDb = (data: any): any => {
         ...(paymentStatus !== undefined && { payment_status: paymentStatus }),
         ...(deliveryStatus !== undefined && { delivery_status: deliveryStatus }),
         ...(paymentType !== undefined && { payment_type: paymentType }),
-        ...(creditDueDate !== undefined && { credit_due_date: creditDueDate })
+        ...(creditDueDate !== undefined && { credit_due_date: creditDueDate }),
+        ...(payments !== undefined && { payments })
     };
 };
 
@@ -370,6 +374,18 @@ export const updatePaymentStatus = async (orderId: string, status: string) => {
     const { data, error } = await supabase
         .from('orders')
         .update({ payment_status: status })
+        .eq('id', orderId)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return mapFromDb(data);
+};
+
+export const updateOrderPayments = async (orderId: string, payments: any[]) => {
+    const { data, error } = await supabase
+        .from('orders')
+        .update({ payments })
         .eq('id', orderId)
         .select()
         .single();

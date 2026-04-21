@@ -15,9 +15,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getStatusConfig } from "@/data/mockData";
-import { getOrder, setPricing, updatePaymentStatus, dispatchOrder, adminDeliverOrder } from "@/lib/api"; 
+import { getOrder, setPricing, updatePaymentStatus, dispatchOrder, adminDeliverOrder, updateOrderPayments } from "@/lib/api"; 
 import { useToast } from "@/components/ui/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus, Edit, Trash2 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const getTimelineSteps = (status: string) => {
     // Map backend status to timeline
@@ -37,6 +41,9 @@ export default function AdminOrderDetail() {
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [newPayment, setNewPayment] = useState({ amount: "", method: "CASH", date: new Date().toISOString().split('T')[0] });
+  const [editingPaymentIndex, setEditingPaymentIndex] = useState<number | null>(null);
 
   const fetchOrder = async () => {
     try {
@@ -54,18 +61,96 @@ export default function AdminOrderDetail() {
     fetchOrder();
   }, [orderId]);
 
-  const handleUpdatePayment = async () => {
+  const handleUpdatePayment = async (status?: string) => {
       setProcessing(true);
       try {
-          // Simplification: Mark PAID immediately. Ideally a modal.
-          await updatePaymentStatus(orderId!, 'PAID');
-          toast({ title: "Payment Recorded", description: "Order marked as PAID." });
+          await updatePaymentStatus(orderId!, status || 'PAID');
+          toast({ title: "Status Updated", description: `Order marked as ${status || 'PAID'}.` });
           fetchOrder();
       } catch (e) {
-          toast({ title: "Error", description: "Failed to update payment" });
+          toast({ title: "Error", description: "Failed to update payment status" });
       } finally {
           setProcessing(false);
       }
+  };
+
+  const handleAddPayment = async () => {
+    if (!newPayment.amount || parseFloat(newPayment.amount) <= 0) {
+      toast({ title: "Invalid amount", variant: "destructive" });
+      return;
+    }
+
+    setProcessing(true);
+    try {
+      const currentPayments = order.payments || [];
+      const paymentItem = {
+        amount: parseFloat(newPayment.amount),
+        method: newPayment.method,
+        date: new Date(newPayment.date).toISOString()
+      };
+
+      let updatedPayments;
+      if (editingPaymentIndex !== null) {
+        updatedPayments = [...currentPayments];
+        updatedPayments[editingPaymentIndex] = paymentItem;
+      } else {
+        updatedPayments = [...currentPayments, paymentItem];
+      }
+
+      await updateOrderPayments(orderId!, updatedPayments);
+      
+      // Auto-update overall status if fully paid? 
+      // Let's check total.
+      const totalPaid = updatedPayments.reduce((sum: number, p: any) => sum + p.amount, 0);
+      if (totalPaid >= (order.totalOrderValue || 0)) {
+        await updatePaymentStatus(orderId!, 'PAID');
+      } else if (totalPaid > 0) {
+        await updatePaymentStatus(orderId!, 'PARTIALLY_PAID');
+      }
+
+      toast({ title: "Payment Recorded", description: editingPaymentIndex !== null ? "Payment updated." : "Partial payment added." });
+      setIsPaymentModalOpen(false);
+      setNewPayment({ amount: "", method: "CASH", date: new Date().toISOString().split('T')[0] });
+      setEditingPaymentIndex(null);
+      fetchOrder();
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to save payment" });
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const handleDeletePayment = async (index: number) => {
+    if (!confirm("Are you sure you want to delete this payment record?")) return;
+    setProcessing(true);
+    try {
+      const updatedPayments = order.payments.filter((_: any, i: number) => i !== index);
+      await updateOrderPayments(orderId!, updatedPayments);
+      
+      const totalPaid = updatedPayments.reduce((sum: number, p: any) => sum + p.amount, 0);
+      if (totalPaid === 0) {
+        await updatePaymentStatus(orderId!, 'PENDING');
+      } else if (totalPaid < (order.totalOrderValue || 0)) {
+        await updatePaymentStatus(orderId!, 'PARTIALLY_PAID');
+      }
+
+      toast({ title: "Payment Deleted" });
+      fetchOrder();
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to delete payment" });
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const openEditPayment = (p: any, index: number) => {
+    setNewPayment({
+      amount: p.amount.toString(),
+      method: p.method,
+      date: new Date(p.date).toISOString().split('T')[0]
+    });
+    setEditingPaymentIndex(index);
+    setIsPaymentModalOpen(true);
   };
 
   const handleDispatch = async () => {
@@ -123,6 +208,7 @@ export default function AdminOrderDetail() {
   const timelineSteps = getTimelineSteps(order.orderStatus);
 
   return (
+    <>
     <AdminLayout>
       <div className="p-4 md:p-8">
         {/* Header */}
@@ -314,14 +400,56 @@ export default function AdminOrderDetail() {
 
             {/* Payment Info */}
             <Card className="border-border/60 shadow-card">
-              <CardHeader>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="text-base">Payment</CardTitle>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => {
+                  setNewPayment({ amount: "", method: "CASH", date: new Date().toISOString().split('T')[0] });
+                  setEditingPaymentIndex(null);
+                  setIsPaymentModalOpen(true);
+                }}>
+                  <Plus className="h-4 w-4" />
+                </Button>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Status</span>
-                  <StatusBadge status={order.paymentStatus === 'PAID' ? 'success' : 'pending'}>{order.paymentStatus || 'PENDING'}</StatusBadge>
+                  <StatusBadge status={order.paymentStatus === 'PAID' ? 'success' : (order.paymentStatus === 'PARTIALLY_PAID' ? 'action' : 'pending')}>
+                    {order.paymentStatus?.replace(/_/g, ' ') || 'PENDING'}
+                  </StatusBadge>
                 </div>
+
+                {/* Individual Payments */}
+                {order.payments && order.payments.length > 0 && (
+                  <div className="space-y-2 mt-4 border-t pt-4">
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Payment History</p>
+                    {order.payments.map((p: any, i: number) => (
+                      <div key={i} className="flex items-center justify-between text-sm group">
+                        <div>
+                          <p className="font-medium">₹{p.amount.toLocaleString()}</p>
+                          <p className="text-[10px] text-muted-foreground">{new Date(p.date).toLocaleDateString()} • {p.method}</p>
+                        </div>
+                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => openEditPayment(p, i)}>
+                            <Edit className="h-3 w-3" />
+                          </Button>
+                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-destructive" onClick={() => handleDeletePayment(i)}>
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                    <Separator className="my-2" />
+                    <div className="flex justify-between items-center pt-1">
+                      <span className="text-xs font-medium text-muted-foreground">Total Paid</span>
+                      <span className="text-sm font-bold">₹{order.payments.reduce((s: number, p: any) => s + p.amount, 0).toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium text-muted-foreground">Balance</span>
+                      <span className="text-sm font-bold text-destructive">₹{Math.max(0, (order.totalOrderValue || 0) - order.payments.reduce((s: number, p: any) => s + p.amount, 0)).toLocaleString()}</span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Due Date</span>
                   <span className="text-sm font-medium">
@@ -335,11 +463,11 @@ export default function AdminOrderDetail() {
                   <Button 
                     className="w-full gap-2" 
                     size="sm" 
-                    onClick={handleUpdatePayment}
+                    onClick={() => handleUpdatePayment('PAID')}
                     disabled={order.paymentStatus === 'PAID' || processing}
                   >
                     <CreditCard className="h-4 w-4" />
-                    {order.paymentStatus === 'PAID' ? 'Paid' : 'Record Payment'}
+                    {order.paymentStatus === 'PAID' ? 'Fully Paid' : 'Mark as Fully Paid'}
                   </Button>
                   <Button variant="outline" className="w-full gap-2" size="sm" onClick={handleExtendDueDate}>
                     <Clock className="h-4 w-4" />
@@ -400,5 +528,56 @@ export default function AdminOrderDetail() {
         </div>
       </div>
     </AdminLayout>
+    <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{editingPaymentIndex !== null ? "Edit Payment Record" : "Add Payment Record"}</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label>Amount (₹)</Label>
+            <Input 
+              type="number" 
+              placeholder="e.g. 5000" 
+              value={newPayment.amount} 
+              onChange={(e) => setNewPayment({...newPayment, amount: e.target.value})}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Method</Label>
+            <Select 
+              value={newPayment.method} 
+              onValueChange={(val) => setNewPayment({...newPayment, method: val})}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Method" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="CASH">Cash</SelectItem>
+                <SelectItem value="BANK_TRANSFER">Bank Transfer</SelectItem>
+                <SelectItem value="UPI">UPI</SelectItem>
+                <SelectItem value="CHEQUE">Cheque</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label>Date</Label>
+            <Input 
+              type="date" 
+              value={newPayment.date} 
+              onChange={(e) => setNewPayment({...newPayment, date: e.target.value})}
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="ghost" onClick={() => setIsPaymentModalOpen(false)}>Cancel</Button>
+          <Button onClick={handleAddPayment} disabled={processing}>
+            {processing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {editingPaymentIndex !== null ? "Update Payment" : "Save Payment"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }

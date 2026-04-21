@@ -49,15 +49,21 @@ export default function AdminPayments() {
   });
 
   const totalRevenue = orders
-    .filter(o => o.paymentStatus === 'PAID' && o.orderStatus !== 'CANCELLED')
-    .reduce((acc, curr) => acc + (curr.totalOrderValue || 0), 0);
+    .filter(o => o.orderStatus !== 'CANCELLED')
+    .reduce((acc, curr) => {
+      const paid = curr.payments?.reduce((s: number, p: any) => s + (p.amount || 0), 0) || (curr.paymentStatus === 'PAID' ? curr.totalOrderValue : 0);
+      return acc + (paid || 0);
+    }, 0);
 
   const pendingRevenue = orders
     .filter(o => 
-      o.paymentStatus !== 'PAID' && 
       !['NEW_INQUIRY', 'PENDING_PRICING', 'WAITING_CLIENT_APPROVAL', 'CANCELLED'].includes(o.orderStatus)
     )
-    .reduce((acc, curr) => acc + (curr.totalOrderValue || 0), 0);
+    .reduce((acc, curr) => {
+      const total = curr.totalOrderValue || 0;
+      const paid = curr.payments?.reduce((s: number, p: any) => s + (p.amount || 0), 0) || (curr.paymentStatus === 'PAID' ? total : 0);
+      return acc + (total - paid);
+    }, 0);
 
   return (
     <AdminLayout>
@@ -128,8 +134,8 @@ export default function AdminPayments() {
                                             Due: {order.creditDueDate ? new Date(order.creditDueDate).toLocaleDateString() : '—'}
                                         </p>
                                     </div>
-                                    <StatusBadge status={order.paymentStatus === 'PAID' ? 'success' : (order.paymentStatus === 'OVERDUE' ? 'danger' : 'pending')}>
-                                        {order.paymentStatus || 'PENDING'}
+                                    <StatusBadge status={order.paymentStatus === 'PAID' ? 'success' : (order.paymentStatus === 'PARTIALLY_PAID' ? 'action' : (order.paymentStatus === 'OVERDUE' ? 'danger' : 'pending'))}>
+                                        {order.paymentStatus?.replace(/_/g, ' ') || 'PENDING'}
                                     </StatusBadge>
                                 </div>
                             </div>
