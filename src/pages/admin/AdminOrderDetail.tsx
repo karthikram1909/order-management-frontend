@@ -23,12 +23,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const getTimelineSteps = (status: string) => {
+const getTimelineSteps = (status: string, paymentStatus?: string) => {
     // Map backend status to timeline
      return [
      { id: "1", label: "Placed", status: "completed" as const },
      { id: "2", label: "Confirmed", status: ['ORDER_CONFIRMED', 'AWAITING_PAYMENT', 'PAYMENT_CLEARED', 'IN_TRANSIT', 'DELIVERED', 'CLOSED'].includes(status) ? "completed" as const : "upcoming" as any },
-     { id: "3", label: "Paid", status: ['PAYMENT_CLEARED', 'IN_TRANSIT', 'DELIVERED', 'CLOSED'].includes(status) ? "completed" : (status === 'AWAITING_PAYMENT' ? 'current' : 'upcoming') as any },
+     { id: "3", label: "Paid", status: ['PAYMENT_CLEARED', 'IN_TRANSIT', 'DELIVERED', 'CLOSED'].includes(status) || paymentStatus === 'PAID' ? "completed" : (status === 'AWAITING_PAYMENT' || paymentStatus === 'PARTIALLY_PAID' ? 'current' : 'upcoming') as any },
      { id: "4", label: "Dispatched", status: ['IN_TRANSIT', 'DELIVERED', 'CLOSED'].includes(status) ? "completed" : 'upcoming' as any },
      { id: "5", label: "Delivered", status: ['DELIVERED', 'CLOSED'].includes(status) ? "completed" : 'upcoming' as any },
     ];
@@ -205,7 +205,7 @@ export default function AdminOrderDetail() {
   if (!order) return <div className="p-8">Order not found</div>;
 
   const statusConfig = getStatusConfig(order.orderStatus); // Adapt or create new helper
-  const timelineSteps = getTimelineSteps(order.orderStatus);
+  const timelineSteps = getTimelineSteps(order.orderStatus, order.paymentStatus);
 
   return (
     <>

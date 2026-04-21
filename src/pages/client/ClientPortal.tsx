@@ -13,7 +13,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Trash2, Plus, Minus, Info } from "lucide-react";
+import { Trash2, Plus, Minus, Info, Sparkles } from "lucide-react";
 
 interface CartItem {
     productId: string;
@@ -30,6 +30,7 @@ export default function ClientPortal() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [submitLoading, setSubmitLoading] = useState(false);
+    const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
     const { toast } = useToast();
 
     useEffect(() => {
@@ -229,11 +230,16 @@ export default function ClientPortal() {
                                                 return (
                                                     <div key={item.productId} className="flex gap-4 p-3 bg-white rounded-xl border border-slate-200 shadow-sm relative group">
                                                         <div className="h-20 w-20 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0 border border-slate-200">
-                                                            {product.imageUrl ? (
-                                                                <img src={product.imageUrl} alt={product.itemName} className="h-full w-full object-cover" />
+                                                            {product.imageUrl && !imageErrors[product._id] ? (
+                                                                <img 
+                                                                    src={product.imageUrl} 
+                                                                    alt={product.itemName} 
+                                                                    className="h-full w-full object-cover" 
+                                                                    onError={() => setImageErrors(prev => ({ ...prev, [product._id]: true }))}
+                                                                />
                                                             ) : (
-                                                                <div className="h-full w-full flex items-center justify-center text-slate-300">
-                                                                    <ShoppingBag className="h-6 w-6" />
+                                                                <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 text-blue-400/50">
+                                                                    <Sparkles className="h-6 w-6" />
                                                                 </div>
                                                             )}
                                                         </div>
